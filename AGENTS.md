@@ -7,7 +7,7 @@
 - Configuration lives in `docs.json`
 - Primary navigation is **`navigation.products`**
 - Site root (**Home**) is welcome + legal — **not** product docs
-- Product docs live under path prefixes: `/rusty`, `/scripty`, `/wargo`
+- Product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`
 
 ## Site structure
 
@@ -16,12 +16,12 @@
 | **Home** | `/`, `/legal/*` | Welcome page + Privacy, Terms, EULA, CLA |
 | **rusty** | `/rusty` | Rust PM + toolchains (Linux-only) |
 | **scripty** | `/scripty` | JS runtime + PM (intro) |
-| **wargo** | `/wargo` | Go workspace PM (intro) |
+| **worgo** | `/worgo` | Go workspace PM (intro) |
 
 ## Terminology
 
-- Product names in UI and headings: lowercase **rusty**, **scripty**, **wargo**
-- **wargo** is the product/package name; public site may say **Worgo** / worgopm.com — both refer to the same product
+- Product names in UI and headings: lowercase **rusty**, **scripty**, **worgo**
+- **worgo** is the product/package name (repo: solvedggorg/worgo; site: worgopm.com / worgo.pm)
 - Prefer **toolchain** over "rustup install" when describing `rusty env`
 - Prefer **rusty-format** / **cargo-format** for project layouts
 - Prefer **native** vs **interop** for cargo process vs Zig implementation
@@ -43,5 +43,5 @@
 
 - Document user-facing CLI and workflows; do not document internal agent-only policy files as product docs
 - Do not invent install URLs or version numbers that are not real — point to rustypm.com / intake@solved.gg when channels are unsettled
-- scripty and wargo: keep intros accurate to public positioning; expand only when CLI surfaces exist
+- scripty and worgo: keep intros accurate to public positioning; expand only when CLI surfaces exist
 - Legal text is operational starting copy — flag for counsel review before treating as final corporate policy
