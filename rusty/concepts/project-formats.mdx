@@ -1,0 +1,70 @@
+---
+title: "Project formats"
+description: "rusty-format vs cargo-format: manifests, locks, and migration posture."
+---
+
+rusty understands two project layouts so you can adopt incrementally.
+
+## rusty-format
+
+Native-first layout:
+
+| File | Purpose |
+| --- | --- |
+| `rusty.json` | Package manifest (deps, scripts, package metadata) |
+| `rusty.lock` | Lockfile produced by native resolve |
+| `.rusty/format` | Contains `rusty` |
+
+Create with:
+
+```bash
+rusty init --format rusty
+```
+
+**Scripts** live in `rusty.json` under `"scripts"`. Lifecycle keys can override or wrap built-in verbs:
+
+- `build`, `test`, `lint`, `format` — special lifecycle hooks
+- any other name — run via `rusty script <name>`
+
+`lint` and `format` always go through scripts (there is no built-in clippy/rustfmt driver under those names).
+
+## cargo-format
+
+Interop layout for existing Cargo trees:
+
+| File | Purpose |
+| --- | --- |
+| `Cargo.toml` | Manifest (and workspace members as usual) |
+| `Cargo.lock` | Lockfile; rusty can generate/refresh natively for supported graphs |
+| `.rusty/format` | Contains `cargo` when scaffolded by rusty |
+
+Create with:
+
+```bash
+rusty init --format cargo
+```
+
+Or open an existing Cargo project; rusty detects `Cargo.toml` without requiring a prior init.
+
+Native support for cargo-format is a **growing matrix**. When a shape is not handled, `build` / `run` / `check` fail with a clear error rather than silently invoking cargo.
+
+## Choosing a format
+
+| Situation | Recommendation |
+| --- | --- |
+| New project, want native path | `--format rusty` |
+| Existing Cargo monorepo | Stay cargo-format; use native PM verbs; migrate when ready |
+| Need full Cargo-only features immediately | Keep Cargo for those paths; use rusty where native works |
+
+## Migrate
+
+Convert Cargo → rusty-format:
+
+```bash
+rusty migrate --dry-run
+rusty migrate --yes
+```
+
+Migration writes `rusty.json` + `rusty.lock` and removes Cargo files as designed by the migrate tool. Always dry-run on large workspaces first.
+
+Full guide: [Migrate from Cargo](/rusty/guides/migrate-from-cargo).

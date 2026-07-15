@@ -1,0 +1,132 @@
+---
+title: "Quickstart"
+description: "From zero to a working rusty project on Linux: toolchain, init, lock, fetch, build, test."
+---
+
+Get a minimal Rust project building with rusty on Linux.
+
+## Prerequisites
+
+- A **Linux** host (x86_64 or aarch64 typical)
+- Network access for the first toolchain install and crate fetch
+- A linker (`cc` / `ld`) available for linking Rust binaries
+
+## 1. Install rusty
+
+Obtain a `rusty` binary for your machine and put it on `PATH`. See [Install](/rusty/install) for current distribution options.
+
+```bash
+rusty --version
+# rusty 0.0.1-dev (version string may differ)
+```
+
+Data lives under **`$RUSTY_HOME`** (default `~/.rusty`).
+
+## 2. Install a toolchain
+
+Default installs include **rustc + rust-std only** (no cargo):
+
+```bash
+rusty env install stable
+rusty env use stable
+rusty env show
+```
+
+Optional: put toolchain shims on your path after `rusty env use`:
+
+```bash
+export PATH="$RUSTY_HOME/bin:$PATH"
+# default RUSTY_HOME is ~/.rusty
+export PATH="${RUSTY_HOME:-$HOME/.rusty}/bin:$PATH"
+```
+
+`rustc`, `rustdoc`, `rustfmt`, and related tools are hardlinked shims that dispatch to the active toolchain. **cargo is not installed or shimmed by default.**
+
+## 3. Create a project
+
+Interactive (TTY) or fully flagged:
+
+```bash
+mkdir hello-rusty && cd hello-rusty
+rusty init --format rusty --kind cli --edition 2021
+```
+
+Useful flags:
+
+| Flag | Meaning |
+| --- | --- |
+| `--format rusty` | Scaffold `rusty.json` + `rusty.lock` (native-first) |
+| `--format cargo` | Scaffold `Cargo.toml` for interop / gradual migration |
+| `--kind cli` / `lib` / `web` / … | Template kind (prompted on TTY if omitted) |
+| `--edition 2021` | Rust edition |
+
+Project metadata and caches land in **`.rusty/`** (including `.rusty/format`).
+
+## 4. Lock and fetch
+
+```bash
+rusty lock
+rusty fetch
+```
+
+- **Lock** writes `rusty.lock` or `Cargo.lock` depending on project format.
+- **Fetch** resolves (if needed) and ingests crates into the content-addressable store.
+
+## 5. Build and test
+
+```bash
+rusty build
+rusty test
+```
+
+Native-only for these verbs: if the project shape is outside the supported matrix, rusty **exits with an error** instead of silently calling cargo.
+
+Optional package and workspace flags (same spirit as Cargo):
+
+```bash
+rusty build -p mypkg --workspace
+rusty build --affected main
+rusty test -j 8
+```
+
+## 6. Day-to-day commands
+
+```bash
+rusty add serde --vers "^1"
+rusty rm some_crate
+rusty update
+rusty clean          # removes <project>/.rusty/target
+rusty script <name>  # run a named entry from rusty.json "scripts"
+```
+
+Lint and format require scripts in `rusty.json`:
+
+```json
+{
+  "scripts": {
+    "lint": "…",
+    "format": "…"
+  }
+}
+```
+
+```bash
+rusty lint
+rusty format
+```
+
+## Existing Cargo workspace?
+
+You do not have to rewrite everything on day one:
+
+1. Point rusty at the tree (detects `Cargo.toml` / cargo-format).
+2. Use native lock/fetch/add where supported.
+3. When ready: `rusty migrate` to convert to `rusty.json` + `rusty.lock`.
+
+See [Migrate from Cargo](/rusty/guides/migrate-from-cargo).
+
+## Next
+
+- [Project formats](/rusty/concepts/project-formats) — rusty vs cargo layout
+- [Build and test](/rusty/guides/build-and-test) — flags, affected builds, scripts
+- [CLI reference](/rusty/reference/cli) — full command map

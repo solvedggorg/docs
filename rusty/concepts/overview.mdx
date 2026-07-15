@@ -1,0 +1,57 @@
+---
+title: "How rusty works"
+description: "Architecture overview: manifests, resolve, CAS, native rustc builds, and caches."
+---
+
+rusty is organized around a **native pipeline**. Cargo is an interop boundary during migration, not the long-term implementation of resolve, lock, or test.
+
+## Preferred pipeline
+
+```text
+manifest (rusty.json or Cargo.toml)
+  → native resolve
+  → lock (rusty.lock or Cargo.lock)
+  → fetch (index + checksum)
+  → CAS ingest / materialize
+  → native rustc graph (build / test)
+  → layers + artifact cache
+```
+
+Contrast with a cargo-wrapper mental model: rusty does **not** aim to shell out to cargo for correctness of core package-manager or build verbs.
+
+## Major subsystems
+
+| Subsystem | Role |
+| --- | --- |
+| **CLI** | Thin dispatch for env, PM, store, layers, cache, workspace, auth |
+| **Package manager** | Manifests, resolve, lock, fetch, add/rm/update, build driver, tests, migrate |
+| **Toolchain** | Channel install, active toolchain, shims under `$RUSTY_HOME/bin` |
+| **Content store** | Content-addressable blobs and crate trees |
+| **Cache / layers** | Artifact groups and per-crate differential layers (`.rusty/`) |
+| **Workspace** | Monorepo member discovery, affected packages, dependents |
+| **Auth** | Optional product identity (Clerk), separate from crates.io |
+
+## Dual-mode projects
+
+| Mode | Manifest / lock | Intent |
+| --- | --- | --- |
+| **rusty-format** | `rusty.json` + `rusty.lock` | Native-first; fail closed when unsupported |
+| **cargo-format** | `Cargo.toml` + `Cargo.lock` | Interop while migrating; native where implemented |
+
+Detection uses those files plus `.rusty/format`. See [Project formats](/rusty/concepts/project-formats).
+
+## Build philosophy
+
+- **`build` / `run` / `check` / `test`**: native graph or hard error.
+- **Lifecycle scripts**: optional overrides in `rusty.json` (`scripts.build`, `scripts.test`, …).
+- **Cargo interop verbs**: tiny allowlist only; documented as needing cargo on PATH.
+- **No silent online cargo fallback** for rusty-format when native prep fails.
+
+## Where data lives
+
+| Location | Contents |
+| --- | --- |
+| `$RUSTY_HOME` | Toolchains, global store, auth, bin shims |
+| `<workspace>/.rusty/` | Format marker, target dir, layer index, project caches |
+
+Details: [Store and cache](/rusty/concepts/store-and-cache), [Environment](/rusty/reference/environment).

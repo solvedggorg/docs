@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "solved.gg Docs",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -9,26 +9,84 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
+    "products": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
+        "product": "rusty",
+        "description": "Cargo + rustup, rebuilt in Zig for Linux monorepos",
+        "icon": "gears",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "rusty/index",
+              "rusty/quickstart",
+              "rusty/install"
+            ]
+          },
+          {
+            "group": "Core concepts",
+            "pages": [
+              "rusty/concepts/overview",
+              "rusty/concepts/project-formats",
+              "rusty/concepts/toolchains",
+              "rusty/concepts/store-and-cache"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "rusty/guides/build-and-test",
+              "rusty/guides/workspaces",
+              "rusty/guides/migrate-from-cargo"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "rusty/reference/cli",
+              "rusty/reference/environment"
+            ]
+          }
+        ]
+      },
+      {
+        "product": "scripty",
+        "description": "JS runtime and project manager — Node, Deno, and Bun APIs in Zig",
+        "icon": "code",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "scripty/index"
+            ]
+          }
+        ]
+      },
+      {
+        "product": "wargo",
+        "description": "Next-gen Go workspace project manager, written in Zig",
+        "icon": "cube",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "wargo/index"
+            ]
+          }
         ]
       }
     ],
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "solved.gg",
+          "href": "https://solved.gg",
+          "icon": "globe"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Projects",
+          "href": "https://solved.gg/projects",
+          "icon": "grid-2"
         }
       ]
     }
@@ -41,13 +99,13 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:intake@solved.gg"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "label": "solved.gg",
+      "href": "https://solved.gg"
     }
   },
   "contextual": {
@@ -64,9 +122,7 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "website": "https://solved.gg"
     }
   }
 }

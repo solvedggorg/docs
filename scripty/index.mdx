@@ -1,0 +1,42 @@
+---
+title: "Introduction"
+description: "scripty is a JS runtime and project manager with Node, Deno, and Bun APIs — rebuilt in Zig."
+---
+
+**scripty** is a JavaScript runtime and project manager written in Zig. One tool aims to cover the APIs and workflows you already use with Node.js, Deno, and Bun — with built-in formatting and linting — without stacking three separate runtimes.
+
+## What scripty is for
+
+- **One runtime surface** for Node, Deno, and Bun APIs (full compatibility is the product goal; the implementation is still early)
+- **Project management** for JS/TS trees: install, run, and workspace workflows in one CLI
+- **Built-in format + lint** with rules and ecosystem support, so you are not forced to wire a separate toolchain for every repo
+- **Speed as a first-class goal** — marketing target is on the order of **100× Bun** for the paths scripty is designed around
+
+## How it fits the suite
+
+scripty sits next to [rusty](/rusty) (Rust) and [wargo](/wargo) (Go): language-ecosystem tooling from [solved.gg](https://solved.gg), all implemented in Zig.
+
+| Sibling | Ecosystem |
+| --- | --- |
+| [rusty](/rusty) | Rust package manager + toolchain (Linux) |
+| **scripty** | JavaScript / TypeScript runtime + PM |
+| [wargo](/wargo) | Go workspace project manager |
+
+## Status
+
+scripty is in **early access / coming soon**. Public packaging, install paths, and CLI reference will land here as the binary stabilizes.
+
+Until then:
+
+- Product site: [scriptypm.com](https://scriptypm.com)
+- Org overview: [solved.gg/projects](https://solved.gg/projects)
+
+## What to expect next in these docs
+
+1. Install and first project
+2. Runtime API surface (Node / Deno / Bun)
+3. Package management and workspaces
+4. Format, lint, and scripts
+5. CLI and configuration reference
+
+Questions or early access: [intake@solved.gg](mailto:intake@solved.gg).

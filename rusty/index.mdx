@@ -1,0 +1,73 @@
+---
+title: "Introduction"
+description: "rusty is a content-addressable Cargo + rustup replacement, rebuilt in Zig for Linux monorepos."
+---
+
+**rusty** is a Linux-only Rust project manager and toolchain manager rewritten in Zig. It combines content-addressable package storage, rustup-style toolchain control, and native resolve / fetch / build / test paths aimed at large monorepos — not a thin shell around `cargo`.
+
+<Warning>
+  **Linux only, permanently.** rusty relies on Linux filesystem semantics for the content store and build cache. macOS and Windows are not supported and will not be added.
+</Warning>
+
+## Why rusty exists
+
+rusty started as an internal tool at **iResolved, LLC** on a client workspace with **3,676 crates** where Cargo could not keep a useful edit–build loop:
+
+| Workload | Before (cargo) | With rusty |
+| --- | --- | --- |
+| Cold build (no deps / cache) | ~10 hours | ~10 minutes |
+| Routine dev compiles | ~6 hours | ~45 seconds |
+| Peak speedup on routine tasks | — | up to **~400×** |
+
+Those numbers come from that production monorepo shape — not a micro-benchmark. Your results depend on graph shape, cache hits, and whether the project is on the native path.
+
+## What rusty does
+
+- **Package manager** — init, lock, fetch, add, rm, update, clean; dual-mode for `rusty.json` / `rusty.lock` and Cargo-format trees during migration
+- **Native build & test** — drives `rustc` directly for a declared project subset; hard-fails when a shape is unsupported (no silent cargo fallback for core verbs)
+- **Toolchains** — install / use / list toolchains (rustup-like); default installs are `rustc` + `rust-std` only
+- **Content store** — pnpm-style CAS under `$RUSTY_HOME` for crates and blobs
+- **Layers & artifact cache** — per-crate differential cache and `RUSTC_WRAPPER` integration
+- **Workspaces** — member listing, git-affected packages, reverse dependents, version-drift reports
+- **Product auth** — optional Clerk-based identity for solved.gg / iResolved accounts (not crates.io login)
+
+## What rusty is not (yet)
+
+rusty is **early access**, not full Cargo parity. Prefer this framing:
+
+> Dual-mode early access: native path for the rusty-format subset and growing cargo-format support; explicit cargo interop only for a small allowlist (`clippy`, `fmt`, `doc`, `bench`, `tree`) and opt-in install paths.
+
+Do not expect every Cargo feature, registry edge case, or build-script shape to work natively on day one. Unsupported native builds fail closed with a clear error.
+
+## Status at a glance
+
+| Area | Native default? | Notes |
+| --- | --- | --- |
+| `lock` / `fetch` / `add` / `rm` / `update` / `clean` | Yes | File I/O for both formats; no cargo process |
+| `build` / `run` / `check` | Yes (subset) | Hard error if unsupported; optional `scripts.build` |
+| `test` | Yes | Never cargo by default; optional `scripts.test` |
+| `lint` / `format` | Scripts | Require `scripts.lint` / `scripts.format` in `rusty.json` |
+| `clippy` / `fmt` / `doc` / `bench` / `tree` | Interop | Need cargo on PATH |
+| `install` | Prebuilt → native | Cargo only with `RUSTY_INSTALL_ALLOW_CARGO=1` |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/rusty/quickstart">
+    Install a toolchain, scaffold a project, lock, fetch, and build.
+  </Card>
+  <Card title="Install" icon="download" href="/rusty/install">
+    Get the rusty binary and set up `$RUSTY_HOME`.
+  </Card>
+  <Card title="Project formats" icon="file-code" href="/rusty/concepts/project-formats">
+    rusty-format vs cargo-format and when to migrate.
+  </Card>
+  <Card title="CLI reference" icon="terminal" href="/rusty/reference/cli">
+    Full command map from `rusty --help`.
+  </Card>
+</CardGroup>
+
+## Product & license
+
+- Site: [rustypm.com](https://rustypm.com)
+- License: **iResolved Source Available License v0.1** (source-available; not OSI open source). Authenticated solved.gg / iResolved accounts may use rusty under the applicable EULA with payment portions of that license bypassed; other commercial licensing: contact iResolved LLC.

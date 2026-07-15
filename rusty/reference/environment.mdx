@@ -1,0 +1,48 @@
+---
+title: "Environment variables"
+description: "RUSTY_* and cargo-compatible variables rusty sets or honors."
+---
+
+## Primary
+
+| Variable | Default / notes |
+| --- | --- |
+| `RUSTY_HOME` | Data root; default `~/.rusty` |
+| `RUSTY_PROJECT_ROOT` | Set during build to the workspace root |
+| `RUSTY_TOOLCHAIN` | Override active toolchain name |
+| `RUSTY_JOBS` | Parallel jobs for build/test (also `-j`) |
+| `RUSTY_BUILD_CACHE` | Set to `0` to disable native build unit CAS cache |
+| `RUSTY_TEST_CACHE` | Set to `0` to disable test binary cache |
+| `RUSTY_NO_SCRIPTS` | Set to `1` to skip lifecycle script hooks |
+| `RUSTY_INSTALL_ALLOW_CARGO` | Set to `1` to allow `cargo install` after prebuilt + native miss |
+| `RUSTY_INSTALL_NO_CARGO` | Force no cargo install path even if allow is set |
+| `RUSTY_AUTH_CLIENT_ID` | Clerk OAuth client for `rusty auth` |
+| `RUSTY_AUTH_ISSUER` | Clerk / OIDC issuer for `rusty auth` |
+
+## Cargo-compatible (often set by rusty)
+
+| Variable | Role under rusty |
+| --- | --- |
+| `CARGO_HOME` | Points at `$RUSTY_HOME/cargo-home` during prepared builds/interop |
+| `CARGO_TARGET_DIR` | `<workspace>/.rusty/target` |
+| `CARGO_PROFILE` | `debug` or `release` |
+| `RUSTC_WRAPPER` | `$RUSTY_HOME/bin/rusty-wrapper` for layer caching |
+| `CARGO` | May point at toolchain cargo sibling of rustc for build-script env (not a substitute for the resolver) |
+
+## Project paths
+
+| Path | Purpose |
+| --- | --- |
+| `$RUSTY_HOME` | Toolchains, store, auth, bin shims |
+| `$RUSTY_HOME/bin` | Proxies after `env use` |
+| `$RUSTY_HOME/cargo-home` | Managed cargo-home layout |
+| `$RUSTY_HOME/auth.db` | Product auth session |
+| `<root>/.rusty/` | Format marker, target, layer index, graph caches |
+| `<root>/.rusty/format` | `rusty` or `cargo` |
+| `<root>/.rusty/target` | Build outputs |
+
+## Interop notes
+
+- Default toolchain install does **not** include cargo.
+- Interop verbs without cargo fail with exit **127**.
+- Doc/bench prep may append `--offline` when the offline prep path ran.

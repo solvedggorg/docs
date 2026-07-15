@@ -1,33 +1,41 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
-
 # Documentation project instructions
 
 ## About this project
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
+- Documentation site for **solved.gg** products, built on [Mintlify](https://mintlify.com)
 - Pages are MDX files with YAML frontmatter
 - Configuration lives in `docs.json`
-- Use the Mintlify MCP server, `https://mcp.mintlify.com`, to edit content and settings via MCP
-- Use the Mintlify docs MCP server, `https://www.mintlify.com/docs/mcp`, to query information about using Mintlify via MCP
+- Primary navigation is **`navigation.products`**: `rusty`, `scripty`, `wargo`
+
+## Products
+
+| Product | Path | Ecosystem | Doc depth |
+| --- | --- | --- | --- |
+| rusty | `rusty/` | Rust PM + toolchains (Linux-only) | Intro + concepts + guides + CLI |
+| scripty | `scripty/` | JS runtime + PM (Node/Deno/Bun APIs) | Intro only until product freezes |
+| wargo | `wargo/` | Go workspace PM (branded Worgo / worgopm.com) | Intro only until product freezes |
 
 ## Terminology
 
-{/* Add product-specific terms and preferred usage */}
-{/* Example: Use "workspace" not "project", "member" not "user" */}
+- Product names in UI and headings: lowercase **rusty**, **scripty**, **wargo**
+- **wargo** is the product/package name; public site may say **Worgo** / worgopm.com — both refer to the same product
+- Prefer **toolchain** over "rustup install" when describing `rusty env`
+- Prefer **rusty-format** / **cargo-format** for project layouts
+- Prefer **native** vs **interop** for cargo process vs Zig implementation
+- Never claim full Cargo parity; rusty is dual-mode early access
+- rusty is **permanently Linux-only** — state that whenever install or platform is discussed
 
 ## Style preferences
-
-{/* Add any project-specific style rules below */}
 
 - Use active voice and second person ("you")
 - Keep sentences concise — one idea per sentence
 - Use sentence case for headings
 - Bold for UI elements: Click **Settings**
 - Code formatting for file names, commands, paths, and code references
+- Prefer honest early-access language over marketing hyperbole; performance claims should cite the origin story (3,676-crate client monorepo) when using the ~400× figure
 
 ## Content boundaries
 
-{/* Define what should and shouldn't be documented */}
-{/* Example: Don't document internal admin features */}
+- Document user-facing CLI and workflows; do not document internal agent-only policy files as product docs
+- Do not invent install URLs or version numbers that are not real — point to rustypm.com / intake@solved.gg when channels are unsettled
+- scripty and wargo: keep intros accurate to public positioning; expand only when CLI surfaces exist

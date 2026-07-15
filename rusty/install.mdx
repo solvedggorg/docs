@@ -1,0 +1,106 @@
+---
+title: "Install"
+description: "Install the rusty CLI and prepare RUSTY_HOME on Linux."
+---
+
+rusty ships as a standalone CLI. This page covers layout and environment after you have a binary.
+
+<Warning>
+  rusty runs on **Linux only**. Do not install or expect support on macOS or Windows.
+</Warning>
+
+## Get the binary
+
+Distribution channels (releases, package repos, or early-access builds) are evolving with the product. For current access:
+
+- Product site: [rustypm.com](https://rustypm.com)
+- Contact: [intake@solved.gg](mailto:intake@solved.gg)
+
+Once you have a `rusty` executable:
+
+```bash
+chmod +x rusty
+sudo mv rusty /usr/local/bin/   # or any directory on PATH
+rusty --version
+rusty --help
+```
+
+## Data directory: `RUSTY_HOME`
+
+| Path | Role |
+| --- | --- |
+| `$RUSTY_HOME` (default `~/.rusty`) | Toolchains, CAS store, auth DB, shims |
+| `$RUSTY_HOME/bin` | Active toolchain proxies (`rustc`, …) and `rusty-wrapper` |
+| `$RUSTY_HOME/cargo-home` | Managed layout used when cargo-compatible env is injected |
+| `$RUSTY_HOME/auth.db` | Product auth session (Clerk), if you sign in |
+
+```bash
+export RUSTY_HOME="$HOME/.rusty"   # optional; this is already the default
+```
+
+## First toolchain
+
+```bash
+rusty env install stable
+rusty env use stable
+rusty env list
+rusty env show
+rusty env which rustc
+```
+
+Install extra targets or components as needed:
+
+```bash
+rusty env install stable x86_64-unknown-linux-musl
+# cargo is opt-in if you need interop verbs:
+rusty env install stable cargo
+```
+
+Without cargo on PATH, interop commands (`clippy`, `fmt`, `doc`, `bench`, `tree`) fail closed (exit **127**).
+
+## PATH for shims
+
+After `rusty env use <id>`, put shims first:
+
+```bash
+export PATH="${RUSTY_HOME:-$HOME/.rusty}/bin:$PATH"
+```
+
+Override the active toolchain for a single command with `+toolchain` or `RUSTY_TOOLCHAIN`.
+
+## Product authentication (optional)
+
+Product identity is **not** crates.io login. Clerk-based sign-in stores a session under `$RUSTY_HOME`:
+
+```bash
+# Requires RUSTY_AUTH_CLIENT_ID and RUSTY_AUTH_ISSUER
+rusty auth login
+rusty auth whoami
+rusty auth status
+rusty auth logout
+```
+
+Authenticated [solved.gg](https://solved.gg) / iResolved accounts may use rusty under the product EULA with payment portions of the source-available license bypassed — see the license shipped with your build.
+
+## Project-local layout
+
+Per repository, rusty uses:
+
+```text
+.rusty/
+  format          # "rusty" or "cargo"
+  target/         # build outputs (also CARGO_TARGET_DIR during builds)
+  …               # lock digests, layer index, graph cache, …
+```
+
+You normally do not create this by hand; `rusty init` and other commands manage it.
+
+## Verify
+
+```bash
+rusty env show
+rusty store path
+rusty store stats
+```
+
+Then continue with the [Quickstart](/rusty/quickstart).

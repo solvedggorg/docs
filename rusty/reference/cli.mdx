@@ -1,0 +1,116 @@
+---
+title: "CLI reference"
+description: "Command map for rusty — toolchains, package manager, store, layers, cache, workspace, auth."
+---
+
+Global:
+
+```bash
+rusty -h, --help
+rusty -V, --version
+```
+
+Version string is currently in the `0.0.1-dev` line during early access.
+
+## Language / toolchains
+
+| Command | Description |
+| --- | --- |
+| `rusty env install <id> [target…]` | Install a toolchain (+ components/targets) |
+| `rusty env uninstall <id>` | Remove a toolchain |
+| `rusty env list` | List installed toolchains |
+| `rusty env show` | Active toolchain + host |
+| `rusty env which <prog>` | Path to `<prog>` in the active toolchain |
+| `rusty env use <id>` | Set the default toolchain |
+
+## Package manager
+
+| Command | Description |
+| --- | --- |
+| `rusty init [name] [--format cargo\|rusty] [--kind KIND] [--edition YYYY]` | Scaffold a project |
+| `rusty migrate [--yes] [--dry-run]` | Cargo → rusty.json + rusty.lock |
+| `rusty lock` | Generate/update lockfile |
+| `rusty fetch` | Resolve (if needed) + ingest deps into CAS |
+| `rusty build` / `run` / `check` | Native rustc graph (hard error if unsupported) |
+| `rusty test [FILTER]…` | Native file-test runner |
+| `rusty lint` / `format` | Run `scripts.lint` / `scripts.format` |
+| `rusty script <name> [args…]` | Run any `rusty.json` scripts entry |
+| `rusty add <crate> [--vers REQ]` | Add dependency (native) |
+| `rusty rm <crate>… [--dev\|--build]` | Remove deps + refresh lock |
+| `rusty update [crate…]` | Re-resolve lock from manifests |
+| `rusty clean` | Remove `<project>/.rusty/target` |
+| `rusty rustc` / `rustdoc …` | Active toolchain via proxy |
+| `rusty clippy` / `fmt` / `doc` / `bench` / `tree` | Cargo interop (needs cargo on PATH) |
+| `rusty install <crate>[@version]` | Prebuilt, else native rustc → `$RUSTY_HOME/bin` |
+
+### Common build / test flags
+
+| Flag | Applies to | Meaning |
+| --- | --- | --- |
+| `-p PKG` | build, test | Package select |
+| `--workspace` | build, test | Multi-package |
+| `--affected [BASE]` | build, test | Touched + reverse dependents |
+| `--affected-direct [BASE]` | build, test | Path-touched only |
+| `--bin NAME` | build | Binary target |
+| `--features` / `--all-features` / `--no-default-features` | build, install | Feature flags |
+| `-j N` | build, test | Jobs (`RUSTY_JOBS`) |
+| `--shard k/n` | test | CI shard (1-based) |
+| `--reporter junit=PATH` | test | JUnit XML |
+| `--retries N` | test | Retry failed test binaries |
+
+`rusty build path.rs` compiles a single file and skips package scripts.
+
+`rusty install` supports `--bin`, `--features`, `--all-features`, `--no-default-features`. Cargo install only with `RUSTY_INSTALL_ALLOW_CARGO=1` (and not `RUSTY_INSTALL_NO_CARGO`).
+
+## Content store
+
+| Command | Description |
+| --- | --- |
+| `rusty store path` | Print store root |
+| `rusty store stats` | Blob count + size |
+| `rusty store put <file>` | Ingest file → digest |
+| `rusty store get <digest>` | Dump blob to stdout |
+| `rusty store has <digest>` | Exit 0 if present |
+| `rusty store gc [--dry-run] [--keep-ref <id>]` | Drop unreferenced blobs |
+| `rusty store tree put\|get\|ls …` | Directory tree manifests |
+| `rusty store crate ingest\|materialize\|list …` | Crate tarball CAS |
+
+## Build layers
+
+| Command | Description |
+| --- | --- |
+| `rusty layers list [--profile p]` | Cached crate layers |
+| `rusty layers plan [--profile p]` | Forecast hit/miss |
+| `rusty layers why <id> [--profile p]` | Layer key for name@version |
+
+## Build cache
+
+| Command | Description |
+| --- | --- |
+| `rusty cache path` | Artifact cache root |
+| `rusty cache key [--source <hex>]` | Artifact key for this crate |
+| `rusty cache put\|get\|has …` | Store / restore / probe |
+| `rusty cache stats` | Statistics |
+| `rusty cache wrap` | `RUSTC_WRAPPER` entry |
+
+## Workspace
+
+| Command | Description |
+| --- | --- |
+| `rusty workspace list` | Members |
+| `rusty workspace affected [base]` | Changed since ref |
+| `rusty workspace affected --reverse` | Include reverse-dependents |
+| `rusty workspace dependents <crate>` | Reverse edges |
+| `rusty workspace unify` | Version-drift report |
+| `rusty workspace test-plan [base]` | Print affected test plan |
+
+## Auth (product identity)
+
+| Command | Description |
+| --- | --- |
+| `rusty auth login` | Browser PKCE → `$RUSTY_HOME/auth.db` |
+| `rusty auth logout` | Clear session |
+| `rusty auth whoami` | Email / user id |
+| `rusty auth status` | Session + store path (no secrets) |
+
+Requires `RUSTY_AUTH_CLIENT_ID` and `RUSTY_AUTH_ISSUER`. This is **not** crates.io login/publish.
