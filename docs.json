@@ -3,9 +3,13 @@
   "theme": "mint",
   "name": "solved.gg Docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#18181b",
+    "light": "#f4f4f5",
+    "dark": "#27272a"
+  },
+  "background": {
+    "light": "#fafafa",
+    "dark": "#070708"
   },
   "favicon": "/favicon.svg",
   "navigation": {
