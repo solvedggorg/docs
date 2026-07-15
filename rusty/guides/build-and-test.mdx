@@ -1,0 +1,94 @@
+---
+title: "Build and test"
+description: "Native rusty build and test drivers: flags, workspaces, affected mode, and scripts."
+---
+
+`rusty build`, `run`, `check`, and `test` use the **native rustc graph** by default. They do not fall back to cargo when the graph is unsupported.
+
+## Build
+
+```bash
+rusty build
+rusty build -p PKG --workspace
+rusty build --bin NAME
+rusty build --features a,b
+rusty build --no-default-features
+rusty build --all-features
+rusty build path.rs                 # single-file compile (skips package scripts)
+```
+
+### Affected builds
+
+```bash
+rusty build --affected [BASE]         # path-touched packages + reverse dependents
+rusty build --affected-direct [BASE]  # path-touched packages only
+```
+
+`BASE` is a git ref (default behavior matches workspace affected tooling). Useful in CI monorepos.
+
+### Parallelism
+
+```bash
+rusty build -j 16
+# or
+export RUSTY_JOBS=16
+```
+
+### Lifecycle scripts
+
+If `rusty.json` defines `scripts.build`, that entry can fully override the built-in driver. Otherwise rusty runs:
+
+1. optional `prebuild`
+2. **native** build
+3. optional `postbuild`
+
+Disable script hooks with `RUSTY_NO_SCRIPTS=1` or `--no-scripts` where supported.
+
+## Run and check
+
+Same native constraints as build:
+
+```bash
+rusty run
+rusty check
+```
+
+## Test
+
+```bash
+rusty test
+rusty test [FILTER]...
+rusty test -p PKG --workspace
+rusty test --affected [base]
+rusty test --affected-direct [base]
+rusty test -j N
+rusty test --shard k/n              # 1-based CI shard
+rusty test --reporter junit=PATH
+rusty test --retries N
+```
+
+Policy: **never cargo by default**. Optional `scripts.test` can override the whole verb when you opt in via config.
+
+Test binary caching is on unless `RUSTY_TEST_CACHE=0`.
+
+## Lint and format
+
+Not built-in clippy/rustfmt drivers under these names:
+
+```bash
+rusty lint      # requires scripts.lint
+rusty format    # requires scripts.format
+```
+
+Cargo-flavored tools remain available as **interop** (need cargo on PATH):
+
+```bash
+rusty clippy
+rusty fmt
+```
+
+Prefer scripts for reproducible monorepo policy.
+
+## When native fails
+
+If the project shape is outside the `canHandle` matrix, rusty prints a hard error. Fix the project shape, extend support (for contributors), or use a script override intentionally — do not expect a silent cargo path for `build` / `test` on rusty-format.

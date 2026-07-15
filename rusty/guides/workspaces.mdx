@@ -1,0 +1,62 @@
+---
+title: "Workspaces"
+description: "Monorepo members, affected packages, dependents, and unify reports."
+---
+
+rusty treats monorepos as a first-class case: native member discovery, reverse dependency edges, and git-based affected selection.
+
+## List members
+
+```bash
+rusty workspace list
+```
+
+Members come from native loading of `rusty.json` workspaces and/or Cargo workspace members (including one-level `/*` globs where supported).
+
+## Affected packages
+
+```bash
+rusty workspace affected [base]
+rusty workspace affected --reverse   # include reverse-dependents
+```
+
+Pair with build/test:
+
+```bash
+rusty build --affected main
+rusty test --affected main
+rusty workspace test-plan main       # print planned rusty test invocations
+```
+
+`--affected-direct` on build/test limits to packages whose paths changed, without reverse dependents.
+
+## Dependents and drift
+
+```bash
+rusty workspace dependents <crate>   # who depends on this package
+rusty workspace unify                # version-drift report across the workspace
+```
+
+Use `unify` to spot divergent versions of the same crate name before they become graph noise.
+
+## Multi-package build/test
+
+```bash
+rusty build -p pkg_a -p pkg_b --workspace
+rusty test -p pkg_a --workspace
+```
+
+Job count is shared via `-j` / `RUSTY_JOBS`.
+
+## Project-local state
+
+Workspace caches, layer indexes, and `target/` live under the workspace root’s `.rusty/` directory. Cleaning:
+
+```bash
+rusty clean    # removes .rusty/target
+```
+
+## Related
+
+- [Build and test](/rusty/guides/build-and-test)
+- [How rusty works](/rusty/concepts/overview)

@@ -1,0 +1,80 @@
+---
+title: "Store and cache"
+description: "Content-addressable store, crate materialization, layers, and artifact cache."
+---
+
+rusty separates **immutable content** (the store) from **compiled outputs** (layers and artifact cache). That split is what makes large monorepos reuse work across packages and machines with the same inputs.
+
+## Content store (CAS)
+
+pnpm-style content-addressable storage under `$RUSTY_HOME`:
+
+```bash
+rusty store path
+rusty store stats
+rusty store put <file>              # ingest file → digest
+rusty store get <digest>            # dump blob to stdout
+rusty store has <digest>            # exit 0/1
+rusty store gc [--dry-run] [--keep-ref <id>]
+```
+
+Trees and crates:
+
+```bash
+rusty store tree put <dir>
+rusty store tree get <hex> <dest>
+rusty store tree ls <hex>
+rusty store crate ingest <name> <ver> <src.crate>
+rusty store crate materialize <name> <ver> <dest>
+rusty store crate list
+```
+
+Fetch pipelines ingest registry crates into the store, then materialize views for the compiler as needed. Integrity of store contents is security-critical — treat digests as the source of truth.
+
+## Build layers
+
+Per-crate differential cache in the **project** `.rusty/` directory:
+
+```bash
+rusty layers list [--profile p]
+rusty layers plan [--profile p]     # forecast hit/miss
+rusty layers why <id> [--profile p] # layer key for name@version
+```
+
+Use `plan` before a large build to see what should rebuild.
+
+## Artifact cache
+
+Compiled artifact groups, including wrapper integration:
+
+```bash
+rusty cache path
+rusty cache key [--source <hex>]
+rusty cache put <key-hex> <out-dir>
+rusty cache get <key-hex> <dest>
+rusty cache has <key-hex>
+rusty cache stats
+rusty cache wrap                    # RUSTC_WRAPPER entry (rusty-wrapper)
+```
+
+During normal builds, rusty sets `RUSTC_WRAPPER` to `rusty-wrapper` so rustc invocations participate in the layer/artifact machinery.
+
+## Project target directory
+
+Compiled outputs for the workspace go under:
+
+```text
+<workspace>/.rusty/target
+```
+
+`rusty clean` removes that tree. This is also the `CARGO_TARGET_DIR` rusty injects for interop-compatible environments.
+
+## Environment toggles
+
+| Variable | Effect |
+| --- | --- |
+| `RUSTY_BUILD_CACHE=0` | Disable native build unit CAS cache |
+| `RUSTY_TEST_CACHE=0` | Disable test binary cache |
+| `RUSTY_JOBS` / `-j` | Parallelism for build and test |
+
+See [Environment](/rusty/reference/environment).

@@ -1,0 +1,78 @@
+---
+title: "Migrate from Cargo"
+description: "Adopt rusty on an existing Cargo tree, then convert to rusty-format when ready."
+---
+
+You can use rusty on Cargo projects without converting everything on day one.
+
+## Phase 1 — stay cargo-format
+
+1. Install rusty and a toolchain ([Install](/rusty/install)).
+2. Enter the existing workspace root (`Cargo.toml` present).
+3. Use native PM verbs:
+
+```bash
+rusty lock
+rusty fetch
+rusty add some_crate
+rusty rm other_crate
+rusty update
+rusty build    # when the shape is in the native matrix
+rusty test
+```
+
+If `build`/`check`/`run` report unsupported shapes, that is intentional fail-closed behavior for cargo-format graphs not yet in the native matrix.
+
+Interop-only verbs still expect cargo on PATH:
+
+```bash
+rusty env install stable cargo   # only if you need these
+rusty clippy
+rusty doc
+```
+
+## Phase 2 — dry-run migration
+
+```bash
+rusty migrate --dry-run
+```
+
+Review the planned conversion to `rusty.json` + `rusty.lock` and which Cargo files would be removed.
+
+## Phase 3 — migrate
+
+```bash
+rusty migrate --yes
+```
+
+After migration:
+
+- Prefer rusty-format workflows and scripts in `rusty.json`.
+- Re-run `rusty lock`, `rusty fetch`, `rusty build`, `rusty test`.
+- Commit the new manifests and lockfile as you would any dependency change.
+
+## Scripts map
+
+Many teams encode clippy/fmt/test policy in CI scripts. Under rusty-format, put them in `rusty.json`:
+
+```json
+{
+  "scripts": {
+    "lint": "…",
+    "format": "…",
+    "test": "…"
+  }
+}
+```
+
+Then:
+
+```bash
+rusty lint
+rusty format
+rusty test     # uses scripts.test if defined; else native runner
+```
+
+## Rollback posture
+
+Keep a git branch or tag before `migrate --yes`. Migration is intended to be deliberate; use `--dry-run` on large monorepos and migrate leaf packages first if you need a staged cutover.

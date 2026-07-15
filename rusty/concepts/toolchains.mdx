@@ -1,0 +1,64 @@
+---
+title: "Toolchains"
+description: "Install and select Rust toolchains with rusty env (rustup-like, Linux)."
+---
+
+rusty manages Rust toolchains under `$RUSTY_HOME`, similar in spirit to rustup, but with a **minimal default install** and no cargo-by-default.
+
+## Commands
+
+```bash
+rusty env install <id> [target...]   # install toolchain (+ optional targets/components)
+rusty env uninstall <id>             # remove a toolchain
+rusty env list                       # installed toolchains
+rusty env show                       # active toolchain + host
+rusty env which <prog>               # path to prog in the active toolchain
+rusty env use <id>                   # set default toolchain
+```
+
+`<id>` is a channel or toolchain name such as `stable`, `nightly`, or a specific version string accepted by the installer.
+
+## Default components
+
+A default install is **`rustc` + `rust-std` only**. Cargo is **not** downloaded unless you ask:
+
+```bash
+rusty env install stable cargo
+```
+
+Reasons:
+
+- Core rusty verbs do not require the cargo binary.
+- Interop verbs that need cargo stay explicit and fail closed if cargo is missing.
+
+## Proxies and PATH
+
+After `rusty env use`:
+
+1. Shims appear (or are updated) under `$RUSTY_HOME/bin`.
+2. Put that directory on `PATH` so `rustc` / `rustdoc` / `rustfmt` resolve through rusty.
+3. Override per process with `RUSTY_TOOLCHAIN` or `+toolchain` where supported.
+
+```bash
+export PATH="${RUSTY_HOME:-$HOME/.rusty}/bin:$PATH"
+rusty env which rustc
+```
+
+## During builds
+
+When rusty prepares a build environment it may set:
+
+| Variable | Typical value |
+| --- | --- |
+| `CARGO_HOME` | `$RUSTY_HOME/cargo-home` |
+| `CARGO_TARGET_DIR` | `<workspace>/.rusty/target` |
+| `CARGO_PROFILE` | `debug` or `release` |
+| `RUSTC_WRAPPER` | `$RUSTY_HOME/bin/rusty-wrapper` |
+| `RUSTY_PROJECT_ROOT` | workspace root |
+
+These keep cargo-compatible tools and build scripts oriented at the managed layout without making cargo the package manager.
+
+## Related
+
+- [Environment variables](/rusty/reference/environment)
+- [Install](/rusty/install)
