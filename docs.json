@@ -15,6 +15,28 @@
   "navigation": {
     "products": [
       {
+        "product": "Home",
+        "description": "Welcome to solved.gg docs and legal",
+        "icon": "house",
+        "groups": [
+          {
+            "group": "Welcome",
+            "pages": [
+              "index"
+            ]
+          },
+          {
+            "group": "Legal",
+            "pages": [
+              "legal/privacy",
+              "legal/terms",
+              "legal/eula",
+              "legal/cla"
+            ]
+          }
+        ]
+      },
+      {
         "product": "rusty",
         "description": "Cargo + rustup, rebuilt in Zig for Linux monorepos",
         "icon": "gears",
@@ -97,10 +119,15 @@
   },
   "logo": {
     "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "dark": "/logo/dark.svg",
+    "href": "/"
   },
   "navbar": {
     "links": [
+      {
+        "label": "Legal",
+        "href": "/legal/privacy"
+      },
       {
         "label": "Support",
         "href": "mailto:intake@solved.gg"
