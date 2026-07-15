@@ -5,15 +5,18 @@
 - Documentation site for **solved.gg** products, built on [Mintlify](https://mintlify.com)
 - Pages are MDX files with YAML frontmatter
 - Configuration lives in `docs.json`
-- Primary navigation is **`navigation.products`**: `rusty`, `scripty`, `wargo`
+- Primary navigation is **`navigation.products`**
+- Site root (**Home**) is welcome + legal — **not** product docs
+- Product docs live under path prefixes: `/rusty`, `/scripty`, `/wargo`
 
-## Products
+## Site structure
 
-| Product | Path | Ecosystem | Doc depth |
-| --- | --- | --- | --- |
-| rusty | `rusty/` | Rust PM + toolchains (Linux-only) | Intro + concepts + guides + CLI |
-| scripty | `scripty/` | JS runtime + PM (Node/Deno/Bun APIs) | Intro only until product freezes |
-| wargo | `wargo/` | Go workspace PM (branded Worgo / worgopm.com) | Intro only until product freezes |
+| Product switcher entry | Path prefix | Contents |
+| --- | --- | --- |
+| **Home** | `/`, `/legal/*` | Welcome page + Privacy, Terms, EULA, CLA |
+| **rusty** | `/rusty` | Rust PM + toolchains (Linux-only) |
+| **scripty** | `/scripty` | JS runtime + PM (intro) |
+| **wargo** | `/wargo` | Go workspace PM (intro) |
 
 ## Terminology
 
@@ -24,6 +27,7 @@
 - Prefer **native** vs **interop** for cargo process vs Zig implementation
 - Never claim full Cargo parity; rusty is dual-mode early access
 - rusty is **permanently Linux-only** — state that whenever install or platform is discussed
+- Legal pages are under `legal/`; do not bury legal-only content inside product trees
 
 ## Style preferences
 
@@ -33,9 +37,11 @@
 - Bold for UI elements: Click **Settings**
 - Code formatting for file names, commands, paths, and code references
 - Prefer honest early-access language over marketing hyperbole; performance claims should cite the origin story (3,676-crate client monorepo) when using the ~400× figure
+- Legal pages: clear effective/last-updated dates, entity name **iResolved, LLC**, contact **intake@solved.gg**
 
 ## Content boundaries
 
 - Document user-facing CLI and workflows; do not document internal agent-only policy files as product docs
 - Do not invent install URLs or version numbers that are not real — point to rustypm.com / intake@solved.gg when channels are unsettled
 - scripty and wargo: keep intros accurate to public positioning; expand only when CLI surfaces exist
+- Legal text is operational starting copy — flag for counsel review before treating as final corporate policy

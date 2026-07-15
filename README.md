@@ -1,18 +1,21 @@
 # solved.gg Docs
 
-Mintlify documentation for **rusty**, **scripty**, and **wargo**.
+Mintlify documentation for **solved.gg** — site home, legal, and product docs.
 
 ## Structure
 
 ```text
-docs.json          # site config + product switcher navigation
-index.mdx          # suite landing page
-rusty/             # Rust PM + toolchains (full early-access docs)
-scripty/           # JS runtime + PM (intro)
-wargo/             # Go workspace PM (intro)
+docs.json              # site config + product switcher
+index.mdx              # welcome (docs.solved.gg/)
+legal/                 # privacy, terms, eula, cla
+rusty/                 # product docs → docs.solved.gg/rusty
+scripty/               # product docs → docs.solved.gg/scripty
+wargo/                 # product docs → docs.solved.gg/wargo
 ```
 
-Products are configured under `navigation.products` in `docs.json` (product switcher dropdown).
+The product switcher lists **Home**, **rusty**, **scripty**, and **wargo**.
+Home is the default entry (welcome + legal). Product documentation is **not**
+at the site root; rusty lives under the `/rusty` path.
 
 ## Development
 
