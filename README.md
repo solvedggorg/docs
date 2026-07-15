@@ -10,10 +10,10 @@ index.mdx              # welcome (docs.solved.gg/)
 legal/                 # privacy, terms, eula, cla
 rusty/                 # product docs → docs.solved.gg/rusty
 scripty/               # product docs → docs.solved.gg/scripty
-wargo/                 # product docs → docs.solved.gg/wargo
+worgo/                 # product docs → docs.solved.gg/worgo
 ```
 
-The product switcher lists **Home**, **rusty**, **scripty**, and **wargo**.
+The product switcher lists **Home**, **rusty**, **scripty**, and **worgo**.
 Home is the default entry (welcome + legal). Product documentation is **not**
 at the site root; rusty lives under the `/rusty` path.
 
