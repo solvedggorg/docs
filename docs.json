@@ -18,18 +18,25 @@
                 "product": "Home",
                 "description": "Welcome to solved.gg docs and legal",
                 "icon": "house",
-                "groups": [
+                "versions": [
                     {
-                        "group": "Welcome",
-                        "pages": ["index"]
-                    },
-                    {
-                        "group": "Legal",
-                        "pages": [
-                            "legal/privacy",
-                            "legal/terms",
-                            "legal/eula",
-                            "legal/cla"
+                        "version": "latest",
+                        "default": true,
+                        "tag": "Latest",
+                        "groups": [
+                            {
+                                "group": "Welcome",
+                                "pages": ["index"]
+                            },
+                            {
+                                "group": "Legal",
+                                "pages": [
+                                    "legal/privacy",
+                                    "legal/terms",
+                                    "legal/eula",
+                                    "legal/cla"
+                                ]
+                            }
                         ]
                     }
                 ]
@@ -38,37 +45,44 @@
                 "product": "rusty",
                 "description": "Cargo + rustup, rebuilt in Zig for Linux monorepos",
                 "icon": "gears",
-                "groups": [
+                "versions": [
                     {
-                        "group": "Get started",
-                        "pages": [
-                            "rusty/index",
-                            "rusty/quickstart",
-                            "rusty/install"
-                        ]
-                    },
-                    {
-                        "group": "Core concepts",
-                        "pages": [
-                            "rusty/concepts/overview",
-                            "rusty/concepts/project-formats",
-                            "rusty/concepts/toolchains",
-                            "rusty/concepts/store-and-cache"
-                        ]
-                    },
-                    {
-                        "group": "Guides",
-                        "pages": [
-                            "rusty/guides/build-and-test",
-                            "rusty/guides/workspaces",
-                            "rusty/guides/migrate-from-cargo"
-                        ]
-                    },
-                    {
-                        "group": "Reference",
-                        "pages": [
-                            "rusty/reference/cli",
-                            "rusty/reference/environment"
+                        "version": "latest",
+                        "default": true,
+                        "tag": "Latest",
+                        "groups": [
+                            {
+                                "group": "Get started",
+                                "pages": [
+                                    "rusty/index",
+                                    "rusty/quickstart",
+                                    "rusty/install"
+                                ]
+                            },
+                            {
+                                "group": "Core concepts",
+                                "pages": [
+                                    "rusty/concepts/overview",
+                                    "rusty/concepts/project-formats",
+                                    "rusty/concepts/toolchains",
+                                    "rusty/concepts/store-and-cache"
+                                ]
+                            },
+                            {
+                                "group": "Guides",
+                                "pages": [
+                                    "rusty/guides/build-and-test",
+                                    "rusty/guides/workspaces",
+                                    "rusty/guides/migrate-from-cargo"
+                                ]
+                            },
+                            {
+                                "group": "Reference",
+                                "pages": [
+                                    "rusty/reference/cli",
+                                    "rusty/reference/environment"
+                                ]
+                            }
                         ]
                     }
                 ]
@@ -77,10 +91,17 @@
                 "product": "scripty",
                 "description": "JS runtime and project manager — Node, Deno, and Bun APIs in Zig",
                 "icon": "code",
-                "groups": [
+                "versions": [
                     {
-                        "group": "Get started",
-                        "pages": ["scripty/index"]
+                        "version": "latest",
+                        "default": true,
+                        "tag": "Latest",
+                        "groups": [
+                            {
+                                "group": "Get started",
+                                "pages": ["scripty/index"]
+                            }
+                        ]
                     }
                 ]
             },
@@ -88,10 +109,17 @@
                 "product": "worgo",
                 "description": "Next-gen Go workspace project manager, written in Zig",
                 "icon": "cube",
-                "groups": [
+                "versions": [
                     {
-                        "group": "Get started",
-                        "pages": ["worgo/index"]
+                        "version": "latest",
+                        "default": true,
+                        "tag": "Latest",
+                        "groups": [
+                            {
+                                "group": "Get started",
+                                "pages": ["worgo/index"]
+                            }
+                        ]
                     }
                 ]
             },
@@ -99,10 +127,17 @@
                 "product": "yappy",
                 "description": "Linux-only native desktop shell — Qt + GTK, scripty for app logic",
                 "icon": "desktop",
-                "groups": [
+                "versions": [
                     {
-                        "group": "Get started",
-                        "pages": ["yappy/index"]
+                        "version": "latest",
+                        "default": true,
+                        "tag": "Latest",
+                        "groups": [
+                            {
+                                "group": "Get started",
+                                "pages": ["yappy/index"]
+                            }
+                        ]
                     }
                 ]
             },
@@ -110,10 +145,17 @@
                 "product": "depotsdk-go",
                 "description": "Go SDK for the Depot API",
                 "icon": "box",
-                "groups": [
+                "versions": [
                     {
-                        "group": "Get started",
-                        "pages": ["depotsdk-go/index"]
+                        "version": "latest",
+                        "default": true,
+                        "tag": "Latest",
+                        "groups": [
+                            {
+                                "group": "Get started",
+                                "pages": ["depotsdk-go/index"]
+                            }
+                        ]
                     }
                 ]
             },
@@ -121,10 +163,17 @@
                 "product": "deploy",
                 "description": "Next.js → Cloudflare Workers at init time",
                 "icon": "rocket",
-                "groups": [
+                "versions": [
                     {
-                        "group": "Get started",
-                        "pages": ["deploy/index"]
+                        "version": "latest",
+                        "default": true,
+                        "tag": "Latest",
+                        "groups": [
+                            {
+                                "group": "Get started",
+                                "pages": ["deploy/index"]
+                            }
+                        ]
                     }
                 ]
             },
@@ -132,10 +181,17 @@
                 "product": "pyppi",
                 "description": "Python package manager and project tool, written in Zig",
                 "icon": "layer-group",
-                "groups": [
+                "versions": [
                     {
-                        "group": "Get started",
-                        "pages": ["pyppi/index"]
+                        "version": "latest",
+                        "default": true,
+                        "tag": "Latest",
+                        "groups": [
+                            {
+                                "group": "Get started",
+                                "pages": ["pyppi/index"]
+                            }
+                        ]
                     }
                 ]
             },
@@ -143,10 +199,17 @@
                 "product": "git",
                 "description": "solved.gg git host UI — Clerk auth, Depot CI",
                 "icon": "code-branch",
-                "groups": [
+                "versions": [
                     {
-                        "group": "Get started",
-                        "pages": ["git/index"]
+                        "version": "latest",
+                        "default": true,
+                        "tag": "Latest",
+                        "groups": [
+                            {
+                                "group": "Get started",
+                                "pages": ["git/index"]
+                            }
+                        ]
                     }
                 ]
             }

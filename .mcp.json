@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp/oauth"
+    },
+    "mintlify-docs": {
+      "type": "http",
+      "url": "https://mintlify.com/docs/mcp"
+    },
+    "mintlify": {
+      "url": "https://mcp.mintlify.com"
+    }
+  }
+}
