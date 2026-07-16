@@ -206,10 +206,6 @@
                 "header": "Products",
                 "items": [
                     {
-                        "label": "Project Managers",
-                        "href": "https://pm.solved.gg"
-                    },
-                    {
                         "label": "rusty",
                         "href": "https://rusty.pm.solved.gg"
                     },
@@ -228,14 +224,6 @@
                     {
                         "label": "pyppi",
                         "href": "https://pyppi.pm.solved.gg"
-                    },
-                    {
-                        "label": "deploy",
-                        "href": "https://deploy.pm.solved.gg"
-                    },
-                    {
-                        "label": "Appy",
-                        "href": "https://appy.pm.solved.gg"
                     }
                 ]
             }
