@@ -116,6 +116,39 @@
                         "pages": ["depotsdk-go/index"]
                     }
                 ]
+            },
+            {
+                "product": "deploy",
+                "description": "Next.js → Cloudflare Workers at init time",
+                "icon": "rocket",
+                "groups": [
+                    {
+                        "group": "Get started",
+                        "pages": ["deploy/index"]
+                    }
+                ]
+            },
+            {
+                "product": "pyppi",
+                "description": "Python package manager and project tool, written in Zig",
+                "icon": "layer-group",
+                "groups": [
+                    {
+                        "group": "Get started",
+                        "pages": ["pyppi/index"]
+                    }
+                ]
+            },
+            {
+                "product": "git",
+                "description": "solved.gg git host UI — Clerk auth, Depot CI",
+                "icon": "code-branch",
+                "groups": [
+                    {
+                        "group": "Get started",
+                        "pages": ["git/index"]
+                    }
+                ]
             }
         ],
         "global": {

@@ -1,0 +1,56 @@
+---
+title: "Introduction"
+description: "git is the solved.gg git host UI — Clerk auth, org-scoped repos, Depot-powered CI."
+---
+
+**git** (Solved Git) is the solved.gg git host control plane UI. It is an authenticated shell for a **small, org-scoped** set of repositories — not a public multi-tenant forge for arbitrary user-created repos. Auth is **Clerk**; issues and feedback deeplink to **Linear** and **Productlane**; CI is intended to surface **Depot** runs.
+
+## What git is for
+
+- **Org-scoped repository hub** — list and open repos for admin + customer Clerk organizations
+- **CI visibility** — Depot-backed build runs (list, filter, run detail) as the primary operations surface
+- **External product links** — issues and feedback stay in Linear / Productlane rather than a built-in tracker
+- **Future SSH keys** — settings for key upload; no custom end-user profile page required for customers
+
+## What it is not (yet)
+
+- Live git hosting / code browser (frontend shell first; git surface lands later)
+- Public self-serve repo creation at arbitrary scale (~tens of repos, not millions)
+- Built-in discussions or forum features (postponed)
+
+## Stack (current shell)
+
+| Layer | Choice |
+| --- | --- |
+| UI | Astro 6 SSR on Cloudflare Workers |
+| Auth | Clerk (organizations enabled for admin + customer orgs) |
+| CI panel | Depot-shaped data (mock until API wiring) |
+| Issues / feedback | Linear / Productlane deeplinks |
+
+## How it fits the suite
+
+| Sibling | Role |
+| --- | --- |
+| **git** | solved.gg git host UI + CI panel |
+| [depotsdk-go](/depotsdk-go) | Go client used toward Depot API integration |
+| [deploy](/deploy) | Next.js → Cloudflare Workers path (related edge stack) |
+| [rusty](/rusty) / [scripty](/scripty) / [worgo](/worgo) / [pyppi](/pyppi) | Language tooling under the same org |
+
+## Status
+
+The **frontend shell** is early access: sign-in and tour paths ship with mock repo / CI data. Git hosting and live Depot CI are not fully wired yet.
+
+Until then:
+
+- Source: [github.com/solvedggorg/git](https://github.com/solvedggorg/git)
+- Org overview: [solved.gg/projects](https://solved.gg/projects)
+
+## What to expect next in these docs
+
+1. Access model (Clerk orgs, who can sign in)
+2. Repo list and repo hub
+3. CI runs and Depot integration
+4. SSH keys and settings
+5. Operator / deploy notes for the Worker
+
+Questions or early access: [intake@solved.gg](mailto:intake@solved.gg).

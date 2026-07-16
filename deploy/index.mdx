@@ -1,0 +1,104 @@
+---
+title: "Introduction"
+description: "deploy bootstraps Next.js apps onto Cloudflare Workers at init time — owned runtime, Vercel-like CLI."
+---
+
+**deploy** is a Zig CLI that wires **Next.js → Cloudflare Workers** when you **create or adopt** an app. It rewrites configs, patches dependencies, generates wrangler, and ships through an **owned** Workers runtime under `@solvedgg/deploy-*` — not a post-build OpenNext adapter.
+
+## What deploy is for
+
+- **Init-time Cloudflare wiring** — `deploy create` / `deploy init` instead of bolting on an adapter after the fact
+- **Vercel-like verbs** — `deploy`, `env`, `link`, `whoami`, `logs`, `dev`, `check`
+- **Owned runtime + build** — `@solvedgg/deploy-runtime` and `@solvedgg/deploy-build` (original code, not a rebrand)
+- **Honest compat** — supported / partial / unsupported tracked in a living matrix; unsupported features fail closed unless you force
+
+## How it maps
+
+| Need | Cloudflare |
+| --- | --- |
+| App server | Workers |
+| Static assets | Workers Assets |
+| KV / edge cache | KV + Cache API |
+| Blobs | R2 |
+| SQL | D1 / Hyperdrive |
+| Images | Cloudflare Images / transform |
+| Cron | `triggers.crons` |
+| AI | Workers AI |
+
+## Install (from source)
+
+Requires [Zig](https://ziglang.org/) `0.16+`.
+
+```bash
+git clone https://github.com/solvedggorg/deploy.git
+cd deploy
+zig build
+./zig-out/bin/deploy help
+```
+
+## Quick start
+
+```bash
+# greenfield
+deploy create my-app --yes --name my-app
+cd my-app
+bun install   # link workspace packages or published @solvedgg/deploy-*
+
+# existing Next app
+deploy init . --name my-app
+deploy check
+deploy link --name my-app
+deploy deploy
+```
+
+## CLI surface
+
+| Command | Purpose |
+| --- | --- |
+| `deploy create [dir]` | Scaffold App Router Next + CF wiring |
+| `deploy init [dir]` | Adopt an existing Next app |
+| `deploy check` | Compat scan |
+| `deploy link` | Write `deploy.json` (+ wrangler if missing) |
+| `deploy deploy` | Build + `wrangler deploy` |
+| `deploy dev` | Local `wrangler dev` path |
+| `deploy env …` | Secrets / vars bridge |
+| `deploy whoami` | Cloudflare identity |
+| `deploy logs` | `wrangler tail` |
+| `deploy matrix` | Print coverage estimate |
+
+Common flags: `--force`, `--yes`, `--name`, `--account-id`, `--rewrite-next-config`.
+
+## Milestones
+
+| Version | Target |
+| --- | --- |
+| `0.0.x` | CLI + init/create + wrangler + runtime/build skeleton |
+| `v0.1.0` | ~**75%** Next / Vercel feature surface |
+| `v1.0.0` | **100%** compat goal |
+
+## How it fits the suite
+
+| Sibling | Role |
+| --- | --- |
+| **deploy** | Next.js → Cloudflare Workers CLI + runtime |
+| [rusty](/rusty) / [scripty](/scripty) / [worgo](/worgo) / [pyppi](/pyppi) | Language tooling |
+| [yappy](/yappy) | Linux native desktop shell |
+| [git](/git) | solved.gg git host UI |
+| [depotsdk-go](/depotsdk-go) | Go SDK for Depot API |
+
+## Status
+
+deploy is in **early access**. Build from source; package install channels will be documented here when published.
+
+- Source: [github.com/solvedggorg/deploy](https://github.com/solvedggorg/deploy)
+- Org overview: [solved.gg/projects](https://solved.gg/projects)
+
+## What to expect next in these docs
+
+1. Install packages and PATH setup
+2. Create vs init walkthroughs
+3. Compat matrix reference
+4. Runtime and build package APIs
+5. Env, secrets, and production checklist
+
+Questions or early access: [intake@solved.gg](mailto:intake@solved.gg).
