@@ -26,7 +26,8 @@
 ## Terminology
 
 - Product names in UI and headings: lowercase **rusty**, **scripty**, **worgo**, **pyppi**, **yappy**, **deploy**, **git**, **depotsdk-go**
-- **worgo** is the product/package name (repo: solvedggorg/worgo; site: worgopm.com / worgo.pm)
+- **worgo** is the product/package name (repo: solvedggorg/worgo; site: worgo.pm.solved.gg)
+- Marketing sites for the PM suite: `pm.solved.gg` (hub) and `<product>.pm.solved.gg` (rusty, scripty, worgo, yappy, pyppi, deploy)
 - **yappy** is permanently Linux-only and always native UI (Qt + GTK; no webview) — state that when platform or UI is discussed
 - **scripty** is the JS runtime/PM yappy embeds; do not describe yappy as Electron-with-Zig
 - **deploy** is init-time Next.js → Cloudflare Workers with an **owned** runtime — not OpenNext; do not claim full Next/Vercel parity before the compat matrix does
@@ -52,7 +53,7 @@
 ## Content boundaries
 
 - Document user-facing CLI and workflows; do not document internal agent-only policy files as product docs
-- Do not invent install URLs or version numbers that are not real — point to rustypm.com / intake@solved.gg when channels are unsettled
+- Do not invent install URLs or version numbers that are not real — point to rusty.pm.solved.gg / intake@solved.gg when channels are unsettled
 - scripty, worgo, pyppi, yappy, deploy, git, depotsdk-go: keep intros accurate to public positioning; expand only when CLI/SDK surfaces exist
 - For depotsdk-go, do not invent a module path that is not in `go.mod` / release notes — link the org repo and note path when unsettled
 - For deploy, do not invent published npm package versions; build-from-source is the honest path until install channels freeze

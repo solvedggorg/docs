@@ -201,6 +201,45 @@
         ]
     },
     "footer": {
+        "links": [
+            {
+                "header": "Products",
+                "items": [
+                    {
+                        "label": "Project Managers",
+                        "href": "https://pm.solved.gg"
+                    },
+                    {
+                        "label": "rusty",
+                        "href": "https://rusty.pm.solved.gg"
+                    },
+                    {
+                        "label": "scripty",
+                        "href": "https://scripty.pm.solved.gg"
+                    },
+                    {
+                        "label": "worgo",
+                        "href": "https://worgo.pm.solved.gg"
+                    },
+                    {
+                        "label": "yappy",
+                        "href": "https://yappy.pm.solved.gg"
+                    },
+                    {
+                        "label": "pyppi",
+                        "href": "https://pyppi.pm.solved.gg"
+                    },
+                    {
+                        "label": "deploy",
+                        "href": "https://deploy.pm.solved.gg"
+                    },
+                    {
+                        "label": "Appy",
+                        "href": "https://appy.pm.solved.gg"
+                    }
+                ]
+            }
+        ],
         "socials": {
             "website": "https://solved.gg",
             "discord": "https://discord.solved.gg",
