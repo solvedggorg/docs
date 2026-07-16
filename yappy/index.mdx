@@ -1,0 +1,43 @@
+---
+title: "Introduction"
+description: "yappy is a Linux-only native desktop shell — Qt + GTK, with scripty for app logic."
+---
+
+**yappy** is a Linux-only native desktop shell written in Zig. It targets Electron / Tauri / Deno Desktop class apps **without** an embedded browser: UI is **Qt and GTK**, and app logic runs on **[scripty](/scripty)** (JS runtime + project manager).
+
+## What yappy is for
+
+- **Native Linux UI** — first-class **Qt** and **GTK** backends (v0.1.0 bar: both)
+- **scripty for logic** — one JS/TS runtime and PM embedded in the host; no Node main process
+- **Capability-scoped host** — FS and related APIs default deny; grants are explicit
+- **Backend-agnostic app API** — apps target a unified widget surface where possible
+
+## How it fits the suite
+
+| Sibling | Role |
+| --- | --- |
+| [scripty](/scripty) | JS runtime + PM that yappy embeds |
+| [rusty](/rusty) | Rust package manager + toolchain (Linux) |
+| [worgo](/worgo) | Go workspace project manager |
+| [depotsdk-go](/depotsdk-go) | Go client for the Depot API |
+
+yappy is **permanently Linux-only** and **always native UI** — no webview, no Chromium, no HTML-as-shell.
+
+## Status
+
+yappy is in **early access / coming soon**. Install paths, CLI reference, and the native API matrix will land here as the binary stabilizes.
+
+Until then:
+
+- Org overview: [solved.gg/projects](https://solved.gg/projects)
+- Contact: [intake@solved.gg](mailto:intake@solved.gg)
+
+## What to expect next in these docs
+
+1. Install and doctor (GTK / Qt system deps)
+2. Hello window on GTK and Qt
+3. scripty embed and app project layout
+4. Native API and backend parity reference
+5. Packaging and capabilities
+
+Questions or early access: [intake@solved.gg](mailto:intake@solved.gg).

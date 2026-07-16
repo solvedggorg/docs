@@ -94,6 +94,28 @@
                         "pages": ["worgo/index"]
                     }
                 ]
+            },
+            {
+                "product": "yappy",
+                "description": "Linux-only native desktop shell — Qt + GTK, scripty for app logic",
+                "icon": "desktop",
+                "groups": [
+                    {
+                        "group": "Get started",
+                        "pages": ["yappy/index"]
+                    }
+                ]
+            },
+            {
+                "product": "depotsdk-go",
+                "description": "Go SDK for the Depot API",
+                "icon": "box",
+                "groups": [
+                    {
+                        "group": "Get started",
+                        "pages": ["depotsdk-go/index"]
+                    }
+                ]
             }
         ],
         "global": {

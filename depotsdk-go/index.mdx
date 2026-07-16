@@ -1,0 +1,61 @@
+---
+title: "Introduction"
+description: "depotsdk-go is a Go SDK for the Depot API, maintained under solved.gg."
+---
+
+**depotsdk-go** is a Go client for the [Depot](https://depot.dev) API. It wraps Connect/gRPC-compatible service stubs so you can list projects, drive builds, and call other Depot organization APIs from Go.
+
+## What depotsdk-go is for
+
+- **Typed Depot API access** from Go services and CLIs
+- **Bearer token auth** (organization or build-scoped tokens)
+- **Connect-style requests** over the Depot HTTP API
+
+Canonical module and package docs evolve with the repo; when install channels differ from upstream Depot packaging, this page will state the **solved.gg** module path explicitly.
+
+## Install (when published)
+
+Point `go get` at the module path shipped by the **solvedggorg/depotsdk-go** repository once you consume it as a dependency. Until publish notes land here, clone or replace from the org remote and follow the repo `README`.
+
+```bash
+# Example shape — confirm module path in go.mod before relying on it in CI
+go get github.com/solvedggorg/depotsdk-go@latest
+```
+
+If your checkout still uses a different module path, prefer that path until it is renamed.
+
+## Auth
+
+| Variable | Description |
+| --- | --- |
+| `DEPOT_TOKEN` or `DEPOT_API_TOKEN` | Organization or build token |
+| `DEPOT_API_URL` | API base URL (Depot default if unset) |
+
+Use `Authorization: Bearer` with an organization token (or build token for build-scoped calls).
+
+## How it fits the suite
+
+| Sibling | Role |
+| --- | --- |
+| **depotsdk-go** | Go SDK for Depot API |
+| [worgo](/worgo) | Go workspace project manager (Zig) |
+| [rusty](/rusty) / [scripty](/scripty) / [yappy](/yappy) | Other solved.gg language and desktop tooling |
+
+Full API schemas live in Depot’s Buf registry, not in this docs site. Link out for service definitions; keep this product section focused on **how solved.gg ships and uses the SDK**.
+
+## Status
+
+**Introduction only.** Expand with install, examples, and error helpers as the org module surface freezes.
+
+- Source: [github.com/solvedggorg/depotsdk-go](https://github.com/solvedggorg/depotsdk-go)
+- Upstream Depot API docs: [buf.build/depot/api](https://buf.build/depot/api)
+- Org overview: [solved.gg/projects](https://solved.gg/projects)
+
+## What to expect next in these docs
+
+1. Confirmed module path and versioning
+2. Quickstart (list projects)
+3. Auth and environment reference
+4. Error helpers and CI integration notes
+
+Questions: [intake@solved.gg](mailto:intake@solved.gg).

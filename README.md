@@ -11,11 +11,14 @@ legal/                 # privacy, terms, eula, cla
 rusty/                 # product docs → docs.solved.gg/rusty
 scripty/               # product docs → docs.solved.gg/scripty
 worgo/                 # product docs → docs.solved.gg/worgo
+yappy/                 # product docs → docs.solved.gg/yappy
+depotsdk-go/           # product docs → docs.solved.gg/depotsdk-go
 ```
 
-The product switcher lists **Home**, **rusty**, **scripty**, and **worgo**.
-Home is the default entry (welcome + legal). Product documentation is **not**
-at the site root; rusty lives under the `/rusty` path.
+The product switcher lists **Home**, **rusty**, **scripty**, **worgo**, **yappy**,
+and **depotsdk-go**. Home is the default entry (welcome + legal). Product
+documentation is **not** at the site root; each product lives under its path
+prefix.
 
 ## Development
 

@@ -7,7 +7,7 @@
 - Configuration lives in `docs.json`
 - Primary navigation is **`navigation.products`**
 - Site root (**Home**) is welcome + legal — **not** product docs
-- Product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`
+- Product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`, `/yappy`, `/depotsdk-go`
 
 ## Site structure
 
@@ -17,11 +17,15 @@
 | **rusty** | `/rusty` | Rust PM + toolchains (Linux-only) |
 | **scripty** | `/scripty` | JS runtime + PM (intro) |
 | **worgo** | `/worgo` | Go workspace PM (intro) |
+| **yappy** | `/yappy` | Native Linux desktop shell — Qt + GTK, scripty logic (intro) |
+| **depotsdk-go** | `/depotsdk-go` | Go SDK for Depot API (intro) |
 
 ## Terminology
 
-- Product names in UI and headings: lowercase **rusty**, **scripty**, **worgo**
+- Product names in UI and headings: lowercase **rusty**, **scripty**, **worgo**, **yappy**, **depotsdk-go**
 - **worgo** is the product/package name (repo: solvedggorg/worgo; site: worgopm.com / worgo.pm)
+- **yappy** is permanently Linux-only and always native UI (Qt + GTK; no webview) — state that when platform or UI is discussed
+- **scripty** is the JS runtime/PM yappy embeds; do not describe yappy as Electron-with-Zig
 - Prefer **toolchain** over "rustup install" when describing `rusty env`
 - Prefer **rusty-format** / **cargo-format** for project layouts
 - Prefer **native** vs **interop** for cargo process vs Zig implementation
@@ -43,5 +47,6 @@
 
 - Document user-facing CLI and workflows; do not document internal agent-only policy files as product docs
 - Do not invent install URLs or version numbers that are not real — point to rustypm.com / intake@solved.gg when channels are unsettled
-- scripty and worgo: keep intros accurate to public positioning; expand only when CLI surfaces exist
+- scripty, worgo, yappy, depotsdk-go: keep intros accurate to public positioning; expand only when CLI/SDK surfaces exist
+- For depotsdk-go, do not invent a module path that is not in `go.mod` / release notes — link the org repo and note path when unsettled
 - Legal text is operational starting copy — flag for counsel review before treating as final corporate policy
