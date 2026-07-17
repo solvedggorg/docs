@@ -48,7 +48,7 @@ Every CI run should emit:
 | Pass | `P` |
 | Fail | `F` |
 | Skip | `S` |
-| Pass rate | `P / (P+F)` for non-skipped |
+| Pass rate | `P / (P+F)` for non-skipped; report `N/A` when `P+F = 0` (all-skip run is never counted as 100%) |
 
 Store the report as a CI artifact. Optionally publish a summary on the docs status page later.
 
