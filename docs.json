@@ -414,12 +414,12 @@
   "navbar": {
     "links": [
       {
-        "label": "Legal",
-        "href": "/legal/privacy"
+        "label": "Your  Account",
+        "href": "https://accounts.solved.gg/user"
       },
       {
         "label": "Support",
-        "href": "mailto:intake@solved.gg"
+        "href": "https://in.solved.gg/support"
       }
     ],
     "primary": {
