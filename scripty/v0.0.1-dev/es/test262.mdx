@@ -66,23 +66,11 @@ Store the report as a CI artifact. Optionally publish a summary on the docs stat
 An **open blocker** is any in-scope test that:
 
 - fails, or
-- is skipped without an approved skip reason linked to a matrix row
+- is skipped — every selected in-scope test must pass, so move valid exclusions out of the selected set via a matrix + scope update rather than skipping them in place
 
 ## Local developer loop
 
-```bash
-# Illustrative — final commands land with the harness implementation
-zig build test262
-# or
-scripty test262 --report ./test262-report.json
-```
-
-Prefer a filter for feature work:
-
-```bash
-scripty test262 --feature Promise
-scripty test262 --path test/built-ins/Array
-```
+The public Test262 harness and `scripty` conformance commands do not exist yet. Runnable commands and filters (by feature or path) will be documented here once the harness lands. Until then, track progress through the [Roadmap](/scripty/v0.0.1-dev/roadmap) and the [feature matrix](/scripty/v0.0.1-dev/es/feature-matrix).
 
 ## Relationship to smoke tests
 

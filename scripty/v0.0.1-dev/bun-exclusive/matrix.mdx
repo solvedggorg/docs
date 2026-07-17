@@ -10,6 +10,8 @@ Inventory detail: [Inventory](/scripty/v0.0.1-dev/bun-exclusive/inventory).
 
 All rows start `unsupported` until implementation lands. Update this table in the same PR as code.
 
+**Coverage:** every [inventory](/scripty/v0.0.1-dev/bun-exclusive/inventory) target maps to a row or a named group below. A row may cover a group of closely related APIs (noted in the row). The [roadmap](/scripty/v0.0.1-dev/bun-exclusive/roadmap) B-5 gate ("no untracked inventory items") checks that this mapping is complete.
+
 ## Core cluster
 
 | Row | Status | Tests |
@@ -17,12 +19,15 @@ All rows start `unsupported` until implementation lands. Update this table in th
 | `Bun.file` | `unsupported` | — |
 | `Bun.write` | `unsupported` | — |
 | `Bun.serve` | `unsupported` | — |
+| `Bun.connect` / `Bun.listen` (TCP) | `unsupported` | — |
 | `Bun.spawn` / `Bun.spawnSync` | `unsupported` | — |
 | `Bun.stdin` / `stdout` / `stderr` File | `unsupported` | — |
 | `Bun.sleep` / `Bun.sleepSync` | `unsupported` | — |
 | `Bun.which` | `unsupported` | — |
+| `Bun.openInEditor` / DX helpers | `unsupported` | — |
 | `Bun.env` (Bun shape) | `unsupported` | — |
 | `Bun.main` / `Bun.argv` | `unsupported` | — |
+| `Bun.version` / `Bun.revision` (runtime identity) | `unsupported` | scripty identity separate; Bun-compat shim |
 
 ## Data & crypto
 
@@ -60,7 +65,8 @@ All rows start `unsupported` until implementation lands. Update this table in th
 | `bun:jsc` equivalents | `unsupported` | Refuse or scripty-native |
 | `Bun.Transpiler` | `unsupported` | — |
 | `Bun.build` | `unsupported` | — |
-| `Bun.gc` / heap snapshot | `unsupported` | — |
+| Bun plugin hooks / `bun:wrap` internals (if stable) | `unsupported` | Only if documented stable |
+| `Bun.gc` / `Bun.generateHeapSnapshot` (GC + heap) | `unsupported` | — |
 
 ## Exit tracking
 

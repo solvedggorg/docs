@@ -23,7 +23,8 @@ Group delivery waves match [ES phases](/scripty/v0.0.1-dev/es/phases): **wave 1 
 | `Date` | `unsupported` | — |
 | `Error`, `TypeError`, `RangeError`, `SyntaxError`, `ReferenceError`, `URIError`, `EvalError`, `AggregateError` | `partial` | Hierarchy incomplete |
 | `JSON` | `unsupported` | — |
-| Global functions (`parseInt`, `parseFloat`, `isNaN`, `isFinite`, `encodeURI*`, `decodeURI*`, `eval` policy) | `unsupported` / `partial` | `eval` policy: document fail-closed or implement |
+| Number/URI globals (`parseInt`, `parseFloat`, `isNaN`, `isFinite`, `encodeURI*`, `decodeURI*`) | `partial` | Bring to spec alongside `Number`/`String` work |
+| `eval` | `unsupported` | Policy row: document fail-closed or implement |
 
 ## Wave 2 (ES-6)
 

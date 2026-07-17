@@ -51,8 +51,8 @@ description: "Delivery phases D-0 through D-6 for Deno-only APIs on scripty."
 
 | | |
 | --- | --- |
-| **Work** | `Deno.dlopen`; `Deno.test` / `Deno.bench`; remaining FS/net; jupyter optional/refuse |
-| **Exit** | Inventory rows classified terminal (`supported` or explicit refuse) |
+| **Work** | `Deno.dlopen`; `Deno.test` / `Deno.bench`; snapshot/telemetry/lint/cron; remaining FS/net; jupyter optional/refuse |
+| **Exit** | Every [inventory](/scripty/v0.0.1-dev/deno-exclusive/inventory) row classified terminal (`supported` or explicit refuse) and mapped in the [matrix](/scripty/v0.0.1-dev/deno-exclusive/matrix) (matrix **Coverage** check passes) |
 | **Depends on** | D-2…D-4 |
 
 ### D-6 — Dogfood

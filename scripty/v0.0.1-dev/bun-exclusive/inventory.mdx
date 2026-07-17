@@ -24,7 +24,7 @@ If Node or Deno gain a first-class equivalent later, **move** the row to a share
 | `Bun.connect` / TCP helpers on `Bun` | Bun-shaped networking helpers | Confirm pin; implement Linux sockets |
 | `Bun.listen` | Bun listener API if still first-class | Same |
 | `Bun.spawn` / `Bun.spawnSync` | Bun subprocess API (not `child_process` / `Deno.Command`) | Capability-scoped |
-| `Bun.open` (editor helper) / related DX | Bun-only DX | Optional low priority |
+| `Bun.openInEditor` (editor helper) / related DX | Bun-only DX | Optional low priority |
 | `Bun.which` | Path lookup helper | — |
 | `Bun.sleep` / `Bun.sleepSync` | Bun helpers | Thin; still inventory |
 | `Bun.env` | Bun env object surface | Overlaps conceptually; shape differs — keep if Bun-global only |
@@ -37,7 +37,7 @@ If Node or Deno gain a first-class equivalent later, **move** the row to a share
 | --- | --- | --- |
 | `Bun.password` (hash/verify) | Built-in password hashing API | Use audited crypto (libsodium/openssl) |
 | `Bun.hash` / `Bun.CryptoHasher` | Bun hashing surface | — |
-| `Bun.SHA*` convenience | Bun helpers | May collapse into hash API |
+| `Bun.CryptoHasher` algorithms (`sha1`, `sha256`, `sha512`, `sha3-256`, `blake2b256`, `md5`, `ripemd160`, …) | Concrete algorithm strings passed to `Bun.CryptoHasher` (no `Bun.SHA*` global exists) | Enumerate supported algorithms as the hash API lands |
 | `Bun.escapeHTML` | Built-in | — |
 | `Bun.stringWidth` | Terminal width | — |
 | `Bun.inspect` | Bun inspect formatting | — |

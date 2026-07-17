@@ -8,21 +8,22 @@ description: "Status matrix for Deno-only APIs on scripty."
 Vocabulary: [Status vocabulary](/scripty/v0.0.1-dev/reference/status-vocabulary).  
 Inventory: [Inventory](/scripty/v0.0.1-dev/deno-exclusive/inventory).
 
+**Coverage:** every [inventory](/scripty/v0.0.1-dev/deno-exclusive/inventory) target maps to a row or named group below (a row may cover a group of related APIs, noted in the row). The [roadmap](/scripty/v0.0.1-dev/deno-exclusive/roadmap) D-5 terminal-classification gate checks that this mapping is complete.
+
 ## Permissions
 
 | Row | Status | Tests |
 | --- | --- | --- |
 | CLI `--allow-*` flags | `unsupported` | — |
 | Permission sets in config | `unsupported` | — |
-| `Deno.permissions.query` | `unsupported` | — |
-| `Deno.permissions.request` | `unsupported` | — |
-| `Deno.permissions.revoke` | `unsupported` | — |
+| `Deno.permissions.query` / `request` / `revoke` | `unsupported` | — |
+| `Deno.PermissionStatus` / descriptors + events | `unsupported` | — |
 
 ## Core `Deno` runtime
 
 | Row | Status | Tests |
 | --- | --- | --- |
-| `Deno.args` / `mainModule` / `pid` / `ppid` | `unsupported` | — |
+| `Deno.args` / `mainModule` / `noColor` / `pid` / `ppid` | `unsupported` | — |
 | `Deno.env` object API | `unsupported` | — |
 | `Deno.cwd` / `chdir` / `execPath` | `unsupported` | — |
 | `Deno.exit` / `exitCode` | `unsupported` | — |
@@ -51,7 +52,8 @@ Inventory: [Inventory](/scripty/v0.0.1-dev/deno-exclusive/inventory).
 
 | Row | Status | Tests |
 | --- | --- | --- |
-| `Deno.Command` | `unsupported` | — |
+| `Deno.Command` / `Deno.ChildProcess` | `unsupported` | — |
+| `Deno.kill` | `unsupported` | — |
 
 ## KV / FFI / test
 
@@ -59,10 +61,19 @@ Inventory: [Inventory](/scripty/v0.0.1-dev/deno-exclusive/inventory).
 | --- | --- | --- |
 | `Deno.openKv` + atomics | `unsupported` | — |
 | KV queues | `unsupported` | — |
-| `Deno.dlopen` / unsafe FFI | `unsupported` | — |
+| `Deno.dlopen` / `Deno.UnsafePointer` / callbacks | `unsupported` | — |
 | `Deno.test` | `unsupported` | — |
 | `Deno.bench` | `unsupported` | — |
+| Snapshot testing APIs | `unsupported` | — |
 | `Deno.jupyter` | `unsupported` | — |
+
+## Other Deno-first surfaces
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| `Deno.cron` (if in pin) | `unsupported` | — |
+| OpenTelemetry zero-config hooks | `unsupported` | — |
+| Lint plugin runtime APIs | `unsupported` | — |
 
 ## Early dogfood targets
 

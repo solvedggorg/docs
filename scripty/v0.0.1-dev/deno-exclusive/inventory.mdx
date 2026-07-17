@@ -11,99 +11,104 @@ Inclusion rule:
 
 Many Deno I/O methods **overlap conceptually** with Node/`Bun` file APIs. I3 still includes the **`Deno.*` namespace shapes** when the product goal is Deno-shaped source compatibility — but marks rows that are “shape-only wrappers over shared host” as such.
 
+Every row carries a **Kind** so the exception stays enforceable:
+
+- `exclusive` — no first-class Node **or** Bun equivalent (e.g. permissions, KV).
+- `shape-only` — a Deno-shaped wrapper over a capability that is already shared host work (e.g. FS, core runtime info); tracked for source compatibility, not counted as a net-new capability.
+
 **Pin:** [Sources](/scripty/v0.0.1-dev/reference/sources).
 
 ## Permissions (high priority exclusive)
 
-| API | Why exclusive | Notes |
-| --- | --- | --- |
-| CLI permission flags (`--allow-read`, `--allow-write`, `--allow-net`, `--allow-env`, `--allow-run`, `--allow-ffi`, `--allow-sys`, …) | Deno security model | Map to scripty capability host |
-| Permission sets in config | Deno 2.x feature | Align with config story |
-| `Deno.permissions.query` | Runtime permission API | — |
-| `Deno.permissions.request` | Interactive / programmatic grant | Embed may no-op or policy-hook |
-| `Deno.permissions.revoke` | Revocation | — |
-| `Deno.PermissionStatus` / descriptors | Types + events | — |
+| API | Kind | Why exclusive | Notes |
+| --- | --- | --- | --- |
+| CLI permission flags (`--allow-read`, `--allow-write`, `--allow-net`, `--allow-env`, `--allow-run`, `--allow-ffi`, `--allow-sys`, …) | `exclusive` | Deno security model | Map to scripty capability host |
+| Permission sets in config | `exclusive` | Deno 2.x feature | Align with config story |
+| `Deno.permissions.query` | `exclusive` | Runtime permission API | — |
+| `Deno.permissions.request` | `exclusive` | Interactive / programmatic grant | Embed may no-op or policy-hook |
+| `Deno.permissions.revoke` | `exclusive` | Revocation | — |
+| `Deno.PermissionStatus` / descriptors | `exclusive` | Types + events | — |
 
 ## `Deno` namespace — core runtime
 
-| API | Why exclusive / Deno-shaped | Notes |
-| --- | --- | --- |
-| `Deno.args` | Deno global shape | — |
-| `Deno.mainModule` | Deno entry URL | — |
-| `Deno.noColor` | Deno flag | — |
-| `Deno.pid` / `Deno.ppid` | Namespace shape | Overlap with `process` — still Deno surface |
-| `Deno.hostname` / `Deno.osRelease` / `Deno.loadavg` / `Deno.systemMemoryInfo` / `Deno.uid` / `Deno.gid` | Deno sys APIs | Linux only |
-| `Deno.exit` / `Deno.exitCode` | Deno shape | — |
-| `Deno.env` (`get`/`set`/`toObject`/`has`/`delete`) | Deno Env object | Not `process.env` |
-| `Deno.cwd` / `Deno.chdir` | Deno shape | — |
-| `Deno.execPath` | Deno shape | — |
+| API | Kind | Why exclusive / Deno-shaped | Notes |
+| --- | --- | --- | --- |
+| `Deno.args` | `shape-only` | Deno global shape | Overlaps `process.argv` |
+| `Deno.mainModule` | `shape-only` | Deno entry URL | — |
+| `Deno.noColor` | `shape-only` | Deno flag | — |
+| `Deno.pid` / `Deno.ppid` | `shape-only` | Namespace shape | Overlap with `process` — still Deno surface |
+| `Deno.hostname` / `Deno.osRelease` / `Deno.loadavg` / `Deno.systemMemoryInfo` / `Deno.uid` / `Deno.gid` | `shape-only` | Deno sys APIs | Linux only |
+| `Deno.exit` / `Deno.exitCode` | `shape-only` | Deno shape | — |
+| `Deno.env` (`get`/`set`/`toObject`/`has`/`delete`) | `shape-only` | Deno Env object | Not `process.env` |
+| `Deno.cwd` / `Deno.chdir` | `shape-only` | Deno shape | — |
+| `Deno.execPath` | `shape-only` | Deno shape | — |
 
 ## `Deno` namespace — files & FS
 
-| API | Notes |
-| --- | --- |
-| `Deno.readFile` / `readTextFile` / `readFileSync` / `readTextFileSync` | Deno shapes over host fs |
-| `Deno.writeFile` / `writeTextFile` (+ sync) | — |
-| `Deno.open` / `Deno.FsFile` | File handle API |
-| `Deno.stat` / `lstat` / `fstat` (+ sync) | — |
-| `Deno.mkdir` / `remove` / `rename` / `copyFile` / `link` / `symlink` / `readLink` / `realPath` / `truncate` / `chmod` / `chown` / `makeTemp*` / `create` / `readDir` | Full Deno FS surface |
-| `Deno.watchFs` | inotify on Linux |
-| `Deno.FileInfo` types | — |
+| API | Kind | Notes |
+| --- | --- | --- |
+| `Deno.readFile` / `readTextFile` / `readFileSync` / `readTextFileSync` | `shape-only` | Deno shapes over host fs |
+| `Deno.writeFile` / `writeTextFile` (+ sync) | `shape-only` | — |
+| `Deno.open` / `Deno.FsFile` | `shape-only` | File handle API |
+| `Deno.stat` / `lstat` / `fstat` (+ sync) | `shape-only` | — |
+| `Deno.mkdir` / `remove` / `rename` / `copyFile` / `link` / `symlink` / `readLink` / `realPath` / `truncate` / `chmod` / `chown` / `makeTemp*` / `create` / `readDir` | `shape-only` | Full Deno FS surface |
+| `Deno.watchFs` | `shape-only` | inotify on Linux |
+| `Deno.FileInfo` types | `shape-only` | — |
 
 ## Net & HTTP
 
-| API | Why exclusive-ish | Notes |
-| --- | --- | --- |
-| `Deno.listen` / `Deno.listenTls` / `Deno.connect` / `Deno.connectTls` | Deno net API shapes | Bun/Node differ |
-| `Deno.serve` | Deno HTTP server | Distinct from `Bun.serve` (I2) and Node `http` |
-| `Deno.resolveDns` | Deno DNS API | — |
-| `Deno.upgradeWebSocket` | Deno upgrade helper | — |
+| API | Kind | Why exclusive-ish | Notes |
+| --- | --- | --- | --- |
+| `Deno.listen` / `Deno.listenTls` / `Deno.connect` / `Deno.connectTls` | `shape-only` | Deno net API shapes | Bun/Node differ |
+| `Deno.serve` | `shape-only` | Deno HTTP server | Distinct from `Bun.serve` (I2) and Node `http` |
+| `Deno.resolveDns` | `exclusive` | Deno DNS API | No first-class Node/Bun equivalent shape |
+| `Deno.upgradeWebSocket` | `exclusive` | Deno upgrade helper | — |
 
 ## Subprocess & workers
 
-| API | Notes |
-| --- | --- |
-| `Deno.Command` / `Deno.ChildProcess` | Deno subprocess API (not `Bun.spawn` / `child_process`) |
-| `Deno.kill` | — |
+| API | Kind | Notes |
+| --- | --- | --- |
+| `Deno.Command` / `Deno.ChildProcess` | `shape-only` | Deno subprocess API (not `Bun.spawn` / `child_process`) |
+| `Deno.kill` | `shape-only` | — |
 
 ## Deno KV (exclusive built-in)
 
-| API | Why exclusive | Notes |
-| --- | --- | --- |
-| `Deno.openKv` | Built-in KV | Not in Node/Bun as runtime builtin |
-| Atomic ops / `commit` | — | Local backend first (SQLite/LMDB-style) |
-| KV queues / listeners | — | Phase after core KV |
-| Remote KV URLs | Optional | May refuse or limit to local for v0 |
+| API | Kind | Why exclusive | Notes |
+| --- | --- | --- | --- |
+| `Deno.openKv` | `exclusive` | Built-in KV | Not in Node/Bun as runtime builtin |
+| Atomic ops / `commit` | `exclusive` | — | Local backend first (SQLite/LMDB-style) |
+| KV queues / listeners | `exclusive` | — | Phase after core KV |
+| Remote KV URLs | `exclusive` | Optional | May refuse or limit to local for v0 |
 
 ## FFI & native
 
-| API | Why exclusive | Notes |
-| --- | --- | --- |
-| `Deno.dlopen` | Deno FFI | Linux `.so`; permission-gated |
-| `Deno.UnsafePointer` / callbacks | FFI detail types | — |
+| API | Kind | Why exclusive | Notes |
+| --- | --- | --- | --- |
+| `Deno.dlopen` | `exclusive` | Deno FFI | Linux `.so`; permission-gated |
+| `Deno.UnsafePointer` / callbacks | `exclusive` | FFI detail types | — |
 
 ## Testing & tooling APIs
 
-| API | Why exclusive | Notes |
-| --- | --- | --- |
-| `Deno.test` | Deno test API shape | Distinct from `bun:test` / `node:test` |
-| `Deno.bench` | Deno bench API | — |
-| Snapshot testing APIs | Deno test helpers | Confirm pin |
+| API | Kind | Why exclusive | Notes |
+| --- | --- | --- | --- |
+| `Deno.test` | `exclusive` | Deno test API shape | Distinct from `bun:test` / `node:test` |
+| `Deno.bench` | `exclusive` | Deno bench API | — |
+| Snapshot testing APIs | `exclusive` | Deno test helpers | Confirm pin |
 
 ## Jupyter / notebook
 
-| API | Why exclusive | Notes |
-| --- | --- | --- |
-| `Deno.jupyter` | Built-in Jupyter display APIs | Niche; phase late or refuse with reason |
+| API | Kind | Why exclusive | Notes |
+| --- | --- | --- | --- |
+| `Deno.jupyter` | `exclusive` | Built-in Jupyter display APIs | Niche; phase late or refuse with reason |
 
 ## Other Deno-first surfaces
 
-| API | Notes |
-| --- | --- |
-| `Deno.cron` (if still runtime API in pin) | Confirm pin |
-| OpenTelemetry zero-config hooks unique to Deno | Observability; may be host |
-| `Deno.cwd` permission interactions | Tie to permissions |
-| Lint plugin runtime APIs | Only if stable runtime surface |
+| API | Kind | Notes |
+| --- | --- | --- |
+| `Deno.cron` (if still runtime API in pin) | `exclusive` | Confirm pin |
+| OpenTelemetry zero-config hooks unique to Deno | `exclusive` | Observability; may be host |
+| `Deno.cwd` permission interactions | `shape-only` | Tie to permissions |
+| Lint plugin runtime APIs | `exclusive` | Only if stable runtime surface |
 
 ## Intentionally excluded
 
