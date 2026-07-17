@@ -18,7 +18,7 @@ description: "Initiative I2: implement the API surface Bun has that Node and Den
 
 scripty’s long-term product story includes Node, Deno, **and** Bun shaped APIs. Overlap (`fs`, `http`, `fetch`, …) is huge and already planned as shared host/Node-compat work.
 
-I2 is deliberately narrower: **what you lose if you only implement Node+Deno**. That list is finite and marketable.
+I2 is deliberately narrower: **what you lose if you only implement Node+Deno**. Exclusivity is by **namespace + shape** (see [Principles](/scripty/v0.0.1-dev/principles)), so a Bun-shaped API such as `Bun.serve` counts even when a similar capability exists elsewhere under a different name (`Deno.serve`, Node `http`). That list is finite and marketable.
 
 ## Success definition
 

@@ -7,7 +7,7 @@ description: "scripty pre-v0.0.1 initiatives: full ECMAScript engine compatibili
 
 This is the **active product program** for scripty before the **v0.0.1** tag.
 
-scripty is a Zig-native JavaScript runtime (own VM — not V8, JSC, or SpiderMonkey). Pre-v0.0.1 reorders the work so the **language engine is complete against the latest ECMAScript edition first**, then the **runtime surfaces that only Bun or only Deno ship natively**.
+scripty is a Zig-native JavaScript runtime and package manager (own VM — not V8, JSC, or SpiderMonkey), embedded by hosts such as yappy. Pre-v0.0.1 reorders the work so the **language engine is complete against the latest ECMAScript edition first**, then the **runtime surfaces that only Bun or only Deno ship natively**.
 
 <Warning>
   **Linux only, permanently.** scripty builds, CI, and first-party dogfood are Linux-only. Desktop UI never lives in scripty (no webview / Chromium). Hosts such as yappy embed scripty from separate repositories.

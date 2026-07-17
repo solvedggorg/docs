@@ -28,6 +28,7 @@ Every row carries a **Kind** so the exception stays enforceable:
 | `Deno.permissions.request` | `exclusive` | Interactive / programmatic grant | Embed may no-op or policy-hook |
 | `Deno.permissions.revoke` | `exclusive` | Revocation | — |
 | `Deno.PermissionStatus` / descriptors | `exclusive` | Types + events | — |
+| Path permission interactions (`Deno.cwd`, relative-path resolution) | `exclusive` | Permission model applies to path access | Resolve relative paths against cwd, then check `--allow-read` / `--allow-write` scope |
 
 ## `Deno` namespace — core runtime
 
@@ -105,9 +106,8 @@ Every row carries a **Kind** so the exception stays enforceable:
 
 | API | Kind | Notes |
 | --- | --- | --- |
-| `Deno.cron` (if still runtime API in pin) | `exclusive` | Confirm pin |
-| OpenTelemetry zero-config hooks unique to Deno | `exclusive` | Observability; may be host |
-| `Deno.cwd` permission interactions | `shape-only` | Tie to permissions |
+| `Deno.cron` | `exclusive` | Unstable in Deno (`--unstable-cron` / `deno.json` `unstable`) |
+| `Deno.telemetry` (`contextManager` / `meterProvider` / `tracerProvider`) | `exclusive` | OpenTelemetry; Deno enables via `OTEL_DENO=true`. May be host-provided |
 | Lint plugin runtime APIs | `exclusive` | Only if stable runtime surface |
 
 ## Intentionally excluded

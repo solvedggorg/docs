@@ -50,7 +50,7 @@ Vocabulary reference: [Status vocabulary](/scripty/v0.0.1-dev/reference/status-v
 | **I2 Bun-exclusive** | APIs native to Bun that Node and Deno do **not** ship as first-class runtime APIs | Shared Node modules (`fs`, `http`, …), generic Web APIs present on all three |
 | **I3 Deno-exclusive** | APIs native to Deno that Bun and Node do **not** ship as first-class runtime APIs | Same shared surface; pure package-manager CLI unless it is a documented runtime API |
 
-If an API exists on two runtimes under different names, it is **not** exclusive. Track shared host / Node-compat elsewhere. Exclusive initiatives track **shape + namespace** differentiators (`Bun.*`, `bun:*`, `Deno.*`, permissions, Deno KV, …).
+Exclusivity is by **namespace + shape**, not raw capability. An API is in scope when its specific `Bun.*` / `bun:*` / `Deno.*` surface is not first-class in the other two runtimes — even if a similar capability exists there under a different name (e.g. `Bun.serve` is in I2 although `Deno.serve` exists, because the Bun-shaped API is not first-class in Node or Deno). Rows whose capability is shared but whose shape differs are tracked as `shape-only`. A capability exposed under the **same** first-class API on all three runtimes is not exclusive — track it in shared host / Node-compat work.
 
 ## 5. Platform and product locks (unchanged)
 
