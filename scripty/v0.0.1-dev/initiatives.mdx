@@ -1,0 +1,97 @@
+---
+title: "Initiatives"
+description: "I1 ES Engine, I2 Bun-exclusive, and I3 Deno-exclusive — goals, ownership, and dependencies for pre-v0.0.1."
+---
+
+# Initiatives
+
+Pre-v0.0.1 is three initiatives under one program. They share principles and matrices, but they do not share exit bars.
+
+## Dependency graph
+
+```text
+                    ┌─────────────────────────────┐
+                    │  I1  ES Engine (hard gate)  │
+                    │  ES2026 + Test262 in-scope  │
+                    └──────────────┬──────────────┘
+                                   │ language bar
+                 ┌─────────────────┴─────────────────┐
+                 v                                   v
+    ┌────────────────────────┐         ┌────────────────────────┐
+    │ I2 Bun-exclusive APIs  │         │ I3 Deno-exclusive APIs │
+    │ Bun.* / bun:* deltas   │         │ Deno.* / perms / KV    │
+    └────────────────────────┘         └────────────────────────┘
+                 │                                   │
+                 └─────────────────┬─────────────────┘
+                                   v
+                    post-v0.0.1: shared Node surface,
+                    frameworks, DX / yappy dogfood
+```
+
+**Rules:**
+
+1. **I1** is the hard gate for the **language** half of tag `0.0.1`.
+2. **I2** and **I3** may start inventory, stubs, and host wiring **in parallel** once the engine can run real modules (roughly after ES-5), but they must not claim completeness before I1’s bar is met.
+3. Inventories and matrices for I2/I3 **ship in docs now**, even while status is `unsupported`.
+
+## I1 — ES Engine
+
+| Field | Value |
+| --- | --- |
+| **Codename** | ES Engine |
+| **Goal** | Own Zig VM fully compatible with the latest ECMAScript edition |
+| **Pin** | ECMAScript **2026** (re-pin when Ecma ships the next edition) |
+| **Oracle** | Test262 language suite (in-scope set) |
+| **Primary surfaces** | Parser, bytecode/interpreter, values, GC roots, built-ins, ESM semantics |
+| **Docs** | [ES Engine](/scripty/v0.0.1-dev/es) |
+| **Tag impact** | Blocks `0.0.1` until exit bar met |
+
+## I2 — Bun-exclusive surface
+
+| Field | Value |
+| --- | --- |
+| **Codename** | Bun-exclusive |
+| **Goal** | Ship the API surface Bun has that Node and Deno do not |
+| **Filter** | Native Bun globals / `bun:*` / first-class builtins only |
+| **Not this initiative** | Full Node compatibility, npm package parity |
+| **Docs** | [Bun-exclusive](/scripty/v0.0.1-dev/bun-exclusive) |
+| **Tag impact** | Docs + living matrix required; implementation depth tracked per row |
+
+## I3 — Deno-exclusive surface
+
+| Field | Value |
+| --- | --- |
+| **Codename** | Deno-exclusive |
+| **Goal** | Ship the API surface Deno has that Bun and Node do not |
+| **Filter** | `Deno.*`, permissions model, Deno-native modules (e.g. KV) |
+| **Not this initiative** | Shared Web APIs, Node-compat layers Deno also implements |
+| **Docs** | [Deno-exclusive](/scripty/v0.0.1-dev/deno-exclusive) |
+| **Tag impact** | Same as I2 |
+
+## What is deliberately not an initiative here
+
+| Workstream | Where it lives |
+| --- | --- |
+| Shared Node-compat (`node:fs`, `http`, …) | Post language-gate; see internal `docs/matrix/node.md` in the scripty repo |
+| Framework dogfood (Next, Nuxt, Nest, Solid) | Post language-gate; equal priority then |
+| DX / yappy product trees | Separate repositories; embed API only in scripty |
+| Package manager full npm peer graph | Later PM milestones |
+
+## Parallelism without lying
+
+| Kind of work | When |
+| --- | --- |
+| Spec pins, Test262 harness, matrices | Immediately |
+| Parser / values / builtins (I1) | Sequential ES-0 … ES-9 |
+| Exclusive inventories (I2/I3) | Immediately (docs) |
+| Exclusive implementations | Prefer after ES-5 (core builtins exist); never mark `supported` without tests |
+| Framework adapters | After I1 language bar |
+
+## Ownership
+
+| Layer | Owner |
+| --- | --- |
+| Language kernel | scripty VM (`src/syntax`, `src/vm`) |
+| Exclusive APIs | scripty `api/` (or equivalent) + host bindings |
+| Public program docs | this tree (`docs/scripty/v0.0.1-dev`) |
+| Host products | DX / yappy repos — not this program’s implementation scope |

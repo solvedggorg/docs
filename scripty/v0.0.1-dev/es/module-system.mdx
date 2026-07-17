@@ -1,0 +1,72 @@
+---
+title: "ES module system"
+description: "Language-level ECMAScript module semantics required for I1 (not Node resolution)."
+---
+
+# ES module system
+
+I1 requires **ECMAScript module semantics**, not Node’s resolver, not Bun’s package rules, and not Deno’s URL imports.
+
+Host resolution (filesystem, HTTPS, `node_modules`) is a **runtime** concern layered **on top of** language module records.
+
+## In scope for I1
+
+| Concern | Requirement |
+| --- | --- |
+| Module parse goal | Parse `Module` / `ModuleItem` forms per pin |
+| Module records | Source text module records with requested/imported bindings |
+| Linking | Resolve bindings, handle cycles per spec |
+| Evaluation | Instantiate + evaluate order; TDZ rules |
+| Top-level await | Ordering and capability as required by pin |
+| Import attributes | Support forms required by the pinned edition |
+| `import.meta` | Host hook exists; minimal fields OK if documented |
+| Dynamic `import()` | Returns Promise; integrates with module loader host hooks |
+
+## Out of scope for I1 (host / later)
+
+| Concern | Where it goes |
+| --- | --- |
+| `node_modules` / package.json `exports` | Node-compat / PM |
+| `npm:` / `jsr:` URL schemes | Deno-shaped host |
+| TypeScript / JSX transform before parse | Transform layer (already partial) |
+| Hot module reload | DX / embed (SCR-21 era host work) |
+| CommonJS `require` | Explicit CJS interop later — not ES language |
+
+## Current scripty state
+
+| Item | Status |
+| --- | --- |
+| Local relative ESM load | `partial` — extension probing `.js/.ts/.tsx/.jsx/.mjs` + `index.*` |
+| Cyclic graphs | `unsupported` |
+| TLA | `unsupported` |
+| Import attributes | `unsupported` |
+| Full link algorithm | `partial` |
+
+Smokes: `testdata/smoke/esm_main.js`, `testdata/smoke/ts_main.ts` (in the scripty repo).
+
+## Host loader contract (sketch)
+
+The engine should call a **host resolve + load** hook:
+
+```text
+resolve(specifier, referrer) -> resolved_url
+load(resolved_url) -> source_text + module_type
+```
+
+I1 correctness is about what happens **after** source text is obtained. Host policy (permissions, network, cache) belongs to runtime matrices.
+
+## Phase alignment
+
+| Phase | Module work |
+| --- | --- |
+| ES-1 | Parse import/export forms |
+| ES-3+ | Binding / TDZ interactions |
+| ES-8 | Full link + evaluate + TLA + attributes |
+| ES-9 | Test262 module suite green |
+
+## Exit criteria
+
+- In-scope module Test262 green
+- Cyclic dependency fixtures pass
+- Dynamic `import()` passes in-scope tests
+- Fail closed on unsupported host resolution schemes (clear error)

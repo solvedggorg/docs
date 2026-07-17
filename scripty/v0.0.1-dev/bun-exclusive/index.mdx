@@ -1,0 +1,58 @@
+---
+title: "I2 — Bun-exclusive surface"
+description: "Initiative I2: implement the API surface Bun has that Node and Deno do not."
+---
+
+# I2 — Bun-exclusive surface
+
+**Goal:** implement the **native API surface Bun ships that Node and Deno do not** — as first-class scripty APIs, on scripty’s own Zig VM (Linux only).
+
+| Field | Value |
+| --- | --- |
+| **Initiative** | I2 |
+| **Filter** | Bun-only / Bun-first-class; **not** shared Node modules |
+| **Depends on** | Usable language kernel (prefer after ES-5); docs/matrices ship immediately |
+| **Pin** | Bun version recorded in [Sources](/scripty/v0.0.1-dev/reference/sources) |
+
+## Why exclusive-only
+
+scripty’s long-term product story includes Node, Deno, **and** Bun shaped APIs. Overlap (`fs`, `http`, `fetch`, …) is huge and already planned as shared host/Node-compat work.
+
+I2 is deliberately narrower: **what you lose if you only implement Node+Deno**. That list is finite and marketable.
+
+## Success definition
+
+| Level | Bar |
+| --- | --- |
+| **Docs (pre-tag)** | Complete [inventory](/scripty/v0.0.1-dev/bun-exclusive/inventory) + [matrix](/scripty/v0.0.1-dev/bun-exclusive/matrix) |
+| **Implementation** | Rows move to `supported` with automated tests |
+| **Dogfood** | First-party smokes exercise the high-value cluster (`Bun.serve`, `Bun.file`, `bun:sqlite`, …) |
+
+Tag `0.0.1` requires the **docs** bar and honest statuses. Full green I2 is not required to *name* the tag if I1 is met — but empty inventories are not acceptable.
+
+## Out of scope
+
+| Item | Why |
+| --- | --- |
+| Full Node ABI parity | Separate matrix |
+| Embedding JSC because Bun uses it | Product lock: own VM |
+| Windows/macOS Bun behaviors | Linux only |
+| Every npm package that “works on Bun” | Not an API surface |
+| Bun’s package manager CLI as a whole | PM track later (except runtime APIs) |
+
+## Read next
+
+<CardGroup cols={2}>
+  <Card title="Inventory" icon="list" href="/scripty/v0.0.1-dev/bun-exclusive/inventory">
+    Bun-only APIs catalogued for implementation.
+  </Card>
+  <Card title="Matrix" icon="table" href="/scripty/v0.0.1-dev/bun-exclusive/matrix">
+    Living status rows.
+  </Card>
+  <Card title="Roadmap" icon="map" href="/scripty/v0.0.1-dev/bun-exclusive/roadmap">
+    B-0 … B-6 delivery waves.
+  </Card>
+  <Card title="Program roadmap" icon="road" href="/scripty/v0.0.1-dev/roadmap">
+    How I2 sits under pre-v0.0.1.
+  </Card>
+</CardGroup>

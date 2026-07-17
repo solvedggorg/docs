@@ -1,0 +1,71 @@
+---
+title: "Deno-exclusive matrix"
+description: "Status matrix for Deno-only APIs on scripty."
+---
+
+# Deno-exclusive matrix
+
+Vocabulary: [Status vocabulary](/scripty/v0.0.1-dev/reference/status-vocabulary).  
+Inventory: [Inventory](/scripty/v0.0.1-dev/deno-exclusive/inventory).
+
+## Permissions
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| CLI `--allow-*` flags | `unsupported` | — |
+| Permission sets in config | `unsupported` | — |
+| `Deno.permissions.query` | `unsupported` | — |
+| `Deno.permissions.request` | `unsupported` | — |
+| `Deno.permissions.revoke` | `unsupported` | — |
+
+## Core `Deno` runtime
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| `Deno.args` / `mainModule` / `pid` / `ppid` | `unsupported` | — |
+| `Deno.env` object API | `unsupported` | — |
+| `Deno.cwd` / `chdir` / `execPath` | `unsupported` | — |
+| `Deno.exit` / `exitCode` | `unsupported` | — |
+| Sys info (`hostname`, `loadavg`, …) | `unsupported` | — |
+
+## Filesystem
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| `readFile` / `readTextFile` (+ sync) | `unsupported` | — |
+| `writeFile` / `writeTextFile` (+ sync) | `unsupported` | — |
+| `open` / `FsFile` | `unsupported` | — |
+| `stat` / `mkdir` / `remove` / `rename` / … | `unsupported` | — |
+| `watchFs` | `unsupported` | — |
+
+## Net
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| `Deno.listen` / `connect` (+ TLS) | `unsupported` | — |
+| `Deno.serve` | `unsupported` | — |
+| `Deno.resolveDns` | `unsupported` | — |
+| `Deno.upgradeWebSocket` | `unsupported` | — |
+
+## Subprocess
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| `Deno.Command` | `unsupported` | — |
+
+## KV / FFI / test
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| `Deno.openKv` + atomics | `unsupported` | — |
+| KV queues | `unsupported` | — |
+| `Deno.dlopen` / unsafe FFI | `unsupported` | — |
+| `Deno.test` | `unsupported` | — |
+| `Deno.bench` | `unsupported` | — |
+| `Deno.jupyter` | `unsupported` | — |
+
+## Early dogfood targets
+
+1. Permissions fail-closed + `Deno.readTextFile`  
+2. `Deno.serve` hello  
+3. Local `Deno.openKv`  

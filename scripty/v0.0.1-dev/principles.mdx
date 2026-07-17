@@ -1,0 +1,81 @@
+---
+title: "Principles"
+description: "Definitions of full ECMAScript compatibility, matrix honesty, Linux-only policy, and exclusive API filters for pre-v0.0.1."
+---
+
+# Principles
+
+These rules apply to every pre-v0.0.1 initiative. They keep roadmaps testable and prevent silent overclaims.
+
+## 1. Own engine
+
+scripty implements JavaScript in a **Zig-native VM**. We never embed or fork V8, JavaScriptCore, or SpiderMonkey.
+
+Bun-exclusive surfaces that historically depended on JSC are implemented by **behavior compatibility** on scripty’s engine, not by shipping JSC.
+
+## 2. What “fully compatible with the latest ECMAScript” means
+
+| Term | Definition |
+| --- | --- |
+| **Latest edition** | The yearly ECMA-262 snapshot we claim. **Pinned baseline: ECMAScript 2026** (17th edition, June 2026; HTML [262.ecma-international.org/17.0](https://262.ecma-international.org/17.0/); program pin date 2026-07-17). |
+| **Re-pin** | When Ecma publishes a new edition, open an explicit re-pin task and finish the [Sources](/scripty/v0.0.1-dev/reference/sources) checklist **before** any release claims the new edition. |
+| **Oracle** | [Test262](https://github.com/tc39/test262) language tests for the pinned edition. |
+| **In-scope** | Language syntax, semantics, and built-ins required by the edition, plus Annex B only where we **opt in** and document it. |
+| **Out of scope for the ES bar** | Browser/Web IDL globals (DOM, `window`, …), HTML host hooks, and features we mark refused with a matrix reason. |
+| **v0.0.1 language exit** | Every **in-scope** feature-matrix row is `supported` or `dogfooded`, and CI Test262 for the in-scope set has **zero open blockers**. |
+
+“Fully compatible” is **not** “looks like a browser” and **not** “runs random npm.” It is **language-level** conformance against the pinned edition.
+
+Details: [ES scope](/scripty/v0.0.1-dev/es/scope) and [Test262](/scripty/v0.0.1-dev/es/test262).
+
+## 3. Matrix honesty
+
+Every compatibility row uses exactly one of:
+
+| Status | Meaning |
+| --- | --- |
+| `unsupported` | Not implemented; must fail closed or be absent |
+| `partial` | Some paths work; gaps documented |
+| `supported` | Implemented with automated tests |
+| `dogfooded` | Supported **and** exercised on a first-party path |
+
+Vocabulary reference: [Status vocabulary](/scripty/v0.0.1-dev/reference/status-vocabulary).
+
+**Refuse** silent Node/Deno/Bun fallbacks on dogfood paths. **Refuse** “full support” claims until the matrix row says so.
+
+## 4. Exclusive-surface filter (I2 / I3)
+
+| Initiative | Include | Exclude |
+| --- | --- | --- |
+| **I2 Bun-exclusive** | APIs native to Bun that Node and Deno do **not** ship as first-class runtime APIs | Shared Node modules (`fs`, `http`, …), generic Web APIs present on all three |
+| **I3 Deno-exclusive** | APIs native to Deno that Bun and Node do **not** ship as first-class runtime APIs | Same shared surface; pure package-manager CLI unless it is a documented runtime API |
+
+If an API exists on two runtimes under different names, it is **not** exclusive. Track shared host / Node-compat elsewhere. Exclusive initiatives track **shape + namespace** differentiators (`Bun.*`, `bun:*`, `Deno.*`, permissions, Deno KV, …).
+
+## 5. Platform and product locks (unchanged)
+
+| Lock | Rule |
+| --- | --- |
+| **Linux-only** | Build, CI, docs claims, first-party dogfood — Linux only. No macOS/Windows ports. |
+| **No webview in scripty** | Desktop UI is host-owned (yappy). Scripty is embed + IPC only. |
+| **Repo boundary** | This product’s runtime lives in the scripty repo; host products (DX, yappy) stay out. |
+| **Equal frameworks later** | Next, Nuxt, Nest, Solid remain equal **after** the language gate — not a reason to park ES completeness. |
+
+## 6. Fail closed
+
+Outside a `supported` / `dogfooded` row:
+
+- Prefer a clear error over a wrong result
+- Prefer “not implemented” over half-compatible quirks that look like success
+- Prefer updating the matrix over marketing prose
+
+## 7. Sources of truth
+
+Pin external sources in [Sources](/scripty/v0.0.1-dev/reference/sources):
+
+- ECMA-262 **edition snapshot** HTML URL + catalog page + pin date (not only the living draft)
+- Test262 commit / tag used in CI
+- Bun docs / version for exclusive inventory
+- Deno docs / version for exclusive inventory
+
+When upstream moves, update the pin **and** the matrices in the same change set.

@@ -1,0 +1,91 @@
+---
+title: "Deno-exclusive roadmap"
+description: "Delivery phases D-0 through D-6 for Deno-only APIs on scripty."
+---
+
+# Deno-exclusive roadmap
+
+## Phases
+
+### D-0 — Inventory freeze
+
+| | |
+| --- | --- |
+| **Work** | Publish inventory + matrix; pin Deno version; classify exclusive vs shared |
+| **Exit** | High-traffic Deno-only surfaces listed |
+| **Status** | **Docs in progress (this tree)** |
+
+### D-1 — Permissions
+
+| | |
+| --- | --- |
+| **Work** | Capability host; CLI flags; `Deno.permissions.*`; fail closed by default |
+| **Exit** | Deny-by-default tests; grant paths for read/net/env |
+| **Depends on** | Embed `Caps` design (scripty already sketches capabilities) |
+
+### D-2 — Core I/O namespace
+
+| | |
+| --- | --- |
+| **Work** | `Deno.env`, args, cwd, read/write text/file, mkdir/stat/remove subset |
+| **Exit** | File + env smokes under permission checks |
+| **Depends on** | D-1 |
+
+### D-3 — Net / serve
+
+| | |
+| --- | --- |
+| **Work** | `Deno.listen` / `Deno.serve` shapes; basic TLS later |
+| **Exit** | HTTP hello smoke |
+| **Depends on** | D-1, host net |
+
+### D-4 — Deno KV
+
+| | |
+| --- | --- |
+| **Work** | Local KV backend; `openKv`; get/set/atomic |
+| **Exit** | KV smoke; queues optional later |
+| **Depends on** | D-2 |
+
+### D-5 — FFI, test, long tail
+
+| | |
+| --- | --- |
+| **Work** | `Deno.dlopen`; `Deno.test` / `Deno.bench`; remaining FS/net; jupyter optional/refuse |
+| **Exit** | Inventory rows classified terminal (`supported` or explicit refuse) |
+| **Depends on** | D-2…D-4 |
+
+### D-6 — Dogfood
+
+| | |
+| --- | --- |
+| **Work** | Sample: permissioned static server; KV counter service |
+| **Exit** | Key rows `dogfooded` |
+| **Depends on** | D-3, D-4 |
+
+## Suggested priority order
+
+```text
+Permissions (deny by default)
+  → Deno.readTextFile / writeTextFile / env / args
+  → Deno.serve
+  → Deno.Command
+  → Deno.openKv
+  → Deno.dlopen
+  → Deno.test / long tail
+```
+
+## Risks
+
+| Risk | Mitigation |
+| --- | --- |
+| Rebuilding all of Node under `Deno.*` | Exclusive filter + “shape wrapper” labels |
+| Permission UX vs embed hosts | Shared capability model with yappy/DX |
+| KV scope creep (hosted) | Local-first; remote optional refuse |
+| Overlap confusion with `Bun.serve` | Separate matrices; both allowed |
+
+## Relationship to I1 / I2
+
+- Language features for modern Deno code → **I1**  
+- Bun-only APIs → **I2** (parallel, different namespace)  
+- Shared Web APIs (`fetch`) → not I3  

@@ -1,0 +1,109 @@
+---
+title: "ES phases"
+description: "ES-0 through ES-9 build sequence for scripty ECMAScript engine completeness."
+---
+
+# ES phases
+
+Kernel growth is **sequential**. Do not skip values before evaluation completeness, or built-ins before a stable value model.
+
+## Phase table
+
+### ES-0 — Spec pin + oracle
+
+| | |
+| --- | --- |
+| **Work** | Pin ECMA-262 edition; vendor or submodule Test262; runner harness; CI job on Linux; publish pass/fail counts |
+| **Exit** | Every main CI run produces a Test262 report artifact; baseline X/Y known |
+| **Depends on** | — |
+
+### ES-1 — Syntax
+
+| | |
+| --- | --- |
+| **Work** | Lexer/parser coverage for modern syntax: classes, modules, async functions, generators, private elements, logical assignment, numeric separators, BigInt literals, import/export forms, etc. |
+| **Exit** | Dedicated syntax fixtures + early Test262 **parse** subset; fail closed on unsupported syntax with clear errors |
+| **Depends on** | ES-0 |
+
+### ES-2 — Values and objects
+
+| | |
+| --- | --- |
+| **Work** | Complete value tags (Symbol, BigInt, …); property attributes (writable/enumerable/configurable); prototype chains; ordinary object internal methods path toward exotic objects |
+| **Exit** | Core object model tests; no silent attribute loss |
+| **Depends on** | ES-1 |
+
+### ES-3 — Evaluation model
+
+| | |
+| --- | --- |
+| **Work** | Lexical environments, variable environments, `this`, `new.target`, super, completion records, try/catch/finally, loops, labeled statements, strict mode rules as required |
+| **Exit** | Control-flow and scope Test262 subsets green |
+| **Depends on** | ES-2 |
+
+### ES-4 — GC for long runs
+
+| | |
+| --- | --- |
+| **Work** | Precise roots (frames, jobs, handles); mark–sweep freelist correct under suite; no host-held dangling Values |
+| **Exit** | Multi-file Test262 runs without UAF / false free; GC stress mode optional |
+| **Depends on** | ES-3 (can overlap late ES-3) |
+| **Design** | Internal `docs/vm-gc.md` in the scripty repo |
+
+### ES-5 — Built-ins wave 1
+
+| | |
+| --- | --- |
+| **Work** | `Object`, `Function`, `Array`, `String`, `Number`, `Boolean`, `Math`, `Date`, `Error` hierarchy, `JSON`, fundamental `Reflect` pieces as needed by wave 1 |
+| **Exit** | Corresponding [built-ins](/scripty/v0.0.1-dev/es/builtins) rows `supported` |
+| **Depends on** | ES-4 |
+
+### ES-6 — Built-ins wave 2
+
+| | |
+| --- | --- |
+| **Work** | `Promise`, `Symbol`, `Map`/`Set`/`WeakMap`/`WeakSet`, `RegExp`, `ArrayBuffer`/`DataView`/TypedArrays, `Atomics` if in-scope |
+| **Exit** | Wave 2 rows `supported` |
+| **Depends on** | ES-5 |
+
+### ES-7 — Built-ins wave 3 + edition deltas
+
+| | |
+| --- | --- |
+| **Work** | `Proxy`/`Reflect` complete; generators/async generators; Iterator helpers; Set methods; other ES2025–ES2026 normative additions; `Intl` **only if** kept in-scope (otherwise explicit refuse) |
+| **Exit** | Edition feature matrix in-scope rows no longer blocked on built-ins |
+| **Depends on** | ES-6 |
+
+### ES-8 — Modules (language)
+
+| | |
+| --- | --- |
+| **Work** | Module records, linking, cyclic evaluation, top-level await ordering, import attributes as required by pin, `import.meta` host hooks minimal |
+| **Exit** | Module Test262 green for in-scope set |
+| **Depends on** | ES-5+ (practical: after ES-6) |
+| **Detail** | [Module system](/scripty/v0.0.1-dev/es/module-system) |
+
+### ES-9 — Hardening
+
+| | |
+| --- | --- |
+| **Work** | Triage remaining Test262 failures; edge cases; error messages; conformance cleanup |
+| **Exit** | **Zero open blockers** on in-scope suite → **I1 language gate met** |
+| **Depends on** | ES-1…ES-8 complete for in-scope features |
+
+## Tracking
+
+| Artifact | Update when |
+| --- | --- |
+| [Feature matrix](/scripty/v0.0.1-dev/es/feature-matrix) | Feature lands or regresses |
+| [Built-ins](/scripty/v0.0.1-dev/es/builtins) | Built-in methods land |
+| [Test262](/scripty/v0.0.1-dev/es/test262) | Harness or pass-rate policy changes |
+| CI badge / report | Every mainline build |
+
+## Parallelism rules
+
+| Allowed in parallel | Not allowed |
+| --- | --- |
+| Docs + harness while parser grows | Marking ES-9 done with open blockers |
+| Built-in implementations across files once ES-2/3 stable | Skipping property attributes |
+| Exclusive API **inventories** (I2/I3) | Claiming Bun/Deno exclusive `supported` without ES kernel for that code path |

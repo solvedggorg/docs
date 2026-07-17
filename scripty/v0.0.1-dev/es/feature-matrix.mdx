@@ -1,0 +1,111 @@
+---
+title: "ES feature matrix"
+description: "Living ECMAScript feature matrix for scripty pre-v0.0.1 (ES2026 pin)."
+---
+
+# ES feature matrix
+
+Status vocabulary: [Status vocabulary](/scripty/v0.0.1-dev/reference/status-vocabulary).
+
+**Edition pin:** ECMAScript **2026** (17th edition) — [Sources](/scripty/v0.0.1-dev/reference/sources) · HTML [17.0](https://262.ecma-international.org/17.0/).  
+**Oracle:** Test262 (in-scope).  
+**Update rule:** change status only with tests + PR. Do not claim a newer edition without re-pin.
+
+> Rows start honest for a greenfield engine. `partial` reflects early scripty smokes where applicable.
+
+## Syntax & language
+
+| Feature | Status | Notes / tests |
+| --- | --- | --- |
+| Lexer / tokenizer | `partial` | `src/syntax/lexer.zig` |
+| Parser (statements / expressions) | `partial` | `src/syntax/parser.zig` |
+| Strict mode | `partial` | Default/strict edge cases incomplete |
+| Classes (methods, heritage, static) | `unsupported` | — |
+| Private fields / methods / accessors | `unsupported` | — |
+| `async` / `await` | `partial` | Promises exist; full async fn semantics TBD |
+| Generators / `yield` | `unsupported` | — |
+| Async generators | `unsupported` | — |
+| Arrow functions | `partial` | Smoke coverage only |
+| Destructuring | `partial` | Incomplete |
+| Rest / spread | `partial` | Incomplete |
+| Default parameters | `partial` | Incomplete |
+| Optional chaining `?.` | `unsupported` | — |
+| Nullish coalescing `??` | `unsupported` | — |
+| Logical assignment `&&=` `\|\|=` `??=` | `unsupported` | — |
+| Numeric separators | `unsupported` | — |
+| BigInt literals | `unsupported` | — |
+| Template literals (incl. tagged) | `partial` | Incomplete |
+| `for-of` / `for-await-of` | `unsupported` | — |
+| `using` / explicit resource management | `unsupported` | If required by pin; else refuse row |
+| Decorators (if normative in pin) | `unsupported` | Confirm against pin; refuse if still proposal-only |
+
+## Types & values
+
+| Feature | Status | Notes / tests |
+| --- | --- | --- |
+| undefined / null / boolean / number / string | `partial` | `src/vm/values.zig` |
+| Object / Array | `partial` | Simple property model |
+| Function | `partial` | Host + JS functions |
+| Symbol | `unsupported` | — |
+| BigInt | `unsupported` | — |
+| Property attributes | `partial` | Not full descriptor model |
+| Prototypes | `partial` | — |
+| Exotic objects path | `unsupported` | — |
+
+## Execution & runtime semantics
+
+| Feature | Status | Notes / tests |
+| --- | --- | --- |
+| Bytecode + interpreter | `partial` | `src/vm/*` |
+| Lexical environments | `partial` | — |
+| `this` binding | `partial` | — |
+| `new` / constructors | `partial` | — |
+| try / catch / finally | `partial` | — |
+| Exceptions / `Error` throw | `partial` | — |
+| Promises + jobs | `supported` | `testdata/smoke/promise_then.js`, microtask order |
+| Microtask ordering vs timers | `supported` | `testdata/smoke/microtask_order.js` |
+
+## Built-in groups (summary)
+
+Detail: [Built-ins](/scripty/v0.0.1-dev/es/builtins).
+
+| Group | Status | Notes |
+| --- | --- | --- |
+| Object / Function / Array basics | `partial` | — |
+| String / Number / Boolean / Math | `partial` / `unsupported` | Math largely missing |
+| Date / JSON / Error | `unsupported` / `partial` | — |
+| Promise (built-in surface) | `partial` | then/jobs; not full static API |
+| Symbol / Map / Set / Weak* | `unsupported` | — |
+| RegExp | `unsupported` | — |
+| TypedArray / ArrayBuffer / DataView | `unsupported` | — |
+| Proxy / Reflect | `unsupported` | — |
+| Iterator helpers (ES2025+) | `unsupported` | — |
+| Set methods (ES2025+) | `unsupported` | — |
+| Intl | `unsupported` | Scope decision: implement or refuse |
+
+## Modules (language)
+
+| Feature | Status | Notes / tests |
+| --- | --- | --- |
+| ESM parse / link / evaluate (local) | `partial` | Relative only; smokes |
+| Cyclic modules | `unsupported` | — |
+| Top-level await | `unsupported` | — |
+| Import attributes | `unsupported` | As required by pin |
+| `import.meta` | `partial` | Minimal / host-dependent |
+
+## GC
+
+| Feature | Status | Notes |
+| --- | --- | --- |
+| Precise STW mark–sweep + freelist | `partial` | Design in repo `docs/vm-gc.md`; auto collect exists |
+| Incremental GC | `unsupported` | Post language-gate OK |
+
+## Annex B (opt-in)
+
+| Feature | Status | Policy |
+| --- | --- | --- |
+| Annex B syntax/semantics (aggregate) | `unsupported` | Opt-in per concrete row when added |
+
+## Exit bar for I1
+
+All **in-scope** rows above (and their detailed built-in rows) must be `supported` or `dogfooded`, with Test262 blockers at zero. See [Scope](/scripty/v0.0.1-dev/es/scope).

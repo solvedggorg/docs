@@ -104,6 +104,53 @@
                   {
                     "group": "Get started",
                     "pages": ["scripty/0.0.1-dev/index"]
+                  },
+                  {
+                    "group": "v0.0.1-dev program",
+                    "pages": [
+                      "scripty/v0.0.1-dev/index",
+                      "scripty/v0.0.1-dev/principles",
+                      "scripty/v0.0.1-dev/initiatives",
+                      "scripty/v0.0.1-dev/roadmap"
+                    ]
+                  },
+                  {
+                    "group": "I1 — ES Engine",
+                    "pages": [
+                      "scripty/v0.0.1-dev/es/index",
+                      "scripty/v0.0.1-dev/es/scope",
+                      "scripty/v0.0.1-dev/es/phases",
+                      "scripty/v0.0.1-dev/es/feature-matrix",
+                      "scripty/v0.0.1-dev/es/builtins",
+                      "scripty/v0.0.1-dev/es/module-system",
+                      "scripty/v0.0.1-dev/es/test262"
+                    ]
+                  },
+                  {
+                    "group": "I2 — Bun-exclusive",
+                    "pages": [
+                      "scripty/v0.0.1-dev/bun-exclusive/index",
+                      "scripty/v0.0.1-dev/bun-exclusive/inventory",
+                      "scripty/v0.0.1-dev/bun-exclusive/matrix",
+                      "scripty/v0.0.1-dev/bun-exclusive/roadmap"
+                    ]
+                  },
+                  {
+                    "group": "I3 — Deno-exclusive",
+                    "pages": [
+                      "scripty/v0.0.1-dev/deno-exclusive/index",
+                      "scripty/v0.0.1-dev/deno-exclusive/inventory",
+                      "scripty/v0.0.1-dev/deno-exclusive/matrix",
+                      "scripty/v0.0.1-dev/deno-exclusive/roadmap"
+                    ]
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      "scripty/v0.0.1-dev/reference/status-vocabulary",
+                      "scripty/v0.0.1-dev/reference/sources",
+                      "scripty/v0.0.1-dev/reference/relationship-to-v1"
+                    ]
                   }
                 ]
               }

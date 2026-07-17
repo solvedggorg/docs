@@ -1,0 +1,100 @@
+---
+title: "Test262"
+description: "How scripty uses Test262 as the oracle for ECMAScript language compatibility."
+---
+
+# Test262
+
+[Test262](https://github.com/tc39/test262) is the **primary oracle** for initiative I1.
+
+## Goals
+
+1. Run the **in-scope language suite** on Linux in CI
+2. Publish pass / fail / skip counts on every mainline run
+3. Treat in-scope failures as **blockers** once a feature is marked complete
+4. Keep skips **enumerated** (never silent)
+
+## Suite selection
+
+| Include | Exclude |
+| --- | --- |
+| Language tests for syntax, semantics, built-ins | HTML / browser host tests |
+| Module tests required by the edition pin | Tests that require non-Linux host features |
+| Strict and non-strict as applicable | Features we explicitly refuse (matrix row + skip list) |
+
+The exact include/exclude globs live with the harness in the scripty repository (path TBD when harness lands). Document the globs here when they exist.
+
+## Harness requirements
+
+| Requirement | Notes |
+| --- | --- |
+| **Host** | scripty own VM only — no alternate engine |
+| **Platform** | Linux CI |
+| **Frontmatter** | Honor Test262 YAML (`features`, `flags`, `includes`) |
+| **Harness files** | Provide `assert.js`, `sta.js`, and feature helpers as required |
+| **Module mode** | Support `$262` / module load hooks needed for ESM tests |
+| **Timeouts** | Per-test timeout; hang = fail |
+| **Determinism** | Avoid order-dependent pollution between tests (isolate or reset realm) |
+
+## Reporting
+
+Every CI run should emit:
+
+| Field | Example |
+| --- | --- |
+| Test262 pin (git SHA) | `abc123…` |
+| Edition claim | `ES2026` |
+| Total selected | `N` |
+| Pass | `P` |
+| Fail | `F` |
+| Skip | `S` |
+| Pass rate | `P / (P+F)` for non-skipped |
+
+Store the report as a CI artifact. Optionally publish a summary on the docs status page later.
+
+## Failure triage policy
+
+| Stage | Policy |
+| --- | --- |
+| **Before a feature is `supported`** | Failures expected; track under the feature row as `partial` |
+| **After a feature is `supported`** | New failures are **regressions** — block merge |
+| **ES-9 / language gate** | In-scope set must have **zero open blockers** |
+| **Skip list changes** | Require PR rationale + matrix update |
+
+### Blocker definition
+
+An **open blocker** is any in-scope test that:
+
+- fails, or
+- is skipped without an approved skip reason linked to a matrix row
+
+## Local developer loop
+
+```bash
+# Illustrative — final commands land with the harness implementation
+zig build test262
+# or
+scripty test262 --report ./test262-report.json
+```
+
+Prefer a filter for feature work:
+
+```bash
+scripty test262 --feature Promise
+scripty test262 --path test/built-ins/Array
+```
+
+## Relationship to smoke tests
+
+Existing `testdata/smoke/*.js` tests stay. They are **fast feedback**, not the conformance oracle.
+
+| Suite | Role |
+| --- | --- |
+| Smoke / unit | Dev loop, embed, host bindings |
+| Test262 | Language compatibility gate |
+
+## When Test262 is not enough
+
+Some edition features need additional directed tests (e.g. GC stress, multi-isolate). Add them as scripty unit tests and still keep a matrix pointer.
+
+Never replace Test262 with only hand-written smokes for the I1 exit bar.

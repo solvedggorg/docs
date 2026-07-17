@@ -1,0 +1,71 @@
+---
+title: "Sources and pins"
+description: "Pinned external specifications and runtime docs for the pre-v0.0.1 program."
+---
+
+# Sources and pins
+
+Update this page whenever an initiative re-pins an upstream. Inventories and matrices should be reconciled in the **same change set**.
+
+## ECMAScript (I1)
+
+| Pin | Value |
+| --- | --- |
+| **Edition claim** | **ECMAScript 2026** (ECMA-262 **17th edition**, June 2026) |
+| **Specification (HTML, normative)** | [262.ecma-international.org/17.0](https://262.ecma-international.org/17.0/) |
+| **Catalog page** | [ECMA-262 on ecma-international.org](https://ecma-international.org/publications-and-standards/standards/ecma-262/) |
+| **PDF** | [ECMA-262_17th_edition_june_2026.pdf](https://ecma-international.org/wp-content/uploads/ECMA-262_17th_edition_june_2026.pdf) |
+| **Program pin date** | 2026-07-17 |
+| **Conformance oracle** | [Test262](https://github.com/tc39/test262) |
+| **Test262 git SHA** | *TBD — set when harness vendors the suite (SCR-2)* |
+
+**Not the pin:** the living draft at [tc39.es/ecma262](https://tc39.es/ecma262/) tracks work **after** the yearly snapshot. Do not use it as the claimed edition URL until an explicit re-pin.
+
+### Re-pin checklist (new ECMA edition)
+
+1. Record new edition name + stable HTML URL (edition snapshot, not only the living draft root) + catalog/PDF if available  
+2. Bump Test262 SHA to a matching suite revision  
+3. Diff [feature matrix](/scripty/v0.0.1-dev/es/feature-matrix) and [built-ins](/scripty/v0.0.1-dev/es/builtins)  
+4. Open engineering Linear issues for deltas  
+5. Update scripty `docs/es-pin.md` and `docs/matrix/language.md` in the same change set  
+6. **Do not** claim the new edition in release notes until in-scope matrix rows catch up
+
+## Bun (I2)
+
+| Pin | Value |
+| --- | --- |
+| **Docs** | [https://bun.com/docs](https://bun.com/docs) (and API reference) |
+| **Bun version for inventory** | *Track latest stable at last inventory pass; record version when freezing B-0* |
+| **Last inventory review** | 2026-07-17 (initial program docs) |
+
+Primary surfaces reviewed for exclusivity: global `Bun`, `bun:*` modules, built-in S3/SQL/SQLite, password/hash/glob helpers.
+
+## Deno (I3)
+
+| Pin | Value |
+| --- | --- |
+| **Docs** | [https://docs.deno.com](https://docs.deno.com) |
+| **Deno version for inventory** | *Track latest stable at last inventory pass; record version when freezing D-0* |
+| **Last inventory review** | 2026-07-17 (initial program docs) |
+
+Primary surfaces reviewed: permissions, `Deno.*` namespace, `Deno.serve`, `Deno.openKv`, `Deno.dlopen`, `Deno.test` / `Deno.bench`.
+
+## Internal engineering docs (scripty repo)
+
+| Doc | Role |
+| --- | --- |
+| `docs/v1-plan.md` | Broader v1 product plan (hosts, frameworks) |
+| `docs/vm-gc.md` | GC design (D7) |
+| `docs/embed.md` | Embed API for hosts |
+| `docs/matrix/*` | Internal engineering matrices |
+
+Public program relationship: [Relationship to the v1 plan](/scripty/v0.0.1-dev/reference/relationship-to-v1).
+
+## Product locks (not pins — permanent)
+
+| Lock | Reference |
+| --- | --- |
+| Own VM (no V8/JSC/SM) | AGENTS / v1 plan D1 |
+| Linux only | D5 |
+| No webview in scripty | D6 |
+| No host products in scripty repo | D11 |

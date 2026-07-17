@@ -1,0 +1,96 @@
+---
+title: "Bun-exclusive inventory"
+description: "Catalog of Bun APIs that Node and Deno do not ship as first-class runtime surfaces."
+---
+
+# Bun-exclusive inventory
+
+This inventory lists **targets** for I2. Inclusion rule:
+
+> Native in Bun (global `Bun`, `bun:*`, or documented built-in) **and** not first-class in Node **and** not first-class in Deno.
+
+If Node or Deno gain a first-class equivalent later, **move** the row to a shared matrix and note the date.
+
+**Pin:** see [Sources](/scripty/v0.0.1-dev/reference/sources). Reconcile this list against Bun’s docs when the pin changes.
+
+## Global `Bun` — I/O and process
+
+| API | Why exclusive | Notes for scripty |
+| --- | --- | --- |
+| `Bun.file` | Bun Blob/file ergonomics; not Node/`Deno` shape | Map to Linux fd/path; zero-copy where possible |
+| `Bun.write` | First-class write helper on `Bun` | Paths + Response/Blob sources |
+| `Bun.stdin` / `Bun.stdout` / `Bun.stderr` as Bun File | Bun-specific File handles | — |
+| `Bun.serve` | Signature HTTP server API (fetch handler style) | Deno has `Deno.serve` (different initiative); Node needs `http`/`node:http` |
+| `Bun.connect` / TCP helpers on `Bun` | Bun-shaped networking helpers | Confirm pin; implement Linux sockets |
+| `Bun.listen` | Bun listener API if still first-class | Same |
+| `Bun.spawn` / `Bun.spawnSync` | Bun subprocess API (not `child_process` / `Deno.Command`) | Capability-scoped |
+| `Bun.open` (editor helper) / related DX | Bun-only DX | Optional low priority |
+| `Bun.which` | Path lookup helper | — |
+| `Bun.sleep` / `Bun.sleepSync` | Bun helpers | Thin; still inventory |
+| `Bun.env` | Bun env object surface | Overlaps conceptually; shape differs — keep if Bun-global only |
+| `Bun.main` / `Bun.argv` | Entry metadata | — |
+| `Bun.version` / `Bun.revision` | Runtime identity | scripty should expose scripty identity separately; optional Bun-compat shims later |
+
+## Global `Bun` — data, crypto, strings
+
+| API | Why exclusive | Notes |
+| --- | --- | --- |
+| `Bun.password` (hash/verify) | Built-in password hashing API | Use audited crypto (libsodium/openssl) |
+| `Bun.hash` / `Bun.CryptoHasher` | Bun hashing surface | — |
+| `Bun.SHA*` convenience | Bun helpers | May collapse into hash API |
+| `Bun.escapeHTML` | Built-in | — |
+| `Bun.stringWidth` | Terminal width | — |
+| `Bun.inspect` | Bun inspect formatting | — |
+| `Bun.deepEquals` | Utility | — |
+| `Bun.nanoseconds` | Timing | — |
+| `Bun.readableStreamTo*` helpers | Bun stream utilities | — |
+| `Bun.Glob` | Built-in glob | — |
+| `Bun.semver` | Built-in semver | — |
+| `Bun.TOML` / YAML parse helpers | Built-in config parsers | Confirm pin |
+| `Bun.JSONC` / related | Built-in | Confirm pin |
+| `Bun.peek` | Promise peek utility | — |
+| `Bun.gc` / memory helpers | Runtime GC controls | Map to scripty GC |
+| `Bun.generateHeapSnapshot` | Diagnostics | Post-core |
+| `Bun.mmap` | Memory-map files | Linux `mmap` |
+
+## Global `Bun` — cloud / SQL
+
+| API | Why exclusive | Notes |
+| --- | --- | --- |
+| `Bun.s3` / `S3Client` | Native S3 client | AWS/R2/MinIO; no AWS SDK required |
+| `Bun.sql` / `SQL` template | Built-in SQL client (Postgres path) | Distinct from `bun:sqlite` |
+| Redis client on `Bun` (if first-class in pin) | Built-in | Confirm against pin; add/remove row |
+
+## `bun:*` modules
+
+| Module | Why exclusive | Notes |
+| --- | --- | --- |
+| `bun:sqlite` | Native SQLite module | High value; use system/sqlite amalgamation |
+| `bun:ffi` | Bun FFI | Zig-friendly; Linux `.so` |
+| `bun:test` | Bun test runner API | Distinct from `node:test` / `Deno.test` |
+| `bun:jsc` | Engine introspection | **Do not embed JSC** — provide scripty-native equivalents or refuse with matrix reason |
+| `bun:wrap` / internal modules | Rarely public | Only if documented stable |
+
+## Transpiler / bundler runtime APIs
+
+| API | Why exclusive | Notes |
+| --- | --- | --- |
+| `Bun.Transpiler` | Built-in transpile API | Align with scripty transform layer |
+| `Bun.build` (programmatic) | Built-in bundler API | Large; phase late |
+| Plugin hooks unique to Bun | Bun-only | Document stability |
+
+## Intentionally excluded (not I2)
+
+| Surface | Reason |
+| --- | --- |
+| `node:*` compatibility | Shared / Node matrix |
+| `fetch` / `Request` / `Response` / `WebSocket` | Web standard; multi-runtime |
+| `fs` / `path` / `buffer` | Node-shaped |
+| npm install performance | PM, not exclusive runtime API |
+| `tsx`/`ts-node` replacement | Transform policy, not Bun-only once others strip types |
+
+## Maintenance
+
+1. Diff Bun release notes against this inventory each pin bump  
+2. Mark deprecated Bun APIs `unsupported` with “upstream deprecated”  
+3. Prefer **behavior tests** over cloning Bun bugs unless needed for ecosystem  
