@@ -1,0 +1,48 @@
+---
+title: "Introducción"
+description: "yappy es un shell de escritorio nativo exclusivo para Linux — Qt + GTK, con «scripty» para la lógica de la aplicación."
+---
+
+**yappy** es un shell de escritorio nativo, solo para Linux, escrito en Zig. Está pensado para Electron / Tauri / Deno, **sin** navegador integrado: UI son **Qt y GTK**, y la lógica de la aplicación se ejecuta en **[scripty](/es/scripty)** (entorno de ejecución JS + gestor de proyectos).
+
+## Para qué sirve yappy
+
+- **Nativo Linux UI** — backends de primera clase **Qt** y **GTK** (a partir de la v0.1.0: ambos)
+- **scripty para la lógica** — un único entorno de ejecución JS/TS y PM integrado en el host; sin proceso principal de Node
+- **Host con ámbito de capacidades** — FS y las API relacionadas tienen denegación por defecto; las concesiones son explícitas
+- **Aplicación independiente del backend API** — las aplicaciones se dirigen a una superficie de widgets unificada siempre que sea posible
+
+## Cómo encaja en el conjunto
+
+| Componente | Función |
+| --- | --- |
+| [scripty](/es/scripty) | El tiempo de ejecución de JS + PM que integra yappy |
+| [rusty](/es/rusty) | Gestor de paquetes de Rust + cadena de herramientas (Linux) |
+| [worgo](/es/worgo) | Go gestor de proyectos del espacio de trabajo |
+| [pyppi](/es/pyppi) | Python gestor de paquetes + herramienta de proyectos |
+| [deploy](/es/deploy) | Next.js → Cloudflare Workers CLI |
+| [git](/es/git) | solved.gg servidor de git UI |
+| [depotsdk-go](/es/depotsdk-go) | Go cliente para el Depot API |
+
+yappy es **exclusivamente para Linux** y **siempre nativo UI**: sin webview, sin Chromium, sin HTML-as-shell.
+
+## Estado
+
+yappy está en **acceso anticipado / próximamente**. Las rutas de instalación, la referencia de CLI y la matriz nativa de API aparecerán aquí en cuanto se estabilice el binario.
+
+Hasta entonces:
+
+- Página del producto: [yappy.pm.solved.gg](https://yappy.pm.solved.gg)
+- Centro de la suite: [pm.solved.gg](https://pm.solved.gg)
+- Descripción general de la organización: [solved.gg/projects](https://solved.gg/projects)
+- Contacto: [intake@solved.gg](mailto:intake@solved.gg)
+
+## Qué te espera a continuación en esta documentación
+
+1. Instalación y configuración (GTK / Qt dependencias del sistema)
+2. Ventana de bienvenida en GTK y Qt
+3. Integración de scripty y estructura del proyecto de la aplicación
+4. Referencia sobre la paridad nativa de API y el backend
+5. Empaquetado y capacidades
+
+Preguntas o acceso anticipado: [intake@solved.gg](mailto:intake@solved.gg).

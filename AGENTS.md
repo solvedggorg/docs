@@ -5,9 +5,11 @@
 - Documentation site for **solved.gg** products, built on [Mintlify](https://mintlify.com)
 - Pages are MDX files with YAML frontmatter
 - Configuration lives in `docs.json`
-- Primary navigation is **`navigation.products`**
-- Site root (**Home**) is welcome + legal — **not** product docs
-- Product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`, `/pyppi`, `/yappy`, `/deploy`, `/git`, `/depotsdk-go`
+- Primary navigation is **`navigation.languages`** wrapping **`products` → `versions` → groups**
+- English is the default language (`en`); Spanish (`es`) lives under `es/` with the same product/version path shape
+- Site root (**Home**) is welcome + legal — **not** product docs (legal pages stay English-only until counsel-reviewed)
+- Product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`, `/pyppi`, `/yappy`, `/deploy`, `/git`, `/depotsdk-go` (locale copies under `/es/...`)
+- Translate with DeepL via `scripts/translate-mdx.mjs` (protects brands/code with keep placeholders); re-wrap nav with `scripts/wrap-languages.mjs` after adding locales
 
 ## Site structure
 

@@ -1,0 +1,106 @@
+---
+title: "Introducción"
+description: "Implementa aplicaciones Next.js con bootstrap en Cloudflare Workers en el momento de la inicialización: entorno de ejecución propio y CLI similar al de Vercel."
+---
+
+**deploy** es un Zig CLI que conecta **Next.js → Cloudflare Workers** cuando **creas o adoptas** una app. Reescribe las configuraciones, aplica parches a las dependencias, genera wrangler y lo envía a través de un entorno de ejecución de Workers **propio** bajo `@solvedgg/deploy-*`, no mediante un adaptador OpenNext posterior a la compilación.
+
+## Para qué sirve deploy
+
+- **Conexión de Cloudflare en el momento de la inicialización** — `deploy create` / `deploy init` en lugar de añadir un adaptador a posteriori
+- **Verbos al estilo de Vercel** — `deploy`, `env`, `link`, `whoami`, `logs`, `dev`, `check`
+- **Tiempo de ejecución y compilación propios** — `@solvedgg/deploy-runtime` y `@solvedgg/deploy-build` (código original, no un cambio de marca)
+- **Compatibilidad real** — compatible / parcial / no compatible, todo ello registrado en una matriz actualizada; las funciones no compatibles fallan de forma cerrada a menos que las fuerces
+
+## Cómo se corresponde
+
+| Necesidad | Cloudflare |
+| --- | --- |
+| Servidor de aplicaciones | Trabajadores |
+| Recursos estáticos | Recursos de los trabajadores |
+| KV / caché perimetral | KV + caché API |
+| Blobs | R2 |
+| SQL | D1 / Hyperdrive |
+| Imágenes | Cloudflare Imágenes / transformación |
+| Cron | `triggers.crons` |
+| IA | Workers AI |
+
+## Instalación (desde el código fuente)
+
+Requiere [Zig](https://ziglang.org/) `0.16+`.
+
+```bash
+git clone https://github.com/solvedggorg/deploy.git
+cd deploy
+zig build
+./zig-out/bin/deploy help
+```
+
+## Inicio rápido
+
+```bash
+# greenfield
+deploy create my-app --yes --name my-app
+cd my-app
+bun install   # link workspace packages or published @solvedgg/deploy-*
+
+# existing Next app
+deploy init . --name my-app
+deploy check
+deploy link --name my-app
+deploy deploy
+```
+
+## Superficie CLI
+
+| Comando | Propósito |
+| --- | --- |
+| `deploy create [dir]` | Estructura básica del enrutador de aplicaciones Next + configuración de CF |
+| `deploy init [dir]` | Adoptar una app Next ya existente |
+| `deploy check` | Análisis de compatibilidad |
+| `deploy link` | Escribir `deploy.json` (+ wrangler si falta) |
+| `deploy deploy` | Compilar + `wrangler deploy` |
+| `deploy dev` | Ruta local de `wrangler dev` |
+| `deploy env …` | Puente de secretos/variables |
+| `deploy whoami` | Identidad de Cloudflare |
+| `deploy logs` | `wrangler tail` |
+| `deploy matrix` | Mostrar estimación de cobertura |
+
+Indicadores comunes: `--force`, `--yes`, `--name`, `--account-id`, `--rewrite-next-config`.
+
+## Hitos
+
+| Versión | Objetivo |
+| --- | --- |
+| `0.0.x` | CLI + inicialización/creación + wrangler + tiempo de ejecución/esqueleto de compilación |
+| `v0.1.0` | ~**75 %** de la superficie de funciones de Next / Vercel |
+| `v1.0.0` | Objetivo de **100 %** de compatibilidad |
+
+## Cómo encaja en el conjunto
+
+| Componente relacionado | Función |
+| --- | --- |
+| **deploy** | Next.js → Cloudflare Workers CLI + tiempo de ejecución |
+| [rusty](/es/rusty) / [scripty](/es/scripty) / [worgo](/es/worgo) / [pyppi](/es/pyppi) | Herramientas de lenguaje |
+| [yappy](/es/yappy) | Linux shell de escritorio nativo |
+| [git](/es/git) | solved.gg servidor de git UI |
+| [depotsdk-go](/es/depotsdk-go) | Go SDK para Depot API |
+
+## Estado
+
+deploy está en **acceso anticipado**. Compílalo desde el código fuente; los canales de instalación de paquetes se documentarán aquí cuando se publiquen.
+
+- Página del producto: [deploy.pm.solved.gg](https://deploy.pm.solved.gg)
+- Centro de la suite: [pm.solved.gg](https://pm.solved.gg)
+- Código fuente: [github.com/solvedggorg/deploy](https://github.com/solvedggorg/deploy)
+- Descripción general de la organización: [solved.gg/projects](https://solved.gg/projects)
+
+## Qué vas a encontrar a continuación en esta documentación
+
+1. Instalación de paquetes y PATH configuración
+2. Guías paso a paso de «create» frente a «init»
+3. Referencia de la matriz de compatibilidad
+4. APIs de tiempo de ejecución y de paquetes de compilación
+5. Entorno, secretos y lista de comprobación para producción
+
+Preguntas o acceso anticipado: [intake@solved.gg](mailto:intake@solved.gg).

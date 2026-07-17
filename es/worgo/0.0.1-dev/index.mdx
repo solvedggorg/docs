@@ -1,0 +1,46 @@
+---
+title: "Introducción"
+description: "worgo es un gestor de proyectos de última generación para el entorno de trabajo de Go, escrito en Zig."
+---
+
+**worgo** es un gestor de proyectos para espacios de trabajo Go de última generación escrito en Zig. Está pensado para solucionar los problemas de los grandes árboles de módulos de Go: herramientas de espacio de trabajo lentas y poco transparentes, límites de monorepo poco prácticos y la brecha entre el trabajo diario «orientado a módulos» y el «nativo del espacio de trabajo».
+
+## Para qué sirve worgo
+
+- **Go a escala de monorepo**: trata los árboles multimódulo como algo de primera clase, no como un añadido de última hora sobre `go work`
+- **Gestión de proyectos** para Go: inicialización, flujos de trabajo de dependencias y operaciones del espacio de trabajo con una única estructura CLI
+- **Implementación de Zig**: el mismo enfoque sistémico que [rusty](/es/rusty) y [scripty](/es/scripty): vías rápidas, comportamiento explícito, trámites mínimos
+
+## Cómo encaja en el conjunto
+
+| Compañero | Ecosistema |
+| --- | --- |
+| [rusty](/es/rusty) | Gestor de paquetes de Rust + cadena de herramientas (Linux) |
+| [scripty](/es/scripty) | Entorno de ejecución de JavaScript / TypeScript + PM |
+| **worgo** | Go gestor de proyectos del espacio de trabajo |
+| [pyppi](/es/pyppi) | Python gestor de paquetes + herramienta de proyectos |
+| [yappy](/es/yappy) | Linux shell de escritorio nativo (Qt + GTK) |
+| [deploy](/es/deploy) | Next.js → Cloudflare Workers CLI |
+| [git](/es/git) | solved.gg servidor de git UI |
+| [depotsdk-go](/es/depotsdk-go) | Go SDK para el Depot API |
+
+Estos productos se comercializan dentro de la familia de productos [solved.gg](https://solved.gg) / iResolved, LLC.
+
+## Estado
+
+worgo está en **acceso anticipado / próximamente**. Las instrucciones de instalación, los detalles del modelo del espacio de trabajo y la referencia de CLI aparecerán aquí en cuanto se concrete la interfaz del producto.
+
+Hasta entonces:
+
+- Página del producto: [worgo.pm.solved.gg](https://worgo.pm.solved.gg)
+- Centro de la suite: [pm.solved.gg](https://pm.solved.gg)
+- Descripción general de la organización: [solved.gg/projects](https://solved.gg/projects)
+
+## Qué puedes esperar a continuación en esta documentación
+
+1. Instalación y módulo «hello-world»
+2. Estructura del espacio de trabajo y flujos de trabajo con varios módulos
+3. Integración de dependencias y compilación con la cadena de herramientas Go
+4. CLI y referencia de configuración
+
+Preguntas o acceso anticipado: [intake@solved.gg](mailto:intake@solved.gg).

@@ -1,0 +1,56 @@
+---
+title: "Introducción"
+description: "git es la interfaz de usuario de solved.gg para gestionar repositorios Git: autenticación con Clerk, repositorios con ámbito de organización e integración continua (CI) con tecnología Depot."
+---
+
+**git** (Git resuelto) es la interfaz de usuario del plano de control del host de git solved.gg. Es un shell autenticado para un conjunto **pequeño de repositorios, limitado al ámbito de la organización**; no es una plataforma pública multitenant para repositorios creados por cualquier usuario. La autenticación es **Clerk**; las incidencias y los comentarios tienen enlaces directos a **Linear** y **Productlane**; CI está pensado para mostrar las ejecuciones de **Depot**.
+
+## Para qué sirve git
+
+- **Centro de repositorios dentro de la organización**: lista y apertura de repositorios para administradores y clientes de organizaciones Clerk
+- **CI visibilidad**: ejecuciones de compilación respaldadas por Depot (lista, filtro, detalles de la ejecución) como interfaz principal de operaciones
+- **Enlaces a productos externos**: las incidencias y los comentarios se mantienen en Linear / Productlane en lugar de en un sistema de seguimiento integrado
+- **Claves SSH futuras** — configuración para la subida de claves; no se necesita una página de perfil personalizada para los clientes
+
+## Lo que (todavía) no es
+
+- Alojamiento Git en tiempo real / navegador de código (primero la interfaz de usuario; la interfaz de Git llegará más adelante)
+- Creación pública y autoservicio de repositorios a escala arbitraria (unas decenas de repositorios, no millones)
+- Funciones integradas de debate o foro (aplazadas)
+
+## Pila (interfaz actual)
+
+| Capa | Opción |
+| --- | --- |
+| UI | Astro 6 SSR en Cloudflare Workers |
+| Autenticación | Clerk (organizaciones habilitadas para administradores y organizaciones de clientes) |
+| Panel CI | Datos en forma de depósito (simulación hasta la conexión de API) |
+| Incidencias / comentarios | Enlaces profundos Linear / Productlane |
+
+## Cómo encaja en el conjunto
+
+| Componente relacionado | Función |
+| --- | --- |
+| **git** | solved.gg servidor de git UI + panel CI |
+| [depotsdk-go](/es/depotsdk-go) | Go cliente utilizado para la integración de Depot y API |
+| [deploy](/es/deploy) | Next.js → ruta Cloudflare Workers (pila de aristas relacionadas) |
+| [rusty](/es/rusty) / [scripty](/es/scripty) / [worgo](/es/worgo) / [pyppi](/es/pyppi) | Herramientas lingüísticas en la misma organización |
+
+## Estado
+
+La **interfaz de usuario** está en acceso anticipado: las rutas de inicio de sesión y recorrido incluyen un repositorio de prueba / datos de CI. El alojamiento en Git y las funciones en vivo Depot CI aún no están totalmente integradas.
+
+Hasta entonces:
+
+- Código fuente: [github.com/solvedggorg/git](https://github.com/solvedggorg/git)
+- Descripción general de la organización: [solved.gg/projects](https://solved.gg/projects)
+
+## Qué puedes esperar a continuación en esta documentación
+
+1. Modelo de acceso (organizaciones Clerk, quién puede iniciar sesión)
+2. Lista de repositorios y centro de repositorios
+3. Ejecuciones CI e integración Depot
+4. SSH claves y configuración
+5. Operador / deploy notas para el trabajador
+
+Preguntas o acceso anticipado: [intake@solved.gg](mailto:intake@solved.gg).

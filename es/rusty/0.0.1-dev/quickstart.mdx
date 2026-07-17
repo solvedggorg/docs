@@ -1,0 +1,132 @@
+---
+title: "Guía rápida"
+description: "De cero a un proyecto en Rust que funciona en Linux: cadena de herramientas, inicio, bloqueo, descarga, compilación y pruebas."
+---
+
+Consigue un proyecto mínimo de Rust que se compile con rusty en Linux.
+
+## Requisitos previos
+
+- Un host **Linux** (normalmente x86_64 o aarch64)
+- Acceso a Internet para la primera instalación de la cadena de herramientas y la descarga de crates
+- Un enlazador (`cc` / `ld`) disponible para enlazar binarios de Rust
+
+## 1. Instala rusty
+
+Consigue un binario `rusty` para tu máquina y colócalo en `PATH`. Echa un vistazo a [Instalación](/es/rusty/install) para ver las opciones de distribución actuales.
+
+```bash
+rusty --version
+# rusty 0.0.1-dev (version string may differ)
+```
+
+Los datos se guardan en **`$RUSTY_HOME`** (por defecto, `~/.rusty`).
+
+## 2. Instala una cadena de herramientas
+
+Las instalaciones predeterminadas incluyen **solo rustc + rust-std** (sin cargo):
+
+```bash
+rusty env install stable
+rusty env use stable
+rusty env show
+```
+
+Opcional: añade los shims de la cadena de herramientas a tu ruta después de `rusty env use`:
+
+```bash
+export PATH="$RUSTY_HOME/bin:$PATH"
+# default RUSTY_HOME is ~/.rusty
+export PATH="${RUSTY_HOME:-$HOME/.rusty}/bin:$PATH"
+```
+
+`rustc`, `rustdoc`, `rustfmt` y las herramientas relacionadas son enlaces duros que redirigen a la cadena de herramientas activa. **cargo no se instala ni se configura de forma predeterminada.**
+
+## 3. Crea un proyecto
+
+Interactivo (TTY) o con todas las opciones activadas:
+
+```bash
+mkdir hello-rusty && cd hello-rusty
+rusty init --format rusty --kind cli --edition 2021
+```
+
+Opciones útiles:
+
+| Opción | Significado |
+| --- | --- |
+| `--format rusty` | Generar el esqueleto de `rusty.json` + `rusty.lock` (nativo primero) |
+| `--format cargo` | Estructura `Cargo.toml` para interoperabilidad / migración gradual |
+| `--kind cli` / `lib` / `web` / … | Tipo de plantilla (se te pedirá en TTY si no lo pones) |
+| `--edition 2021` | Edición de Rust |
+
+Los metadatos y las cachés del proyecto van a parar a **`.rusty/`** (incluido `.rusty/format`).
+
+## 4. Bloquear y recuperar
+
+```bash
+rusty lock
+rusty fetch
+```
+
+- **Bloquear** escribe `rusty.lock` o `Cargo.lock` según el formato del proyecto.
+- **Recuperar** resuelve (si es necesario) e incorpora los crates al almacén direccionable por contenido.
+
+## 5. Compilar y probar
+
+```bash
+rusty build
+rusty test
+```
+
+Solo en nativo para estos verbos: si la estructura del proyecto está fuera de la matriz compatible, rusty **se cierra con un error** en lugar de llamar a cargo sin avisar.
+
+Opciones opcionales para paquetes y espacios de trabajo (en la misma línea que Cargo):
+
+```bash
+rusty build -p mypkg --workspace
+rusty build --affected main
+rusty test -j 8
+```
+
+## 6. Comandos del día a día
+
+```bash
+rusty add serde --vers "^1"
+rusty rm some_crate
+rusty update
+rusty clean          # removes <project>/.rusty/target
+rusty script <name>  # run a named entry from rusty.json "scripts"
+```
+
+Los scripts necesarios para Lint y format en `rusty.json`:
+
+```json
+{
+  "scripts": {
+    "lint": "…",
+    "format": "…"
+  }
+}
+```
+
+```bash
+rusty lint
+rusty format
+```
+
+## ¿Ya tienes un espacio de trabajo Cargo?
+
+No hace falta que lo reescribas todo desde el primer día:
+
+1. Apunta rusty al árbol (detecta `Cargo.toml` / cargo-format).
+2. Usa lock/fetch/add nativos cuando sea posible.
+3. Cuando estés listo: `rusty migrate` para convertir a `rusty.json` + `rusty.lock`.
+
+Echa un vistazo a [Migrar desde Cargo](/rusty/guides/migrate-from-cargo).
+
+## Siguiente
+
+- [Formatos de proyecto](/rusty/concepts/project-formats) — Diseño de rusty frente a cargo
+- [Compilación y pruebas](/rusty/guides/build-and-test) — opciones, compilaciones afectadas, scripts
+- [Referencia de CLI](/rusty/reference/cli) — lista completa de comandos

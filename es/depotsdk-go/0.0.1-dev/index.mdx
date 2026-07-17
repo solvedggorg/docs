@@ -1,0 +1,62 @@
+---
+title: "Introducción"
+description: "depotsdk-go es un SDK de Go para la API de Depot, que se mantiene en solved.gg."
+---
+
+**depotsdk-go** es un cliente Go para la API [Depot](https://depot.dev). Envuelve stubs de servicio compatibles con Connect/gRPC para que puedas ver una lista de proyectos, gestionar compilaciones y llamar a otras API de la organización Depot desde Go.
+
+## Para qué sirve depotsdk-go
+
+- **Acceso tipado a Depot y API** desde los servicios y las CLI de Go
+- **Autenticación con token de portador** (tokens a nivel de organización o de compilación)
+- **Solicitudes al estilo Connect** a través del Depot HTTP API
+
+La documentación canónica del módulo y del paquete evoluciona con el repositorio; cuando los canales de instalación difieran del empaquetado Depot del upstream, esta página indicará explícitamente la ruta del módulo **solved.gg**.
+
+## Instalación (cuando se publique)
+
+Apunta `go get` a la ruta del módulo que ofrece el repositorio **solvedggorg/depotsdk-go** una vez que lo utilices como dependencia. Hasta que las notas de publicación aparezcan aquí, clona o sustituye desde el remote de la organización y sigue las instrucciones del repositorio `README`.
+
+```bash
+# Example shape — confirm module path in go.mod before relying on it in CI
+go get github.com/solvedggorg/depotsdk-go@latest
+```
+
+Si tu copia del código sigue usando una ruta de módulo diferente, usa esa ruta hasta que se cambie el nombre.
+
+## Autenticación
+
+| Variable | Descripción |
+| --- | --- |
+| `DEPOT_TOKEN` o `DEPOT_API_TOKEN` | Token de organización o de compilación |
+| `DEPOT_API_URL` | URL base de API (por defecto Depot si no está configurada) |
+
+Usa `Authorization: Bearer` con un token de organización (o un token de compilación para llamadas dentro del ámbito de la compilación).
+
+## Cómo encaja en el conjunto
+
+| Componente | Función |
+| --- | --- |
+| **depotsdk-go** | Go SDK para Depot API |
+| [worgo](/es/worgo) | Go, gestor de proyectos del espacio de trabajo (Zig) |
+| [git](/es/git) | solved.gg servidor de git UI (panel Depot CI) |
+| [rusty](/es/rusty) / [scripty](/es/scripty) / [pyppi](/es/pyppi) / [yappy](/es/yappy) / [deploy](/es/deploy) | Otras herramientas de solved.gg |
+
+Los esquemas completos de API están disponibles en el registro Buf de Depot, no en esta página de documentación. Pon enlaces externos a las definiciones de los servicios; centra esta sección del producto en **cómo solved.gg distribuye y utiliza SDK**.
+
+## Estado
+
+**Solo introducción.** Amplíalo con instrucciones de instalación, ejemplos y ayuda para resolver errores a medida que se vaya consolidando el módulo de la organización.
+
+- Fuente: [github.com/solvedggorg/depotsdk-go](https://github.com/solvedggorg/depotsdk-go)
+- Documentación de Depot API del proyecto original: [buf.build/depot/api](https://buf.build/depot/api)
+- Descripción general de la organización: [solved.gg/projects](https://solved.gg/projects)
+
+## Qué puedes esperar a continuación en esta documentación
+
+1. Ruta del módulo y control de versiones confirmados
+2. Guía de inicio rápido (listar proyectos)
+3. Referencia de autenticación y entorno
+4. Ayudas para errores y notas de integración de CI
+
+Preguntas: [intake@solved.gg](mailto:intake@solved.gg).

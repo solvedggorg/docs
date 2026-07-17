@@ -6,6 +6,14 @@
     },
     "mintlify": {
       "url": "https://mcp.mintlify.com"
+    },
+    "deepl-developer-docs": {
+      "type": "http",
+      "url": "https://developers.deepl.com/mcp"
+    },
+    "deepl": {
+      "command": "bash",
+      "args": ["./scripts/run-deepl-mcp.sh"]
     }
   }
 }

@@ -1,0 +1,48 @@
+---
+title: "Introducción"
+description: "scripty es un entorno de ejecución de JS y un gestor de proyectos con API para Node, Deno y Bun, rediseñado en Zig."
+---
+
+**scripty** es un entorno de ejecución de JavaScript y un gestor de proyectos escrito en Zig. Esta herramienta pretende cubrir las API y los flujos de trabajo que ya usas con Node.js, Deno y Bun —con formateo y linting integrados— sin tener que apilar tres entornos de ejecución distintos.
+
+## Para qué sirve scripty
+
+- **Un único entorno de ejecución** para las API de Node, Deno y Bun (el objetivo del producto es la compatibilidad total; la implementación aún está en una fase temprana)
+- **Gestión de proyectos** para árboles JS/TS: flujos de trabajo de instalación, ejecución y espacio de trabajo, todo en un solo CLI
+- **Formateo y linting integrados** con reglas y compatibilidad con el ecosistema, para que no tengas que montar una cadena de herramientas aparte para cada repositorio
+- **La velocidad como objetivo prioritario**: el objetivo de marketing es del orden de **100× Bun** para las rutas en torno a las que se ha diseñado scripty
+
+## Cómo encaja en la suite
+
+scripty se sitúa junto a [rusty](/es/rusty) (Rust), [worgo](/es/worgo) (Go), [pyppi](/es/pyppi) (Python) y [yappy](/es/yappy) (host de escritorio nativo): herramientas de [solved.gg](https://solved.gg).
+
+| Hermano | Ecosistema |
+| --- | --- |
+| [rusty](/es/rusty) | Gestor de paquetes y cadena de herramientas de Rust (Linux) |
+| **scripty** | Entorno de ejecución de JavaScript / TypeScript + PM |
+| [worgo](/es/worgo) | Gestor de proyectos del espacio de trabajo Go |
+| [pyppi](/es/pyppi) | Python gestor de paquetes + herramienta de proyectos |
+| [yappy](/es/yappy) | Linux shell de escritorio nativo (incorpora scripty) |
+| [deploy](/es/deploy) | Next.js → Cloudflare Workers CLI |
+| [git](/es/git) | solved.gg servidor de git UI |
+| [depotsdk-go](/es/depotsdk-go) | Go SDK para el Depot API |
+
+## Estado
+
+scripty está en **acceso anticipado / próximamente**. Los paquetes públicos, las rutas de instalación y la referencia a CLI se publicarán aquí en cuanto se estabilice el binario.
+
+Hasta entonces:
+
+- Página del producto: [scripty.pm.solved.gg](https://scripty.pm.solved.gg)
+- Centro de la suite: [pm.solved.gg](https://pm.solved.gg)
+- Descripción general de la organización: [solved.gg/projects](https://solved.gg/projects)
+
+## Qué puedes esperar a continuación en esta documentación
+
+1. Instalación y primer proyecto
+2. Interfaz de tiempo de ejecución API (Node / Deno / Bun)
+3. Gestión de paquetes y espacios de trabajo
+4. Formato, lint y scripts
+5. CLI y referencia de configuración
+
+Preguntas o acceso anticipado: [intake@solved.gg](mailto:intake@solved.gg).

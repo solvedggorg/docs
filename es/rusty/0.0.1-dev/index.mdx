@@ -1,0 +1,76 @@
+---
+title: "Introducción"
+description: "rusty es un sustituto de Cargo y rustup con direccionamiento por contenido, reescrito en Zig para monorepos de Linux."
+---
+
+**rusty** es un gestor de proyectos y de cadenas de herramientas de Rust, solo para Linux, reescrito en Zig. Combina almacenamiento de paquetes por contenido, control de la cadena de herramientas al estilo de rustup y rutas nativas de resolución, obtención, compilación y pruebas pensadas para monorepos grandes; no es solo una capa superficial sobre `cargo`.
+
+<Warning>
+  **Solo Linux, de forma permanente.** rusty se basa en la semántica del sistema de archivos de Linux para el almacenamiento de contenido y la caché de compilación. macOS y Windows no son compatibles y no se añadirán.
+</Warning>
+
+## Por qué existe rusty
+
+rusty empezó como una herramienta interna en **iResolved, LLC** en un espacio de trabajo de un cliente con **3.676 crates**, donde Cargo no podía mantener un ciclo útil de edición-compilación:
+
+| Carga de trabajo | Antes (cargo) | Con rusty |
+| --- | --- | --- |
+| Compilación en frío (sin dependencias ni caché) | ~10 horas | ~10 minutos |
+| Compilaciones de desarrollo rutinarias | ~6 horas | ~45 segundos |
+| Aumento máximo de velocidad en tareas rutinarias | — | hasta **~400×** |
+
+Esas cifras provienen de la estructura real de un monorepo de producción, no de un microbenchmark. Tus resultados dependen de la estructura del grafo, de los aciertos en la caché y de si el proyecto está en la ruta nativa.
+
+## Qué hace rusty
+
+- **Gestor de paquetes**: init, lock, fetch, add, rm, update, clean; modo dual para `rusty.json` / `rusty.lock` y árboles en formato Cargo durante la migración
+- **Compilación y pruebas nativas** — ejecuta `rustc` directamente para un subconjunto declarado del proyecto; falla de forma catastrófica cuando una forma no es compatible (sin recurso silencioso de cargo para los verbos principales)
+- **Cadenas de herramientas** — instala / usa / muestra cadenas de herramientas (al estilo de rustup); las instalaciones predeterminadas son solo `rustc` + `rust-std`
+- **Almacén de contenido** — al estilo de pnpm CAS bajo `$RUSTY_HOME` para crates y blobs
+- **Capas y caché de artefactos** — caché diferencial por crate e integración con `RUSTC_WRAPPER`
+- **Espacios de trabajo** — lista de miembros, paquetes afectados por Git, dependencias inversas, informes de desviación de versiones
+- **Autenticación de productos** — identidad opcional basada en Clerk para cuentas solved.gg / iResolved (no es el inicio de sesión de crates.io)
+
+## Lo que rusty no es (todavía)
+
+rusty es **acceso anticipado**, no paridad completa con Cargo. Prefiere esta forma de verlo:
+
+> Acceso anticipado en modo dual: ruta nativa para el subconjunto en formato «rusty» y compatibilidad creciente con el formato «cargo»; interoperabilidad explícita con cargo solo para una pequeña lista de permitidos (`clippy`, `fmt`, `doc`, `bench`, `tree`) y rutas de instalación opcionales.
+
+No esperes que todas las funciones Cargo, los casos extremos del registro o las estructuras de los scripts de compilación funcionen de forma nativa desde el primer día. Las compilaciones nativas no compatibles fallan y se cierran con un error claro.
+
+## Resumen del estado
+
+| Área | ¿Predeterminado nativo? | Notas |
+| --- | --- | --- |
+| `lock` / `fetch` / `add` / `rm` / `update` / `clean` | Sí | E/S de archivos para ambos formatos; sin proceso cargo |
+| `build` / `run` / `check` | Sí (subconjunto) | Error grave si no es compatible; `scripts.build` opcional |
+| `test` | Sí | Nunca se utiliza cargo por defecto; `scripts.test` opcional |
+| `lint` / `format` | Scripts | Requiere `scripts.lint` / `scripts.format` en `rusty.json` |
+| `clippy` / `fmt` / `doc` / `bench` / `tree` | Interoperabilidad | Se necesita cargo en PATH |
+| `install` | Precompilado → nativo | Cargo solo con `RUSTY_INSTALL_ALLOW_CARGO=1` |
+
+## Próximos pasos
+
+<CardGroup cols={2}>
+  <Card title="Guía rápida" icon="rocket" href="/es/rusty/quickstart">
+    Instala una cadena de herramientas, crea la estructura básica del proyecto, bloquea, descarga y compila.
+  </Card>
+  <Card title="Instalación" icon="download" href="/es/rusty/install">
+    Consigue el binario rusty y configura `$RUSTY_HOME`.
+  </Card>
+  <Card title="Formatos de proyecto" icon="file-code" href="/rusty/concepts/project-formats">
+    rusty-format frente a cargo-format y cuándo migrar (inglés por ahora).
+  </Card>
+  <Card title="Referencia de CLI" icon="terminal" href="/rusty/reference/cli">
+    Lista completa de comandos de `rusty --help` (inglés por ahora).
+  </Card>
+</CardGroup>
+
+## Producto y licencia
+
+- Página web: [rusty.pm.solved.gg](https://rusty.pm.solved.gg)
+- Centro de la suite: [pm.solved.gg](https://pm.solved.gg)
+- Ruta de la documentación: [`/rusty`](/es/rusty) en este sitio web (no en la raíz de la suite)
+- Licencia: **iResolved Licencia de código fuente disponible v0.1** (código fuente disponible; no es código abierto según la OSI). Las cuentas autenticadas solved.gg / iResolved pueden usar rusty bajo el [EULA](/legal/eula) correspondiente, sin tener que cumplir con las condiciones de pago de esa licencia; para otras licencias comerciales: ponte en contacto con iResolved LLC.
+- Aspectos legales: [Privacidad](/legal/privacy) · [Condiciones](/legal/terms) · [EULA](/legal/eula) · [CLA](/legal/cla)

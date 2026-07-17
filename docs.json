@@ -13,28 +13,222 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "products": [
+    "languages": [
       {
-        "product": "Home",
-        "description": "Welcome to solved.gg docs and legal",
-        "icon": "house",
-        "versions": [
+        "language": "en",
+        "default": true,
+        "products": [
           {
-            "version": "latest",
-            "default": true,
-            "tag": "Latest",
-            "groups": [
+            "product": "Home",
+            "description": "Welcome to solved.gg docs and legal",
+            "icon": "house",
+            "versions": [
               {
-                "group": "Welcome",
-                "pages": ["index"]
-              },
+                "version": "2026-07-04",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Welcome",
+                    "pages": [
+                      "index"
+                    ]
+                  },
+                  {
+                    "group": "Legal",
+                    "pages": [
+                      "legal/2026-07-04/privacy",
+                      "legal/2026-07-04/terms",
+                      "legal/2026-07-04/eula",
+                      "legal/2026-07-04/cla"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "rusty",
+            "description": "Cargo + rustup, rebuilt in Zig for Linux monorepos",
+            "icon": "gears",
+            "versions": [
               {
-                "group": "Legal",
-                "pages": [
-                  "legal/privacy",
-                  "legal/terms",
-                  "legal/eula",
-                  "legal/cla"
+                "version": "0.0.1-dev",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "rusty/0.0.1-dev/index",
+                      "rusty/0.0.1-dev/quickstart",
+                      "rusty/0.0.1-dev/install"
+                    ]
+                  },
+                  {
+                    "group": "Core concepts",
+                    "pages": [
+                      "rusty/0.0.1-dev/concepts/overview",
+                      "rusty/0.0.1-dev/concepts/project-formats",
+                      "rusty/0.0.1-dev/concepts/toolchains",
+                      "rusty/0.0.1-dev/concepts/store-and-cache"
+                    ]
+                  },
+                  {
+                    "group": "Guides",
+                    "pages": [
+                      "rusty/0.0.1-dev/guides/build-and-test",
+                      "rusty/0.0.1-dev/guides/workspaces",
+                      "rusty/0.0.1-dev/guides/migrate-from-cargo"
+                    ]
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      "rusty/0.0.1-dev/reference/cli",
+                      "rusty/0.0.1-dev/reference/environment"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "scripty",
+            "description": "JS runtime and project manager — Node, Deno, and Bun APIs in Zig",
+            "icon": "code",
+            "versions": [
+              {
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "scripty/0.0.1-dev/index"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "worgo",
+            "description": "Next-gen Go workspace project manager, written in Zig",
+            "icon": "cube",
+            "versions": [
+              {
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "worgo/0.0.1-dev/index"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "yappy",
+            "description": "Linux-only native desktop shell — Qt + GTK, scripty for app logic",
+            "icon": "desktop",
+            "versions": [
+              {
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "yappy/0.0.1-dev/index"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "depotsdk-go",
+            "description": "Go SDK for the Depot API",
+            "icon": "box",
+            "versions": [
+              {
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "depotsdk-go/0.0.1-dev/index"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "deploy",
+            "description": "Next.js → Cloudflare Workers at init time",
+            "icon": "rocket",
+            "versions": [
+              {
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "deploy/0.0.1-dev/index"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "pyppi",
+            "description": "Python package manager and project tool, written in Zig",
+            "icon": "layer-group",
+            "versions": [
+              {
+                "version": "0.0.1-dev",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "pyppi/0.0.1-dev/index"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "git",
+            "description": "solved.gg git host UI — Clerk auth, Depot CI",
+            "icon": "code-branch",
+            "versions": [
+              {
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "git/index"
+                    ]
+                  }
                 ]
               }
             ]
@@ -42,165 +236,187 @@
         ]
       },
       {
-        "product": "rusty",
-        "description": "Cargo + rustup, rebuilt in Zig for Linux monorepos",
-        "icon": "gears",
-        "versions": [
+        "language": "es",
+        "products": [
           {
-            "version": "0.0.1-dev",
-            "default": true,
-            "tag": "Latest",
-            "groups": [
+            "product": "Home",
+            "description": "Bienvenida a la documentación y a los aspectos legales de solved.gg",
+            "icon": "house",
+            "versions": [
               {
-                "group": "Get started",
-                "pages": ["rusty/index", "rusty/quickstart", "rusty/install"]
-              },
-              {
-                "group": "Core concepts",
-                "pages": [
-                  "rusty/concepts/overview",
-                  "rusty/concepts/project-formats",
-                  "rusty/concepts/toolchains",
-                  "rusty/concepts/store-and-cache"
+                "version": "2026-07-04",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Bienvenida",
+                    "pages": [
+                      "es/index"
+                    ]
+                  }
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "product": "rusty",
+            "description": "Cargo + rustup, reconstruidos en Zig para monorepos de Linux",
+            "icon": "gears",
+            "versions": [
               {
-                "group": "Guides",
-                "pages": [
-                  "rusty/guides/build-and-test",
-                  "rusty/guides/workspaces",
-                  "rusty/guides/migrate-from-cargo"
+                "version": "0.0.1-dev",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Primeros pasos",
+                    "pages": [
+                      "es/rusty/0.0.1-dev/index",
+                      "es/rusty/0.0.1-dev/quickstart",
+                      "es/rusty/0.0.1-dev/install"
+                    ]
+                  }
                 ]
-              },
-              {
-                "group": "Reference",
-                "pages": ["rusty/reference/cli", "rusty/reference/environment"]
               }
             ]
-          }
-        ]
-      },
-      {
-        "product": "scripty",
-        "description": "JS runtime and project manager — Node, Deno, and Bun APIs in Zig",
-        "icon": "code",
-        "versions": [
+          },
           {
-            "version": "latest",
-            "default": true,
-            "tag": "Latest",
-            "groups": [
+            "product": "scripty",
+            "description": "Entorno de ejecución JS y gestor de proyectos — API de Node, Deno y Bun en Zig",
+            "icon": "code",
+            "versions": [
               {
-                "group": "Get started",
-                "pages": ["scripty/index"]
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Primeros pasos",
+                    "pages": [
+                      "es/scripty/0.0.1-dev/index"
+                    ]
+                  }
+                ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "product": "worgo",
-        "description": "Next-gen Go workspace project manager, written in Zig",
-        "icon": "cube",
-        "versions": [
+          },
           {
-            "version": "latest",
-            "default": true,
-            "tag": "Latest",
-            "groups": [
+            "product": "worgo",
+            "description": "Gestor de proyectos y espacios de trabajo Go de nueva generación, escrito en Zig",
+            "icon": "cube",
+            "versions": [
               {
-                "group": "Get started",
-                "pages": ["worgo/index"]
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Primeros pasos",
+                    "pages": [
+                      "es/worgo/0.0.1-dev/index"
+                    ]
+                  }
+                ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "product": "yappy",
-        "description": "Linux-only native desktop shell — Qt + GTK, scripty for app logic",
-        "icon": "desktop",
-        "versions": [
+          },
           {
-            "version": "latest",
-            "default": true,
-            "tag": "Latest",
-            "groups": [
+            "product": "yappy",
+            "description": "Shell de escritorio nativo solo para Linux — Qt + GTK, scripty para la lógica",
+            "icon": "desktop",
+            "versions": [
               {
-                "group": "Get started",
-                "pages": ["yappy/index"]
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Primeros pasos",
+                    "pages": [
+                      "es/yappy/0.0.1-dev/index"
+                    ]
+                  }
+                ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "product": "depotsdk-go",
-        "description": "Go SDK for the Depot API",
-        "icon": "box",
-        "versions": [
+          },
           {
-            "version": "latest",
-            "default": true,
-            "tag": "Latest",
-            "groups": [
+            "product": "depotsdk-go",
+            "description": "SDK de Go para la API de Depot",
+            "icon": "box",
+            "versions": [
               {
-                "group": "Get started",
-                "pages": ["depotsdk-go/index"]
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Primeros pasos",
+                    "pages": [
+                      "es/depotsdk-go/0.0.1-dev/index"
+                    ]
+                  }
+                ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "product": "deploy",
-        "description": "Next.js → Cloudflare Workers at init time",
-        "icon": "rocket",
-        "versions": [
+          },
           {
-            "version": "latest",
-            "default": true,
-            "tag": "Latest",
-            "groups": [
+            "product": "deploy",
+            "description": "Next.js → Cloudflare Workers en el momento de la inicialización",
+            "icon": "rocket",
+            "versions": [
               {
-                "group": "Get started",
-                "pages": ["deploy/index"]
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Primeros pasos",
+                    "pages": [
+                      "es/deploy/0.0.1-dev/index"
+                    ]
+                  }
+                ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "product": "pyppi",
-        "description": "Python package manager and project tool, written in Zig",
-        "icon": "layer-group",
-        "versions": [
+          },
           {
-            "version": "latest",
-            "default": true,
-            "tag": "Latest",
-            "groups": [
+            "product": "pyppi",
+            "description": "Gestor de paquetes y herramienta de proyectos Python, escrito en Zig",
+            "icon": "layer-group",
+            "versions": [
               {
-                "group": "Get started",
-                "pages": ["pyppi/index"]
+                "version": "0.0.1-dev",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Primeros pasos",
+                    "pages": [
+                      "es/pyppi/0.0.1-dev/index"
+                    ]
+                  }
+                ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "product": "git",
-        "description": "solved.gg git host UI — Clerk auth, Depot CI",
-        "icon": "code-branch",
-        "versions": [
+          },
           {
-            "version": "latest",
-            "default": true,
-            "tag": "Latest",
-            "groups": [
+            "product": "git",
+            "description": "UI del servidor git de solved.gg — auth Clerk, CI Depot",
+            "icon": "code-branch",
+            "versions": [
               {
-                "group": "Get started",
-                "pages": ["git/index"]
+                "version": "latest",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Primeros pasos",
+                    "pages": [
+                      "es/git/index"
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -258,6 +474,24 @@
   },
   "footer": {
     "links": [
+      {
+        "header": "Sponsors",
+        "items": [
+          {
+            "label": "Coderabbit",
+            "href": "https://l.solved.gg/mI5vTic"
+          }
+        ]
+      },
+      {
+        "header": "in",
+        "items": [
+          {
+            "label": "Help Center",
+            "href": "https://in.solved.gg/docs"
+          }
+        ]
+      },
       {
         "header": "Products",
         "items": [

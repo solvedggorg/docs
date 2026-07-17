@@ -1,0 +1,106 @@
+---
+title: "Instalar"
+description: "Instala la CLI de Rusty y configura RUSTY_HOME en Linux."
+---
+
+rusty se distribuye como una aplicación de línea de comandos independiente. En esta página te explicamos la configuración y el entorno una vez que tengas el binario.
+
+<Warning>
+  rusty solo funciona en **Linux**. No lo instales ni esperes que sea compatible con macOS o Windows.
+</Warning>
+
+## Consigue el binario
+
+Los canales de distribución (versiones, repositorios de paquetes o compilaciones de acceso anticipado) van evolucionando con el producto. Para acceder a la versión actual:
+
+- Página web del producto: [rusty.pm.solved.gg](https://rusty.pm.solved.gg)
+- Contacto: [intake@solved.gg](mailto:intake@solved.gg)
+
+Una vez que tengas un ejecutable `rusty`:
+
+```bash
+chmod +x rusty
+sudo mv rusty /usr/local/bin/   # or any directory on PATH
+rusty --version
+rusty --help
+```
+
+## Directorio de datos: `RUSTY_HOME`
+
+| Ruta | Función |
+| --- | --- |
+| `$RUSTY_HOME` (por defecto `~/.rusty`) | Cadenas de herramientas, almacén CAS, base de datos de autenticación, shims |
+| `$RUSTY_HOME/bin` | Proxies de cadenas de herramientas activos (`rustc`, …) y `rusty-wrapper` |
+| `$RUSTY_HOME/cargo-home` | Diseño gestionado que se usa cuando se inyecta un entorno compatible con Cargo |
+| `$RUSTY_HOME/auth.db` | Sesión de autenticación del producto (Clerk), si inicias sesión |
+
+```bash
+export RUSTY_HOME="$HOME/.rusty"   # optional; this is already the default
+```
+
+## Primera cadena de herramientas
+
+```bash
+rusty env install stable
+rusty env use stable
+rusty env list
+rusty env show
+rusty env which rustc
+```
+
+Instala objetivos o componentes adicionales según sea necesario:
+
+```bash
+rusty env install stable x86_64-unknown-linux-musl
+# cargo is opt-in if you need interop verbs:
+rusty env install stable cargo
+```
+
+Sin cargo en PATH, los comandos de interoperabilidad (`clippy`, `fmt`, `doc`, `bench`, `tree`) fallan y se cierran (salida **127**).
+
+## PATH para los shims
+
+Después de `rusty env use <id>`, pon primero los shims:
+
+```bash
+export PATH="${RUSTY_HOME:-$HOME/.rusty}/bin:$PATH"
+```
+
+Anula la cadena de herramientas activa para un solo comando con `+toolchain` o `RUSTY_TOOLCHAIN`.
+
+## Autenticación del producto (opcional)
+
+La identidad del producto **no** es el inicio de sesión de crates.io. El inicio de sesión basado en Clerk guarda una sesión en `$RUSTY_HOME`:
+
+```bash
+# Requires RUSTY_AUTH_CLIENT_ID and RUSTY_AUTH_ISSUER
+rusty auth login
+rusty auth whoami
+rusty auth status
+rusty auth logout
+```
+
+Las cuentas autenticadas [solved.gg](https://solved.gg) / Las cuentas de iResolved pueden usar rusty según el EULA del producto, sin tener que cumplir con las condiciones de pago de la licencia de código abierto; consulta la licencia que viene con tu compilación.
+
+## Estructura local del proyecto
+
+Por cada repositorio, rusty utiliza:
+
+```text
+.rusty/
+  format          # "rusty" or "cargo"
+  target/         # build outputs (also CARGO_TARGET_DIR during builds)
+  …               # lock digests, layer index, graph cache, …
+```
+
+Normalmente no tienes que crearlo a mano; `rusty init` y otros comandos se encargan de ello.
+
+## Verificar
+
+```bash
+rusty env show
+rusty store path
+rusty store stats
+```
+
+A continuación, sigue con la [Guía de inicio rápido](/es/rusty/quickstart).
