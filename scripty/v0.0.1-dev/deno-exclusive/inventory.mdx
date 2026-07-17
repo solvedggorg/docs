@@ -62,7 +62,7 @@ Every row carries a **Kind** so the exception stays enforceable:
 | --- | --- | --- | --- |
 | `Deno.listen` / `Deno.listenTls` / `Deno.connect` / `Deno.connectTls` | `shape-only` | Deno net API shapes | Bun/Node differ |
 | `Deno.serve` | `shape-only` | Deno HTTP server | Distinct from `Bun.serve` (I2) and Node `http` |
-| `Deno.resolveDns` | `exclusive` | Deno DNS API | No first-class Node/Bun equivalent shape |
+| `Deno.resolveDns` | `shape-only` | Deno-shaped DNS API | Capability exists via `node:dns` (Node, and Bun's `node:dns`); only the `Deno.resolveDns` shape differs |
 | `Deno.upgradeWebSocket` | `exclusive` | Deno upgrade helper | — |
 
 ## Subprocess & workers
@@ -94,7 +94,6 @@ Every row carries a **Kind** so the exception stays enforceable:
 | --- | --- | --- | --- |
 | `Deno.test` | `exclusive` | Deno test API shape | Distinct from `bun:test` / `node:test` |
 | `Deno.bench` | `exclusive` | Deno bench API | — |
-| Snapshot testing APIs | `exclusive` | Deno test helpers | Confirm pin |
 
 ## Jupyter / notebook
 
@@ -108,7 +107,7 @@ Every row carries a **Kind** so the exception stays enforceable:
 | --- | --- | --- |
 | `Deno.cron` | `exclusive` | Unstable in Deno (`--unstable-cron` / `deno.json` `unstable`) |
 | `Deno.telemetry` (`contextManager` / `meterProvider` / `tracerProvider`) | `exclusive` | OpenTelemetry; Deno enables via `OTEL_DENO=true`. May be host-provided |
-| Lint plugin runtime APIs | `exclusive` | Only if stable runtime surface |
+| `Deno.lint.Plugin` (lint plugin API) | `exclusive` | Unstable in Deno; refuse until the runtime surface stabilizes |
 
 ## Intentionally excluded
 
@@ -117,6 +116,7 @@ Every row carries a **Kind** so the exception stays enforceable:
 | `node:` compat under Deno | Shared Node matrix |
 | `fetch` / Web streams / WebCrypto | Multi-runtime Web |
 | `npm:` specifier mechanics alone | Module host; shared packaging story |
+| `@std/testing/snapshot` snapshot helpers | Std-library API, not a `Deno.*` runtime surface |
 | Deno Deploy-only APIs | Cloud product |
 | Full `deno compile` binary product | Tooling CLI, not language runtime API (document separately if needed) |
 
