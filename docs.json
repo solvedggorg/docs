@@ -30,7 +30,9 @@
                 "groups": [
                   {
                     "group": "Welcome",
-                    "pages": ["index"]
+                    "pages": [
+                      "index"
+                    ]
                   },
                   {
                     "group": "Legal",
@@ -93,7 +95,7 @@
           },
           {
             "product": "scripty",
-            "description": "JS runtime and project manager — Node, Deno, and Bun APIs in Zig",
+            "description": "JS runtime and project manager \u2014 Node, Deno, and Bun APIs in Zig",
             "icon": "code",
             "versions": [
               {
@@ -103,7 +105,9 @@
                 "groups": [
                   {
                     "group": "Get started",
-                    "pages": ["scripty/0.0.1-dev/index"]
+                    "pages": [
+                      "scripty/0.0.1-dev/index"
+                    ]
                   },
                   {
                     "group": "v0.0.1-dev program",
@@ -115,7 +119,7 @@
                     ]
                   },
                   {
-                    "group": "I1 — ES Engine",
+                    "group": "I1 \u2014 ES Engine",
                     "pages": [
                       "scripty/v0.0.1-dev/es/index",
                       "scripty/v0.0.1-dev/es/scope",
@@ -127,7 +131,7 @@
                     ]
                   },
                   {
-                    "group": "I2 — Bun-exclusive",
+                    "group": "I2 \u2014 Bun-exclusive",
                     "pages": [
                       "scripty/v0.0.1-dev/bun-exclusive/index",
                       "scripty/v0.0.1-dev/bun-exclusive/inventory",
@@ -136,7 +140,7 @@
                     ]
                   },
                   {
-                    "group": "I3 — Deno-exclusive",
+                    "group": "I3 \u2014 Deno-exclusive",
                     "pages": [
                       "scripty/v0.0.1-dev/deno-exclusive/index",
                       "scripty/v0.0.1-dev/deno-exclusive/inventory",
@@ -168,61 +172,9 @@
                 "groups": [
                   {
                     "group": "Get started",
-                    "pages": ["worgo/0.0.1-dev/index"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "yappy",
-            "description": "Linux-only native desktop shell — Qt + GTK, scripty for app logic",
-            "icon": "desktop",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": ["yappy/0.0.1-dev/index"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "depotsdk-go",
-            "description": "Go SDK for the Depot API",
-            "icon": "box",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": ["depotsdk-go/0.0.1-dev/index"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "deploy",
-            "description": "Next.js → Cloudflare Workers at init time",
-            "icon": "rocket",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": ["deploy/0.0.1-dev/index"]
+                    "pages": [
+                      "worgo/0.0.1-dev/index"
+                    ]
                   }
                 ]
               }
@@ -240,153 +192,9 @@
                 "groups": [
                   {
                     "group": "Get started",
-                    "pages": ["pyppi/0.0.1-dev/index"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "git",
-            "description": "solved.gg git host UI — Clerk auth, Depot CI",
-            "icon": "code-branch",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": ["git/index"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "trunker",
-            "description": "Linear + GitHub workspace dashboard for trunks and PR targets",
-            "icon": "diagram-project",
-            "versions": [
-              {
-                "version": "0.1.0",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
                     "pages": [
-                      "trunker/0.1.0/index",
-                      "trunker/0.1.0/quickstart"
+                      "pyppi/0.0.1-dev/index"
                     ]
-                  },
-                  {
-                    "group": "Core concepts",
-                    "pages": [
-                      "trunker/0.1.0/concepts/workspaces",
-                      "trunker/0.1.0/concepts/linear-sync",
-                      "trunker/0.1.0/concepts/github",
-                      "trunker/0.1.0/concepts/trunk-naming"
-                    ]
-                  },
-                  {
-                    "group": "Guides",
-                    "pages": [
-                      "trunker/0.1.0/guides/connect-linear",
-                      "trunker/0.1.0/guides/connect-github",
-                      "trunker/0.1.0/guides/dashboard",
-                      "trunker/0.1.0/guides/settings-and-filters"
-                    ]
-                  },
-                  {
-                    "group": "Reference",
-                    "pages": [
-                      "trunker/0.1.0/reference/urls",
-                      "trunker/0.1.0/reference/api",
-                      "trunker/0.1.0/reference/environment"
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "language": "es",
-        "products": [
-          {
-            "product": "Home",
-            "description": "Bienvenida a la documentación y a los aspectos legales de solved.gg",
-            "icon": "house",
-            "versions": [
-              {
-                "version": "2026-07-04",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Bienvenida",
-                    "pages": ["es/index"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "rusty",
-            "description": "Cargo + rustup, reconstruidos en Zig para monorepos de Linux",
-            "icon": "gears",
-            "versions": [
-              {
-                "version": "0.0.1-dev",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Primeros pasos",
-                    "pages": [
-                      "es/rusty/0.0.1-dev/index",
-                      "es/rusty/0.0.1-dev/quickstart",
-                      "es/rusty/0.0.1-dev/install"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "scripty",
-            "description": "Entorno de ejecución JS y gestor de proyectos — API de Node, Deno y Bun en Zig",
-            "icon": "code",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Primeros pasos",
-                    "pages": ["es/scripty/0.0.1-dev/index"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "worgo",
-            "description": "Gestor de proyectos y espacios de trabajo Go de nueva generación, escrito en Zig",
-            "icon": "cube",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Primeros pasos",
-                    "pages": ["es/worgo/0.0.1-dev/index"]
                   }
                 ]
               }
@@ -394,7 +202,7 @@
           },
           {
             "product": "yappy",
-            "description": "Shell de escritorio nativo solo para Linux — Qt + GTK, scripty para la lógica",
+            "description": "Linux-only native desktop shell \u2014 Qt + GTK, scripty for app logic",
             "icon": "desktop",
             "versions": [
               {
@@ -403,8 +211,10 @@
                 "tag": "Latest",
                 "groups": [
                   {
-                    "group": "Primeros pasos",
-                    "pages": ["es/yappy/0.0.1-dev/index"]
+                    "group": "Get started",
+                    "pages": [
+                      "yappy/0.0.1-dev/index"
+                    ]
                   }
                 ]
               }
@@ -412,7 +222,7 @@
           },
           {
             "product": "depotsdk-go",
-            "description": "SDK de Go para la API de Depot",
+            "description": "Go SDK for the Depot API",
             "icon": "box",
             "versions": [
               {
@@ -421,62 +231,10 @@
                 "tag": "Latest",
                 "groups": [
                   {
-                    "group": "Primeros pasos",
-                    "pages": ["es/depotsdk-go/0.0.1-dev/index"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "deploy",
-            "description": "Next.js → Cloudflare Workers en el momento de la inicialización",
-            "icon": "rocket",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Primeros pasos",
-                    "pages": ["es/deploy/0.0.1-dev/index"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "pyppi",
-            "description": "Gestor de paquetes y herramienta de proyectos Python, escrito en Zig",
-            "icon": "layer-group",
-            "versions": [
-              {
-                "version": "0.0.1-dev",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Primeros pasos",
-                    "pages": ["es/pyppi/0.0.1-dev/index"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "git",
-            "description": "UI del servidor git de solved.gg — auth Clerk, CI Depot",
-            "icon": "code-branch",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Primeros pasos",
-                    "pages": ["es/git/index"]
+                    "group": "Get started",
+                    "pages": [
+                      "depotsdk-go/0.0.1-dev/index"
+                    ]
                   }
                 ]
               }
@@ -508,7 +266,7 @@
   "navbar": {
     "links": [
       {
-        "label": "Your  Account",
+        "label": "Your Account",
         "href": "https://accounts.solved.gg/user"
       },
       {

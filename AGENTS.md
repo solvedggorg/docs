@@ -6,9 +6,10 @@
 - Pages are MDX files with YAML frontmatter
 - Configuration lives in `docs.json`
 - Primary navigation is **`navigation.languages`** wrapping **`products` → `versions` → groups**
-- English is the default language (`en`); Spanish (`es`) lives under `es/` with the same product/version path shape
+- English is the default language (`en`); Spanish is deferred under **`.nrn/es/`** (not published)
 - Site root (**Home**) is welcome + legal — **not** product docs (legal pages stay English-only until counsel-reviewed)
-- Product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`, `/pyppi`, `/yappy`, `/deploy`, `/git`, `/depotsdk-go`, `/trunker` (locale copies under `/es/...` when translated)
+- Published product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`, `/pyppi`, `/yappy`, `/depotsdk-go`
+- Deferred product trees (**deploy**, **git**, **trunker**) and Spanish live under **`.nrn/`** — restore via `.nrn/navigation.deferred.json` when ready
 - Translate with DeepL via `scripts/translate-mdx.mjs` (protects brands/code with keep placeholders); re-wrap nav with `scripts/wrap-languages.mjs` after adding locales
 
 ## Site structure
@@ -21,10 +22,9 @@
 | **worgo** | `/worgo` | Go workspace PM (intro) |
 | **pyppi** | `/pyppi` | Python package manager (intro) |
 | **yappy** | `/yappy` | Native Linux desktop shell — Qt + GTK, scripty logic (intro) |
-| **deploy** | `/deploy` | Next.js → Cloudflare Workers CLI (intro) |
-| **git** | `/git` | solved.gg git host UI (intro) |
 | **depotsdk-go** | `/depotsdk-go` | Go SDK for Depot API (intro) |
-| **trunker** | `/trunker` | Linear + GitHub cloud workspace for trunks / PR targets |
+
+Deferred (not in nav / not published): **deploy**, **git**, **trunker**, Spanish (`es`). See `.nrn/README.md`.
 
 ## Terminology
 
@@ -58,8 +58,9 @@
 
 - Document user-facing CLI and workflows; do not document internal agent-only policy files as product docs
 - Do not invent install URLs or version numbers that are not real — point to rusty.pm.solved.gg / intake@solved.gg when channels are unsettled
-- scripty, worgo, pyppi, yappy, deploy, git, depotsdk-go: keep intros accurate to public positioning; expand only when CLI/SDK surfaces exist
+- scripty, worgo, pyppi, yappy, depotsdk-go: keep intros accurate to public positioning; expand only when CLI/SDK surfaces exist
+- Do not re-publish deploy, git, trunker, or Spanish from `.nrn/` until intentionally restored to nav
 - **scripty pre-v0.0.1 program** lives under `/scripty/v0.0.1-dev` (ES2026 engine gate + Bun-exclusive + Deno-exclusive initiatives). Do not claim ES/Bun/Deno parity unless the matrices in that tree say `supported` or `dogfooded`. Prefer linking the program over inventing install/CLI docs early.
 - For depotsdk-go, do not invent a module path that is not in `go.mod` / release notes — link the org repo and note path when unsettled
-- For deploy, do not invent published npm package versions; build-from-source is the honest path until install channels freeze
+- For deploy (when restored), do not invent published npm package versions; build-from-source is the honest path until install channels freeze
 - Legal text is operational starting copy — flag for counsel review before treating as final corporate policy
