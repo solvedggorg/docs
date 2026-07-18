@@ -73,21 +73,25 @@ Test binary caching is on unless `RUSTY_TEST_CACHE=0`.
 
 ## Lint and format
 
-Not built-in clippy/rustfmt drivers under these names:
+Lifecycle names go through scripts only:
 
 ```bash
 rusty lint      # requires scripts.lint
 rusty format    # requires scripts.format
 ```
 
-Cargo-flavored tools remain available as **interop** (need cargo on PATH):
+Native clippy and rustfmt (no cargo):
 
 ```bash
-rusty clippy
-rusty fmt
+# once per toolchain
+rusty env install stable clippy
+rusty env install stable rustfmt
+
+rusty clippy    # clippy-driver
+rusty fmt       # rustfmt
 ```
 
-Prefer scripts for reproducible monorepo policy.
+Prefer `scripts.lint` / `scripts.format` when you need monorepo-wide policy wrappers around those tools.
 
 ## When native fails
 

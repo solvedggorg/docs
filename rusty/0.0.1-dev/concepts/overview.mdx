@@ -11,8 +11,8 @@ rusty is organized around a **native pipeline**. Cargo is an interop boundary du
 manifest (rusty.json or Cargo.toml)
   → native resolve
   → lock (rusty.lock or Cargo.lock)
-  → fetch (index + checksum)
-  → CAS ingest / materialize
+  → fetch (lock pin → static URL + checksum; else index + checksum)
+  → parallel CAS ingest / materialize
   → native rustc graph (build / test)
   → layers + artifact cache
 ```
@@ -44,7 +44,8 @@ Detection uses those files plus `.rusty/format`. See [Project formats](/rusty/0.
 
 - **`build` / `run` / `check` / `test`**: native graph or hard error.
 - **Lifecycle scripts**: optional overrides in `rusty.json` (`scripts.build`, `scripts.test`, …).
-- **Cargo interop verbs**: tiny allowlist only; documented as needing cargo on PATH.
+- **`clippy` / `fmt`**: native drivers (`clippy-driver` / `rustfmt`); install components with `rusty env install <id> clippy` / `rustfmt`.
+- **Cargo interop verbs**: tiny allowlist (`doc`, `bench`, `tree`); need cargo on PATH.
 - **No silent online cargo fallback** for rusty-format when native prep fails.
 
 ## Where data lives

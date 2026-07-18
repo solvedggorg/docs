@@ -29,7 +29,11 @@ rusty store crate materialize <name> <ver> <dest>
 rusty store crate list
 ```
 
-Fetch pipelines ingest registry crates into the store, then materialize views for the compiler as needed. Integrity of store contents is security-critical — treat digests as the source of truth.
+`rusty fetch` (and prep paths that call the same machinery) download, checksum-verify, ingest, and materialize registry crates **in parallel**. Worker count follows the shared job budget (`RUSTY_JOBS` / `-j`) but is capped like sparse-index prefetch so network/disk does not thrash.
+
+When the lockfile already pins a checksum, rusty builds the deterministic crates.io static URL (`https://static.crates.io/crates/<name>/<name>-<ver>.crate`) and skips a sparse-index lookup. Local `.crate` paths extract in place (no redundant tarball copy into the staging tree).
+
+Integrity of store contents is security-critical — treat digests (and lock pins) as the source of truth.
 
 ## Build layers
 
@@ -75,6 +79,6 @@ Compiled outputs for the workspace go under:
 | --- | --- |
 | `RUSTY_BUILD_CACHE=0` | Disable native build unit CAS cache |
 | `RUSTY_TEST_CACHE=0` | Disable test binary cache |
-| `RUSTY_JOBS` / `-j` | Parallelism for build and test |
+| `RUSTY_JOBS` / `-j` | Parallelism for build, test, and fetch ingest |
 
 See [Environment](/rusty/0.0.1-dev/reference/environment).

@@ -10,7 +10,7 @@ description: "RUSTY_* and cargo-compatible variables rusty sets or honors."
 | `RUSTY_HOME` | Data root; default `~/.rusty` |
 | `RUSTY_PROJECT_ROOT` | Set during build to the workspace root |
 | `RUSTY_TOOLCHAIN` | Override active toolchain name |
-| `RUSTY_JOBS` | Parallel jobs for build/test (also `-j`) |
+| `RUSTY_JOBS` | Parallel jobs for build/test/fetch (also `-j`; fetch workers additionally capped) |
 | `RUSTY_BUILD_CACHE` | Set to `0` to disable native build unit CAS cache |
 | `RUSTY_TEST_CACHE` | Set to `0` to disable test binary cache |
 | `RUSTY_NO_SCRIPTS` | Set to `1` to skip lifecycle script hooks |
