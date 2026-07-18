@@ -8,7 +8,7 @@
 - Primary navigation is **`navigation.languages`** wrapping **`products` → `versions` → groups**
 - English is the default language (`en`); Spanish is deferred under **`.nrn/es/`** (not published)
 - Site root (**Home**) is welcome + legal — **not** product docs (legal pages stay English-only until counsel-reviewed)
-- Published product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`, `/pyppi`, `/yappy`, `/depotsdk-go`
+- Published product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`, `/pyppi`, `/hasky`, `/yappy`, `/depotsdk-go`
 - Deferred product trees (**deploy**, **git**, **trunker**) and Spanish live under **`.nrn/`** — restore via `.nrn/navigation.deferred.json` when ready
 - Translate with DeepL via `scripts/translate-mdx.mjs` (protects brands/code with keep placeholders); re-wrap nav with `scripts/wrap-languages.mjs` after adding locales
 
@@ -21,6 +21,7 @@
 | **scripty** | `/scripty` | JS runtime + PM; pre-v0.0.1 program under `/scripty/v0.0.1-dev` |
 | **worgo** | `/worgo` | Go workspace PM (intro) |
 | **pyppi** | `/pyppi` | Python package manager (intro) |
+| **hasky** | `/hasky` | Haskell toolchain + PM (intro; Linux-only) |
 | **yappy** | `/yappy` | Native Linux desktop shell — Qt + GTK, scripty logic (intro) |
 | **depotsdk-go** | `/depotsdk-go` | Go SDK for Depot API (intro) |
 
@@ -28,15 +29,16 @@ Deferred (not in nav / not published): **deploy**, **git**, **trunker**, Spanish
 
 ## Terminology
 
-- Product names in UI and headings: lowercase **rusty**, **scripty**, **worgo**, **pyppi**, **yappy**, **deploy**, **git**, **depotsdk-go**, **trunker**
+- Product names in UI and headings: lowercase **rusty**, **scripty**, **worgo**, **pyppi**, **hasky**, **yappy**, **deploy**, **git**, **depotsdk-go**, **trunker**
 - **worgo** is the product/package name (repo: solvedggorg/worgo; site: worgo.pm.solved.gg)
-- Marketing sites for the PM suite: `pm.solved.gg` (hub) and `<product>.pm.solved.gg` (rusty, scripty, worgo, yappy, pyppi, deploy)
+- Marketing sites for the PM suite: `pm.solved.gg` (hub) and `<product>.pm.solved.gg` (rusty, scripty, worgo, yappy, pyppi, hasky, deploy)
 - **yappy** is permanently Linux-only and always native UI (Qt + GTK; no webview) — state that when platform or UI is discussed
 - **scripty** is the JS runtime/PM yappy embeds; do not describe yappy as Electron-with-Zig
 - **deploy** is init-time Next.js → Cloudflare Workers with an **owned** runtime — not OpenNext; do not claim full Next/Vercel parity before the compat matrix does
 - **git** is the solved.gg org-scoped git host UI (Clerk + Depot CI); not a public mass multi-tenant forge
 - **trunker** is the hosted Linear ↔ GitHub control plane (Clerk orgs = workspaces). Do not claim local worktrees, auto-open PR, or Linear write-back as shipped unless the product docs say so. App: trunker.solved.gg; API: trunker.api.solved.gg. Env keys follow the product root `.env` contract (LINEAR_CALLBACK_URL, GITHUB_*, etc.)
 - **pyppi** is Python tooling; do not claim full pip/uv parity while early access
+- **hasky** is a Linux-only Haskell toolchain (Zig): lock-first `hasky.json` / `hasky.lock`, CAS store, native GHC driver. Cabal/Stack are migration inputs only. Do not claim full Cabal/Stack parity or non-Linux support
 - Prefer **toolchain** over "rustup install" when describing `rusty env`
 - Prefer **rusty-format** / **cargo-format** for project layouts
 - Prefer **native** vs **interop** for cargo process vs Zig implementation
@@ -58,7 +60,7 @@ Deferred (not in nav / not published): **deploy**, **git**, **trunker**, Spanish
 
 - Document user-facing CLI and workflows; do not document internal agent-only policy files as product docs
 - Do not invent install URLs or version numbers that are not real — point to rusty.pm.solved.gg / intake@solved.gg when channels are unsettled
-- scripty, worgo, pyppi, yappy, depotsdk-go: keep intros accurate to public positioning; expand only when CLI/SDK surfaces exist
+- scripty, worgo, pyppi, hasky, yappy, depotsdk-go: keep intros accurate to public positioning; expand only when CLI/SDK surfaces exist
 - Do not re-publish deploy, git, trunker, or Spanish from `.nrn/` until intentionally restored to nav
 - **scripty pre-v0.0.1 program** lives under `/scripty/v0.0.1-dev` (ES2026 engine gate + Bun-exclusive + Deno-exclusive initiatives). Do not claim ES/Bun/Deno parity unless the matrices in that tree say `supported` or `dogfooded`. Prefer linking the program over inventing install/CLI docs early.
 - For depotsdk-go, do not invent a module path that is not in `go.mod` / release notes — link the org repo and note path when unsettled

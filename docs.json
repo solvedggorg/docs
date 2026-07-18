@@ -201,6 +201,26 @@
             ]
           },
           {
+            "product": "hasky",
+            "description": "Haskell toolchain in Zig — lock-first packages, CAS, native GHC driver (Linux)",
+            "icon": "terminal",
+            "versions": [
+              {
+                "version": "0.0.1-dev",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "hasky/0.0.1-dev/index"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "product": "yappy",
             "description": "Linux-only native desktop shell \u2014 Qt + GTK, scripty for app logic",
             "icon": "desktop",
@@ -338,6 +358,10 @@
           {
             "label": "pyppi",
             "href": "https://pyppi.pm.solved.gg"
+          },
+          {
+            "label": "hasky",
+            "href": "https://hasky.pm.solved.gg"
           },
           {
             "label": "trunker",

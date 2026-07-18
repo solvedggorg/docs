@@ -1,0 +1,49 @@
+---
+title: "Introduction"
+description: "hasky is a Linux-only Haskell toolchain in Zig — lock-first packages, CAS store, and a native GHC build driver."
+---
+
+**hasky** is a Linux-only Haskell toolchain written in Zig. It sits next to [rusty](/rusty), [scripty](/scripty), [worgo](/worgo), and [pyppi](/pyppi) in the solved.gg language-tooling suite: GHCup-like env management, lock-first package resolve, a content-addressable store, and a native **GHC** build driver for **hasky-format** projects (`hasky.json` / `hasky.lock`).
+
+## What hasky is for
+
+- **Haskell project management** — resolve, lock, fetch, and build with a single CLI direction
+- **hasky-format only** — runtime projects use `hasky.json` + `hasky.lock`; Cabal/Stack trees are migration inputs (`hasky migrate`)
+- **Drive stock GHC** — native graph and unit cache over the compiler you already know; not a reimplementation of typechecking
+- **Linux-only** — permanently; hardlink / reflink CAS semantics are part of the design
+
+## How it fits the suite
+
+| Sibling | Ecosystem |
+| --- | --- |
+| [rusty](/rusty) | Rust package manager + toolchain (Linux) |
+| [scripty](/scripty) | JavaScript / TypeScript runtime + PM |
+| [worgo](/worgo) | Go workspace project manager |
+| [pyppi](/pyppi) | Python package manager + project tool |
+| **hasky** | Haskell toolchain + package manager (Linux) |
+| [yappy](/yappy) | Linux native desktop shell (Qt + GTK) |
+| [depotsdk-go](/depotsdk-go) | Go SDK for the Depot API |
+
+These products ship under the [solved.gg](https://solved.gg) / iResolved, LLC product family.
+
+## Status
+
+hasky is in **early access / coming soon**. It is not a full Cabal or Stack replacement yet. Install instructions, lockfile reference, migrate guide, and CLI docs will land here as the native path stabilizes.
+
+Until then:
+
+- Product site: [hasky.pm.solved.gg](https://hasky.pm.solved.gg)
+- Suite hub: [pm.solved.gg](https://pm.solved.gg)
+- Source: [github.com/solvedggorg/hasky](https://github.com/solvedggorg/hasky)
+- Org overview: [solved.gg/projects](https://solved.gg/projects)
+
+## What to expect next in these docs
+
+1. Install and doctor (Linux + GHC toolchain)
+2. First `hasky.json` project and lockfile
+3. Fetch, materialize, and native build/test
+4. Migrate from Cabal/Stack
+5. Unit cache and workspace workflows
+6. CLI and configuration reference
+
+Questions or early access: [intake@solved.gg](mailto:intake@solved.gg).
