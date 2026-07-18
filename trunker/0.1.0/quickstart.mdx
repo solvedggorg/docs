@@ -1,0 +1,68 @@
+---
+title: "Quickstart"
+description: "From zero to a synced Linear workspace and GitHub org/repo list in trunker."
+---
+
+Use this path on the hosted product. You need a browser and accounts on Clerk (solved.gg), Linear, and GitHub.
+
+## Prerequisites
+
+- Access to [https://trunker.solved.gg](https://trunker.solved.gg)
+- Permission to create or join a **Clerk Organization** (workspace)
+- A **Linear** account with access to the teams/projects you care about
+- A **GitHub** account that can install the Trunker GitHub App on the orgs/repos you open PRs into
+- **Org admin** role in the Clerk organization to start OAuth connects (members can view synced data)
+
+## 1. Sign in
+
+1. Open [https://trunker.solved.gg](https://trunker.solved.gg).
+2. Sign in or sign up with Clerk.
+3. If you have no active organization, the app asks you to **create or join** one. Clerk Organizations **are** Trunker workspaces.
+
+Use the organization switcher in the sidebar (dark-themed) to move between workspaces later.
+
+## 2. Connect Linear
+
+1. Open **Connect** in the sidebar.
+2. Under **Linear**, click **Connect with Linear** (org admins only).
+3. Approve the Linear OAuth consent screen.
+4. You return to trunker; the dashboard shows **Connected** and may still be running an initial sync.
+
+Optional: register the Linear app webhook URL so updates arrive faster than the 5-minute poll. See [Connect Linear](/trunker/0.1.0/guides/connect-linear).
+
+## 3. Sync and explore
+
+1. Open **Dashboard**.
+2. Click **Sync now** if you want an on-demand poll (org admin).
+3. Open **Projects** to see Linear projects and computed trunk refs (`trunker/<branch_slug>`).
+4. Open **Issues** to browse identifiers, titles, and states.
+
+If counts stay at zero, check **Settings** filters (empty team keys / project IDs mean “all”) and that Linear OAuth completed without error.
+
+## 4. Connect GitHub
+
+1. On **Connect**, under **GitHub**, click **Connect with GitHub**.
+2. Authorize the GitHub App OAuth user flow.
+3. Install the GitHub App on the organization (or user account) that owns target repos. GitHub redirects to the setup URL and trunker stores the `installation_id`.
+4. On **Connect**, pick an installation with **Use for PRs** if you have more than one.
+5. Confirm the repository table lists the repos you expect.
+
+Details: [Connect GitHub](/trunker/0.1.0/guides/connect-github).
+
+## 5. Confirm health
+
+| Check | Where |
+| --- | --- |
+| Linear connected + last sync | Dashboard cards |
+| GitHub login + installation | Dashboard / Connect |
+| Webhooks (Linear) | Settings → Linear webhooks |
+| API alive | `curl https://trunker.api.solved.gg/health` |
+
+You now have a workspace with planning data from Linear and GitHub org/repo visibility for PR targets.
+
+## Next
+
+- [Workspaces](/trunker/0.1.0/concepts/workspaces) — roles and isolation
+- [Trunk naming](/trunker/0.1.0/concepts/trunk-naming) — how branch names are computed
+- [Settings and filters](/trunker/0.1.0/guides/settings-and-filters) — limit which Linear teams/projects sync
+- [API reference](/trunker/0.1.0/reference/api) — call trunker from scripts with a Clerk JWT

@@ -1,0 +1,53 @@
+---
+title: "Workspaces"
+description: "Clerk Organizations are Trunker workspaces — isolation, roles, and the org switcher."
+---
+
+Every piece of synced Linear data and every integration token in trunker is scoped to a **workspace**. A workspace is exactly one **Clerk Organization**.
+
+## Mapping
+
+| Clerk | Trunker |
+| --- | --- |
+| Organization id (`org_id` JWT claim) | `workspace_id` in D1 |
+| Organization name | Displayed in the sidebar |
+| Organization membership | Who can open the app for that workspace |
+| `org:admin` / owner roles | Can start OAuth, disconnect, sync, patch settings |
+| `org:member` (and similar) | Can read status, projects, issues, GitHub lists |
+
+There is no personal (non-org) workspace path for product data. The UI uses `OrganizationSwitcher` with personal accounts hidden — you must select or create an organization.
+
+## Isolation rules
+
+- Linear OAuth tokens for workspace A never serve workspace B.
+- GitHub OAuth tokens and `installation_id` are per workspace.
+- Teams, projects, issues, and comments rows always carry `workspace_id`.
+- Switching org in the sidebar changes the active Clerk session org and therefore all API results.
+
+## Org switcher
+
+The sidebar footer hosts Clerk’s organization switcher and user menu. The app forces a **dark** Clerk appearance so controls stay visible against Trunker’s dark chrome.
+
+If you land on “Select an organization”, create or join an org, then continue to the dashboard.
+
+## Roles in practice
+
+| Action | Typical role |
+| --- | --- |
+| View dashboard, projects, issues | Member |
+| Connect / reconnect / disconnect Linear | Admin |
+| Connect / reconnect / disconnect GitHub | Admin |
+| Save GitHub installation for PRs | Admin |
+| **Sync now** | Admin |
+| Patch team/project filters | Admin |
+
+If an admin-only action fails with `403` / `forbidden`, ask an org admin or promote the role in the Clerk dashboard.
+
+## Creating a workspace
+
+1. In trunker (or Clerk), create an organization.
+2. Invite teammates via Clerk’s organization invites.
+3. Admins run Connect for Linear and GitHub once per workspace.
+4. Members use the same org switcher to enter the workspace.
+
+Deleting or leaving a Clerk organization removes product access for that membership; treat org lifecycle as workspace lifecycle.
