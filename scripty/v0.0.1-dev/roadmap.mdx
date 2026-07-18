@@ -1,0 +1,99 @@
+---
+title: "Roadmap"
+description: "Phased pre-v0.0.1 roadmap for ES engine completeness and Bun/Deno exclusive surfaces."
+---
+
+# Roadmap
+
+High-level program timeline. Detailed phase tables live under each initiative.
+
+## Program phases
+
+| Phase | Name | Focus | Exit |
+| --- | --- | --- | --- |
+| **P0** | Document | This tree, pins, empty honest matrices | Docs published; nav live |
+| **P1** | Oracle | Test262 harness + CI report on Linux | Pass rate published every CI run |
+| **P2** | Language kernel | ES-1 … ES-4 (parse, values, eval, GC) | Core semantics Test262 subsets green |
+| **P3** | Built-ins | ES-5 … ES-7 | Built-in matrix rows green for in-scope set |
+| **P4** | Modules + harden | ES-8 … ES-9 | **I1 exit bar** → language half of `0.0.1` |
+| **P5** | Exclusive surfaces | I2 + I3 implementation waves | Matrices climb; dogfood smokes for key rows |
+| **P6** | Tag | `0.0.1` | I1 hard gate + I2/I3 inventories + honest status |
+
+P5 may **overlap** the end of P3/P4 for inventory-driven stubs, but `supported` exclusive rows still require a working engine.
+
+## I1 phase summary (ES Engine)
+
+| ID | Focus | Exit sketch |
+| --- | --- | --- |
+| ES-0 | Spec pin + Test262 harness | CI runs suite, reports X/Y |
+| ES-1 | Full modern syntax (lexer/parser) | Syntax fixtures + parse subset |
+| ES-2 | Values, property attributes, exotic paths | Core value semantics |
+| ES-3 | Evaluation model (envs, this, completions) | Control-flow / scope tests |
+| ES-4 | GC roots for long suite runs | No UAF / false free under suite |
+| ES-5 | Built-ins wave 1 | Object, Function, Array, String, Number, Boolean, Math, Date, Error, JSON |
+| ES-6 | Built-ins wave 2 | Promise, Symbol, Map/Set/Weak*, RegExp, TypedArray family |
+| ES-7 | Built-ins wave 3 + ES2025–2026 deltas | Proxy/Reflect, iterators, Iterator helpers, Set methods, … |
+| ES-8 | Module linking (cycles, TLA, import attributes as required) | Module Test262 green |
+| ES-9 | Hardening | **Zero open blockers** on in-scope Test262 |
+
+Full detail: [ES phases](/scripty/v0.0.1-dev/es/phases).
+
+## I2 phase summary (Bun-exclusive)
+
+| ID | Focus | Exit sketch |
+| --- | --- | --- |
+| B-0 | Inventory freeze + matrix | Every known Bun-only row listed |
+| B-1 | `Bun.file` / `Bun.write` / path helpers | File smokes |
+| B-2 | `Bun.serve` HTTP | Server smoke |
+| B-3 | `bun:sqlite` + SQL helpers | DB smoke |
+| B-4 | Hash / password / Glob / spawn cluster | Utility smokes |
+| B-5 | S3 + remaining long tail | Matrix depth |
+| B-6 | Dogfood scripts | Key rows `dogfooded` |
+
+Full detail: [Bun roadmap](/scripty/v0.0.1-dev/bun-exclusive/roadmap).
+
+## I3 phase summary (Deno-exclusive)
+
+| ID | Focus | Exit sketch |
+| --- | --- | --- |
+| D-0 | Inventory freeze + matrix | Every known Deno-only row listed |
+| D-1 | Permissions model | Grant / deny / query |
+| D-2 | Core `Deno.*` I/O namespace | File/env/args smokes |
+| D-3 | Net / `Deno.serve` (Deno shape) | Server smoke |
+| D-4 | Deno KV | KV smoke |
+| D-5 | FFI / test / bench / long tail | Matrix depth |
+| D-6 | Dogfood scripts | Key rows `dogfooded` |
+
+Full detail: [Deno roadmap](/scripty/v0.0.1-dev/deno-exclusive/roadmap).
+
+## Suggested calendar framing (not a promise)
+
+| Horizon | Intent |
+| --- | --- |
+| Near | P0–P1: docs + Test262 harness; ES-1 parser growth |
+| Mid | P2–P3: language kernel + first built-in waves |
+| Far | P4: language gate; P5 exclusive surfaces; P6 tag |
+
+A greenfield Zig ES engine that passes modern Test262 is a **large** effort. Phases exist so progress is continuous and claimable without faking parity.
+
+## Risks
+
+| Risk | Mitigation |
+| --- | --- |
+| Underestimating ES surface area | Matrix rows + Test262 oracles; no silent “done” |
+| Confusing exclusive APIs with shared Node | Strict I2/I3 filters |
+| Host pressure (DX/yappy) derailing language work | Embed stubs OK; language gate stays primary for `0.0.1` |
+| Upstream Bun/Deno API churn | Version pins in [Sources](/scripty/v0.0.1-dev/reference/sources) |
+| Scope creep into browsers / multi-OS | Permanent product locks |
+
+## After `0.0.1`
+
+Post-tag work (not this program’s exit bar):
+
+- Shared Node / Deno / Bun **overlap** surfaces
+- Framework dogfood (Next, Nuxt, Nest, Solid — equal priority)
+- Embed depth for DX and yappy
+- PM/CAS offline graphs
+- Broader npm without adapters
+
+See [Relationship to the v1 plan](/scripty/v0.0.1-dev/reference/relationship-to-v1).

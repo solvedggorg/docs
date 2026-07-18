@@ -17,7 +17,7 @@
 | --- | --- | --- |
 | **Home** | `/`, `/legal/*` | Welcome page + Privacy, Terms, EULA, CLA |
 | **rusty** | `/rusty` | Rust PM + toolchains (Linux-only) |
-| **scripty** | `/scripty` | JS runtime + PM (intro) |
+| **scripty** | `/scripty` | JS runtime + PM; pre-v0.0.1 program under `/scripty/v0.0.1-dev` |
 | **worgo** | `/worgo` | Go workspace PM (intro) |
 | **pyppi** | `/pyppi` | Python package manager (intro) |
 | **yappy** | `/yappy` | Native Linux desktop shell — Qt + GTK, scripty logic (intro) |
@@ -57,6 +57,7 @@
 - Document user-facing CLI and workflows; do not document internal agent-only policy files as product docs
 - Do not invent install URLs or version numbers that are not real — point to rusty.pm.solved.gg / intake@solved.gg when channels are unsettled
 - scripty, worgo, pyppi, yappy, deploy, git, depotsdk-go: keep intros accurate to public positioning; expand only when CLI/SDK surfaces exist
+- **scripty pre-v0.0.1 program** lives under `/scripty/v0.0.1-dev` (ES2026 engine gate + Bun-exclusive + Deno-exclusive initiatives). Do not claim ES/Bun/Deno parity unless the matrices in that tree say `supported` or `dogfooded`. Prefer linking the program over inventing install/CLI docs early.
 - For depotsdk-go, do not invent a module path that is not in `go.mod` / release notes — link the org repo and note path when unsettled
 - For deploy, do not invent published npm package versions; build-from-source is the honest path until install channels freeze
 - Legal text is operational starting copy — flag for counsel review before treating as final corporate policy

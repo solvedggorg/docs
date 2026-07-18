@@ -1,0 +1,65 @@
+---
+title: "I3 — Deno-exclusive surface"
+description: "Initiative I3: implement the API surface Deno has that Bun and Node do not."
+---
+
+# I3 — Deno-exclusive surface
+
+**Goal:** implement the **native API surface Deno ships that Bun and Node do not** — permissions-aware, `Deno.*`-shaped, on scripty’s own Zig VM (Linux only).
+
+| Field | Value |
+| --- | --- |
+| **Initiative** | I3 |
+| **Filter** | Deno-only / Deno-first-class; **not** shared Web or Node modules |
+| **Depends on** | Usable language kernel; permission host design |
+| **Pin** | Deno version recorded in [Sources](/scripty/v0.0.1-dev/reference/sources) |
+
+## Why exclusive-only
+
+Deno’s differentiators are not “also has `fetch`.” They are the **`Deno` namespace**, **capability permissions**, **Deno KV**, and other first-party modules that Node/Bun do not ship as builtins.
+
+I3 tracks that delta so scripty can honestly say what Deno-shaped code needs.
+
+## Success definition
+
+| Level | Bar |
+| --- | --- |
+| **Docs (pre-tag)** | [Inventory](/scripty/v0.0.1-dev/deno-exclusive/inventory) complete and every row mapped in the [matrix](/scripty/v0.0.1-dev/deno-exclusive/matrix) (matrix **Coverage** check) |
+| **Implementation** | Rows `supported` with tests; permission denials fail closed |
+| **Dogfood** | Smokes for permissions + core I/O + KV |
+
+## Out of scope
+
+| Item | Why |
+| --- | --- |
+| Full Node compat Deno also implements | Shared Node matrix |
+| Deno Deploy product cloud | Hosted product, not local runtime kernel |
+| Browser webview desktop | Product lock — never in scripty |
+| JSR registry product | PM/registry track |
+
+## Permissions are part of the surface
+
+Unlike Bun’s default unrestricted model, Deno’s runtime security model **is** an API:
+
+- CLI flags (`--allow-read`, …)
+- `Deno.permissions.query` / `request` / `revoke`
+- Permission descriptors
+
+scripty should implement a **capability host** that can express the same shapes (aligned with embed `Caps` where applicable).
+
+## Read next
+
+<CardGroup cols={2}>
+  <Card title="Inventory" icon="list" href="/scripty/v0.0.1-dev/deno-exclusive/inventory">
+    Deno-only APIs catalogued for implementation.
+  </Card>
+  <Card title="Matrix" icon="table" href="/scripty/v0.0.1-dev/deno-exclusive/matrix">
+    Living status rows.
+  </Card>
+  <Card title="Roadmap" icon="map" href="/scripty/v0.0.1-dev/deno-exclusive/roadmap">
+    D-0 … D-6 delivery waves.
+  </Card>
+  <Card title="Program principles" icon="scale-balanced" href="/scripty/v0.0.1-dev/principles">
+    Exclusive-surface filter rules.
+  </Card>
+</CardGroup>

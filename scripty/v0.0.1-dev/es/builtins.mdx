@@ -1,0 +1,79 @@
+---
+title: "ES built-ins"
+description: "Built-in object inventory for scripty ECMAScript compatibility (I1)."
+---
+
+# ES built-ins
+
+Inventory of standard built-in objects for initiative **I1**. Status vocabulary: [Status vocabulary](/scripty/v0.0.1-dev/reference/status-vocabulary).
+
+Group delivery waves match [ES phases](/scripty/v0.0.1-dev/es/phases): **wave 1 = ES-5**, **wave 2 = ES-6**, **wave 3 = ES-7**.
+
+## Wave 1 (ES-5)
+
+| Built-in | Status | Priority notes |
+| --- | --- | --- |
+| `Object` + static/prototype methods | `partial` | Property model must catch up |
+| `Function` | `partial` | — |
+| `Array` + iteration helpers baseline | `partial` | Modern methods incomplete |
+| `String` | `partial` | — |
+| `Number` | `partial` | — |
+| `Boolean` | `partial` | — |
+| `Math` | `unsupported` | — |
+| `Date` | `unsupported` | — |
+| `Error`, `TypeError`, `RangeError`, `SyntaxError`, `ReferenceError`, `URIError`, `EvalError`, `AggregateError` | `partial` | Hierarchy incomplete |
+| `JSON` | `unsupported` | — |
+| Number/URI globals (`parseInt`, `parseFloat`, `isNaN`, `isFinite`, `encodeURI*`, `decodeURI*`) | `partial` | Bring to spec alongside `Number`/`String` work |
+| `eval` | `unsupported` | Policy row: document fail-closed or implement |
+
+## Wave 2 (ES-6)
+
+| Built-in | Status | Priority notes |
+| --- | --- | --- |
+| `Promise` (+ `all`, `race`, `any`, `allSettled`, `withResolvers`, …) | `partial` | then/jobs exist |
+| `Symbol` (+ well-known symbols) | `unsupported` | — |
+| `Map` | `unsupported` | — |
+| `Set` | `unsupported` | — |
+| `WeakMap` | `unsupported` | — |
+| `WeakSet` | `unsupported` | — |
+| `WeakRef` / `FinalizationRegistry` | `unsupported` | Coordinate with GC design |
+| `RegExp` | `unsupported` | Large surface; plan early |
+| `ArrayBuffer` | `unsupported` | — |
+| `SharedArrayBuffer` | `unsupported` | Threading policy TBD; may refuse until workers |
+| `DataView` | `unsupported` | — |
+| TypedArrays (`Int8Array` … `Float64Array`, `BigInt64Array`, …) | `unsupported` | — |
+| `Atomics` | `unsupported` | Depends on SAB policy |
+
+## Wave 3 (ES-7 + edition deltas)
+
+| Built-in / feature | Status | Priority notes |
+| --- | --- | --- |
+| `Proxy` | `unsupported` | — |
+| `Reflect` | `unsupported` | — |
+| GeneratorFunction / Generator prototype | `unsupported` | — |
+| AsyncFunction / AsyncGenerator | `unsupported` | — |
+| `%IteratorPrototype%` + Iterator helpers | `unsupported` | ES2025+ |
+| `Set` methods (union, intersection, …) | `unsupported` | ES2025+ |
+| `Iterator` global (if present in pin) | `unsupported` | Track edition text |
+| `Intl` (`Intl.DateTimeFormat`, …) | `unsupported` | **Decision:** implement for gate **or** mark refused (out of I1) |
+| `Temporal` (if normative in pin / host ships) | `unsupported` | Confirm against ES2026 pin; refuse if still separate |
+
+## Globals (realm)
+
+| Global | Status | Notes |
+| --- | --- | --- |
+| `globalThis` | `partial` | — |
+| `undefined` | `supported` | — |
+| `NaN` / `Infinity` | `partial` | — |
+| `console` | `partial` | Host-ish; log/error/warn smokes — not ES core |
+
+## Implementation notes
+
+1. Prefer **spec algorithms** over “good enough” polyfill behavior.
+2. Every method that lands needs at least one automated test (unit or Test262 path).
+3. When a method is missing, it should be **absent** or throw a clear “not implemented” — not return wrong values.
+4. Built-ins that allocate must participate in **GC roots** (see internal GC design).
+
+## Tracking
+
+Update this page and the [feature matrix](/scripty/v0.0.1-dev/es/feature-matrix) together. Do not let them diverge.

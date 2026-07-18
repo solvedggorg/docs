@@ -1,0 +1,90 @@
+---
+title: "Bun-exclusive roadmap"
+description: "Delivery phases B-0 through B-6 for Bun-only APIs on scripty."
+---
+
+# Bun-exclusive roadmap
+
+## Phases
+
+### B-0 — Inventory freeze
+
+| | |
+| --- | --- |
+| **Work** | Publish inventory + matrix; pin Bun docs version; classify each API exclusive vs shared |
+| **Exit** | No known high-traffic Bun-only API missing from inventory without a “deferred” note |
+| **Status** | **Docs in progress (this tree)** |
+
+### B-1 — Files
+
+| | |
+| --- | --- |
+| **Work** | `Bun.file`, `Bun.write`, path edge cases on Linux, basic Blob interop |
+| **Exit** | Smokes + matrix `supported` for file core |
+| **Depends on** | Engine can run modules; host fs capability |
+
+### B-2 — HTTP server
+
+| | |
+| --- | --- |
+| **Work** | `Bun.serve` fetch-handler server; routing basics; TLS later |
+| **Exit** | Hello-world server smoke; load test optional |
+| **Depends on** | B-1 helpful; net host |
+
+### B-3 — SQLite + SQL
+
+| | |
+| --- | --- |
+| **Work** | `bun:sqlite`; then `Bun.sql` / Postgres client if still exclusive |
+| **Exit** | CRUD smoke; parameterized queries |
+| **Depends on** | B-1 |
+
+### B-4 — Utilities cluster
+
+| | |
+| --- | --- |
+| **Work** | `Bun.hash`, `Bun.password`, `Bun.Glob`, `Bun.spawn`, `Bun.sleep`, inspect/deepEquals/semver |
+| **Exit** | Unit tests per API; matrix updates |
+| **Depends on** | B-0 |
+
+### B-5 — Cloud + long tail
+
+| | |
+| --- | --- |
+| **Work** | S3 client; remaining inventory rows; FFI; test runner API |
+| **Exit** | Every [inventory](/scripty/v0.0.1-dev/bun-exclusive/inventory) row maps to a [matrix](/scripty/v0.0.1-dev/bun-exclusive/matrix) row or named group (matrix **Coverage** check passes); experimental rows labeled |
+| **Depends on** | B-2…B-4 as needed |
+
+### B-6 — Dogfood
+
+| | |
+| --- | --- |
+| **Work** | First-party sample apps: static file server, sqlite API, S3 backup script |
+| **Exit** | Key rows `dogfooded` |
+| **Depends on** | B-2, B-3 at minimum |
+
+## Suggested priority order
+
+```text
+Bun.file / Bun.write
+  → Bun.serve
+  → bun:sqlite
+  → Bun.hash / Bun.password / Bun.Glob
+  → Bun.spawn
+  → Bun.sql
+  → Bun.s3
+  → bun:ffi / bun:test / Bun.build
+```
+
+## Risks
+
+| Risk | Mitigation |
+| --- | --- |
+| Inventory churn | Version pin + release-note diffs |
+| Accidental Node reimplementation | Exclusive filter review in PR template |
+| `bun:jsc` expectation | Document refuse / scripty-native substitute |
+| Scope explosion via `Bun.build` | Keep in B-5; do not block B-1…B-3 |
+
+## Relationship to I1
+
+Prefer implementing exclusive APIs that need modern syntax **after** ES-5. File and hash APIs can start earlier with limited language features.

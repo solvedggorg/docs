@@ -1,0 +1,64 @@
+---
+title: "Relationship to the v1 plan"
+description: "How pre-v0.0.1 ES/Bun/Deno initiatives relate to scripty's existing v1 product plan."
+---
+
+# Relationship to the v1 plan
+
+The scripty repository keeps an engineering plan at **`docs/v1-plan.md`**. That plan centers:
+
+- Own Zig VM  
+- External hosts (DX, yappy)  
+- Equal framework dogfood (Next, Nuxt, Nest, Solid)  
+- Layered node-compat  
+
+This **pre-v0.0.1 program** does **not** delete those goals. It **reorders the gate** for the first tagged release.
+
+## What changed
+
+| Topic | Prior emphasis in `v1-plan.md` | Pre-v0.0.1 program |
+| --- | --- | --- |
+| Full Test262 / full ES edition | Explicitly **out of v1** / later | **I1 hard gate** for tag `0.0.1` |
+| Framework dogfood | Track A success definition | **Deferred** until language bar (still equal priority after) |
+| Desktop embed (yappy) | Track B | Still real; not the `0.0.1` language gate |
+| Bun / Deno APIs | Layered `api/` mention | **I2 / I3** exclusive inventories and roadmaps |
+| Linux-only / no webview / own VM | Locked | **Unchanged** |
+
+## What did not change
+
+- **D1** Own VM — never embed V8/JSC/SpiderMonkey  
+- **D5** Permanently Linux-only  
+- **D6** No webview/Chromium in scripty  
+- **D11** No yappy/DX product trees in the scripty repo  
+- **D3** Frameworks remain equal **when** framework work resumes  
+- Runtime complexity stays in scripty; hosts stay thin  
+
+## How to use both documents
+
+| Audience | Read |
+| --- | --- |
+| Contributors implementing language kernel | This program **I1** + `docs/vm-gc.md` |
+| Contributors implementing Bun/Deno exclusives | **I2** / **I3** |
+| Contributors on DX/yappy embed | `docs/embed.md` + host repos; do not block on frameworks before ES bar |
+| Contributors on frameworks | Wait for I1 language gate unless work is pure docs/adapters on smokes |
+| Release managers for `0.0.1` | [Program index](/scripty/v0.0.1-dev) exit bars |
+
+## Suggested `v1-plan.md` framing (engineering)
+
+Treat pre-v0.0.1 as **Milestone language-gate** inserted **before** M3 framework dogfood completion:
+
+```text
+M0–M2 foundations (existing)
+  → Pre-v0.0.1 program (I1 hard gate; I2/I3 inventories)
+  → tag 0.0.1
+  → resume M3 framework tracks / M4 desktop embed depth / M5–M6 matrices+PM
+```
+
+## Conflict resolution
+
+If instructions disagree:
+
+1. **Product locks** (Linux, own VM, no webview, repo boundary) always win  
+2. **Tag `0.0.1` language claims** follow this program’s I1 definition  
+3. **Framework equality** remains true for post-gate work  
+4. Update both docs in one change set when priorities shift again  

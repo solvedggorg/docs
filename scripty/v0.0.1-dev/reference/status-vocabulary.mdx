@@ -1,0 +1,37 @@
+---
+title: "Status vocabulary"
+description: "Shared matrix status labels for scripty pre-v0.0.1 docs."
+---
+
+# Status vocabulary
+
+Every compatibility or feature row in this program uses exactly one status.
+
+| Status | Meaning | Allowed claims |
+| --- | --- | --- |
+| `unsupported` | Not implemented. Must be absent or fail closed. | None |
+| `partial` | Some paths work. Gaps are documented on the row. | “Experimental / incomplete” only |
+| `supported` | Implemented with automated tests pointing at the row. | “Supported” in docs for that row |
+| `dogfooded` | Supported **and** exercised on a first-party smoke or app path. | Strongest claim |
+
+## Optional qualifiers (in Notes column)
+
+| Qualifier | Meaning |
+| --- | --- |
+| `refused` | Will not implement (with reason) — terminal for that row |
+| `deferred` | Intentionally later; not a silent gap |
+| `shape-wrapper` | Thin Deno/Bun-shaped API over shared host |
+
+## Rules
+
+1. **No silent upgrades.** Do not move to `supported` without tests.  
+2. **No marketing override.** README claims must match the weakest related row.  
+3. **Regressions.** If tests break, drop status in the same PR.  
+4. **Linux only.** Status never implies multi-OS.  
+
+## Used by
+
+- [ES feature matrix](/scripty/v0.0.1-dev/es/feature-matrix)
+- [ES built-ins](/scripty/v0.0.1-dev/es/builtins)
+- [Bun-exclusive matrix](/scripty/v0.0.1-dev/bun-exclusive/matrix)
+- [Deno-exclusive matrix](/scripty/v0.0.1-dev/deno-exclusive/matrix)

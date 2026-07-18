@@ -1,0 +1,127 @@
+---
+title: "Deno-exclusive inventory"
+description: "Catalog of Deno APIs that Bun and Node do not ship as first-class runtime surfaces."
+---
+
+# Deno-exclusive inventory
+
+Inclusion rule:
+
+> Native in Deno **and** not first-class in Node **and** not first-class in Bun.
+
+Many Deno I/O methods **overlap conceptually** with Node/`Bun` file APIs. I3 still includes the **`Deno.*` namespace shapes** when the product goal is Deno-shaped source compatibility — but marks rows that are “shape-only wrappers over shared host” as such.
+
+Every row carries a **Kind** so the exception stays enforceable:
+
+- `exclusive` — no first-class Node **or** Bun equivalent (e.g. permissions, KV).
+- `shape-only` — a Deno-shaped wrapper over a capability that is already shared host work (e.g. FS, core runtime info); tracked for source compatibility, not counted as a net-new capability.
+
+**Pin:** [Sources](/scripty/v0.0.1-dev/reference/sources).
+
+## Permissions (high priority exclusive)
+
+| API | Kind | Why exclusive | Notes |
+| --- | --- | --- | --- |
+| CLI permission flags (`--allow-read`, `--allow-write`, `--allow-net`, `--allow-env`, `--allow-run`, `--allow-ffi`, `--allow-sys`, …) | `exclusive` | Deno security model | Map to scripty capability host |
+| Permission sets in config | `exclusive` | Deno 2.x feature | Align with config story |
+| `Deno.permissions.query` | `exclusive` | Runtime permission API | — |
+| `Deno.permissions.request` | `exclusive` | Interactive / programmatic grant | Embed may no-op or policy-hook |
+| `Deno.permissions.revoke` | `exclusive` | Revocation | — |
+| `Deno.PermissionStatus` / descriptors | `exclusive` | Types + events | — |
+| Path permission interactions (`Deno.cwd`, relative-path resolution) | `exclusive` | Permission model applies to path access | Resolve relative paths against cwd, then check `--allow-read` / `--allow-write` scope |
+
+## `Deno` namespace — core runtime
+
+| API | Kind | Why exclusive / Deno-shaped | Notes |
+| --- | --- | --- | --- |
+| `Deno.args` | `shape-only` | Deno global shape | Overlaps `process.argv` |
+| `Deno.mainModule` | `shape-only` | Deno entry URL | — |
+| `Deno.noColor` | `shape-only` | Deno flag | — |
+| `Deno.pid` / `Deno.ppid` | `shape-only` | Namespace shape | Overlap with `process` — still Deno surface |
+| `Deno.hostname` / `Deno.osRelease` / `Deno.loadavg` / `Deno.systemMemoryInfo` / `Deno.uid` / `Deno.gid` | `shape-only` | Deno sys APIs | Linux only |
+| `Deno.exit` / `Deno.exitCode` | `shape-only` | Deno shape | — |
+| `Deno.env` (`get`/`set`/`toObject`/`has`/`delete`) | `shape-only` | Deno Env object | Not `process.env` |
+| `Deno.cwd` / `Deno.chdir` | `shape-only` | Deno shape | — |
+| `Deno.execPath` | `shape-only` | Deno shape | — |
+
+## `Deno` namespace — files & FS
+
+| API | Kind | Notes |
+| --- | --- | --- |
+| `Deno.readFile` / `readTextFile` / `readFileSync` / `readTextFileSync` | `shape-only` | Deno shapes over host fs |
+| `Deno.writeFile` / `writeTextFile` (+ sync) | `shape-only` | — |
+| `Deno.open` / `Deno.FsFile` | `shape-only` | File handle API |
+| `Deno.stat` / `lstat` / `fstat` (+ sync) | `shape-only` | — |
+| `Deno.mkdir` / `remove` / `rename` / `copyFile` / `link` / `symlink` / `readLink` / `realPath` / `truncate` / `chmod` / `chown` / `makeTemp*` / `create` / `readDir` | `shape-only` | Full Deno FS surface |
+| `Deno.watchFs` | `shape-only` | inotify on Linux |
+| `Deno.FileInfo` types | `shape-only` | — |
+
+## Net & HTTP
+
+| API | Kind | Why exclusive-ish | Notes |
+| --- | --- | --- | --- |
+| `Deno.listen` / `Deno.listenTls` / `Deno.connect` / `Deno.connectTls` | `shape-only` | Deno net API shapes | Bun/Node differ |
+| `Deno.serve` | `shape-only` | Deno HTTP server | Distinct from `Bun.serve` (I2) and Node `http` |
+| `Deno.resolveDns` | `shape-only` | Deno-shaped DNS API | Capability exists via `node:dns` (Node, and Bun's `node:dns`); only the `Deno.resolveDns` shape differs |
+| `Deno.upgradeWebSocket` | `exclusive` | Deno upgrade helper | — |
+
+## Subprocess & workers
+
+| API | Kind | Notes |
+| --- | --- | --- |
+| `Deno.Command` / `Deno.ChildProcess` | `shape-only` | Deno subprocess API (not `Bun.spawn` / `child_process`) |
+| `Deno.kill` | `shape-only` | — |
+
+## Deno KV (exclusive built-in)
+
+| API | Kind | Why exclusive | Notes |
+| --- | --- | --- | --- |
+| `Deno.openKv` | `exclusive` | Built-in KV | Not in Node/Bun as runtime builtin |
+| Atomic ops / `commit` | `exclusive` | — | Local backend first (SQLite/LMDB-style) |
+| KV queues / listeners | `exclusive` | — | Phase after core KV |
+| Remote KV URLs | `exclusive` | Optional | May refuse or limit to local for v0 |
+
+## FFI & native
+
+| API | Kind | Why exclusive | Notes |
+| --- | --- | --- | --- |
+| `Deno.dlopen` | `exclusive` | Deno FFI | Linux `.so`; permission-gated |
+| `Deno.UnsafePointer` / callbacks | `exclusive` | FFI detail types | — |
+
+## Testing & tooling APIs
+
+| API | Kind | Why exclusive | Notes |
+| --- | --- | --- | --- |
+| `Deno.test` | `exclusive` | Deno test API shape | Distinct from `bun:test` / `node:test` |
+| `Deno.bench` | `exclusive` | Deno bench API | — |
+
+## Jupyter / notebook
+
+| API | Kind | Why exclusive | Notes |
+| --- | --- | --- | --- |
+| `Deno.jupyter` | `exclusive` | Built-in Jupyter display APIs | Niche; phase late or refuse with reason |
+
+## Other Deno-first surfaces
+
+| API | Kind | Notes |
+| --- | --- | --- |
+| `Deno.cron` | `exclusive` | Unstable in Deno (`--unstable-cron` / `deno.json` `unstable`) |
+| `Deno.telemetry` (`contextManager` / `meterProvider` / `tracerProvider`) | `exclusive` | OpenTelemetry; Deno enables via `OTEL_DENO=true`. May be host-provided |
+| `Deno.lint.Plugin` (lint plugin API) | `exclusive` | Unstable in Deno; refuse until the runtime surface stabilizes |
+
+## Intentionally excluded
+
+| Surface | Reason |
+| --- | --- |
+| `node:` compat under Deno | Shared Node matrix |
+| `fetch` / Web streams / WebCrypto | Multi-runtime Web |
+| `npm:` specifier mechanics alone | Module host; shared packaging story |
+| `@std/testing/snapshot` snapshot helpers | Std-library API, not a `Deno.*` runtime surface |
+| Deno Deploy-only APIs | Cloud product |
+| Full `deno compile` binary product | Tooling CLI, not language runtime API (document separately if needed) |
+
+## Maintenance
+
+1. Diff Deno release notes against inventory each pin bump  
+2. Prefer local, permission-gated implementations  
+3. When an API becomes shared upstream, reclassify out of I3  

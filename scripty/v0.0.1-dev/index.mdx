@@ -1,0 +1,72 @@
+---
+title: "Pre-v0.0.1 program"
+description: "scripty pre-v0.0.1 initiatives: full ECMAScript engine compatibility, then Bun-exclusive and Deno-exclusive API surfaces."
+---
+
+# Pre-v0.0.1 program
+
+This is the **active product program** for scripty before the **v0.0.1** tag.
+
+scripty is a Zig-native JavaScript runtime and package manager (own VM — not V8, JSC, or SpiderMonkey), embedded by hosts such as yappy. Pre-v0.0.1 reorders the work so the **language engine is complete against the latest ECMAScript edition first**, then the **runtime surfaces that only Bun or only Deno ship natively**.
+
+<Warning>
+  **Linux only, permanently.** scripty builds, CI, and first-party dogfood are Linux-only. Desktop UI never lives in scripty (no webview / Chromium). Hosts such as yappy embed scripty from separate repositories.
+</Warning>
+
+## The three initiatives
+
+| ID | Initiative | Pre-v0.0.1 bar |
+| --- | --- | --- |
+| **I1** | [ES Engine](/scripty/v0.0.1-dev/es) | Own Zig VM fully compatible with the **latest ECMAScript** edition (pinned today to **ECMAScript 2026**) |
+| **I2** | [Bun-exclusive surface](/scripty/v0.0.1-dev/bun-exclusive) | API surface **Bun has that Node and Deno do not** |
+| **I3** | [Deno-exclusive surface](/scripty/v0.0.1-dev/deno-exclusive) | API surface **Deno has that Bun and Node do not** |
+
+See [Initiatives](/scripty/v0.0.1-dev/initiatives) for the dependency graph and [Roadmap](/scripty/v0.0.1-dev/roadmap) for phases and exit criteria.
+
+## Why this order
+
+1. **Language first.** Frameworks, Node-compat, and host embeds all assume a correct ES engine. Shipping adapters on a partial language subset produces silent lies in the matrices.
+2. **Exclusive surfaces next.** Shared Node-shaped APIs are large and already tracked elsewhere. Bun-only and Deno-only surfaces are the differentiators for a multi-runtime product story — and they are finite inventories you can matrix honestly.
+3. **Hosts and frameworks after the language gate.** DX, yappy, and Next/Nuxt/Nest/Solid dogfood remain real goals, but they are **not** the pre-v0.0.1 gate. See [Relationship to the v1 plan](/scripty/v0.0.1-dev/reference/relationship-to-v1).
+
+## What “v0.0.1” means
+
+| Gate | Required for tag `0.0.1`? |
+| --- | --- |
+| **I1** ES engine exit bar (in-scope Test262 / ES2026 feature matrix green) | **Yes — hard gate** |
+| **I2** Bun-exclusive inventory published + matrices live | **Yes (docs)**; implementation may still be partial if rows are honest |
+| **I3** Deno-exclusive inventory published + matrices live | **Yes (docs)**; same honesty rule |
+| Full Node ABI / arbitrary npm | No |
+| Framework dogfood (Next, Nuxt, Nest, Solid) | No — post language-gate |
+| Multi-OS | Never |
+
+Exact definitions of “fully compatible” live in [Principles](/scripty/v0.0.1-dev/principles) and [ES scope](/scripty/v0.0.1-dev/es/scope).
+
+## Status at a glance
+
+| Area | Today |
+| --- | --- |
+| Own VM skeleton (parse → bytecode → interpret) | Early / partial |
+| Promises, timers, local ESM, TS/JSX strip | Partial smokes |
+| Test262 harness + ES2026 matrix | **This program** — docs first, then implementation |
+| Bun-exclusive APIs | Unsupported (inventory in this tree) |
+| Deno-exclusive APIs | Unsupported (inventory in this tree) |
+
+Never claim “ES2026 complete” or “Bun/Deno compatible” until the matrices say `supported` or `dogfooded`.
+
+## Read next
+
+<CardGroup cols={2}>
+  <Card title="Principles" icon="scale-balanced" href="/scripty/v0.0.1-dev/principles">
+    How we define compatible, honest, and Linux-only.
+  </Card>
+  <Card title="Initiatives" icon="diagram-project" href="/scripty/v0.0.1-dev/initiatives">
+    I1 / I2 / I3 summary and ordering.
+  </Card>
+  <Card title="ES Engine" icon="microchip" href="/scripty/v0.0.1-dev/es">
+    Full ECMAScript compatibility roadmap.
+  </Card>
+  <Card title="Roadmap" icon="map" href="/scripty/v0.0.1-dev/roadmap">
+    Phases and exit criteria for the program.
+  </Card>
+</CardGroup>

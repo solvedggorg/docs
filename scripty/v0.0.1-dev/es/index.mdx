@@ -1,0 +1,71 @@
+---
+title: "I1 — ES Engine"
+description: "Initiative I1: make scripty's Zig VM fully compatible with the latest ECMAScript edition (ES2026 baseline)."
+---
+
+# I1 — ES Engine
+
+**Goal:** ship a Zig-native JavaScript engine that is **fully compatible** with the **latest ECMAScript** edition.
+
+| Field | Value |
+| --- | --- |
+| **Initiative** | I1 |
+| **Edition pin** | **ECMAScript 2026** ([ECMA-262](https://262.ecma-international.org/)) |
+| **Oracle** | [Test262](https://github.com/tc39/test262) language tests (in-scope set) |
+| **Hard gate for** | Tag `0.0.1` language bar |
+| **Engine** | Own VM in Zig — never V8 / JSC / SpiderMonkey |
+
+## Why this is first
+
+Every other product surface — exclusive Bun/Deno APIs, Node-compat, frameworks, DX, desktop embed — assumes correct language semantics. Partial engines produce matrices that look green while real programs fail in surprising ways.
+
+Pre-v0.0.1 therefore **gates the tag on language completeness**, not on framework dogfood.
+
+## Success definition
+
+You may claim ES edition compatibility for `0.0.1` only when **all** of the following hold:
+
+1. [Feature matrix](/scripty/v0.0.1-dev/es/feature-matrix) in-scope rows are `supported` or `dogfooded`
+2. [Test262](/scripty/v0.0.1-dev/es/test262) CI runs on Linux for the in-scope set with **zero open blockers**
+3. Fail-closed behavior outside the matrix (no silent wrong success)
+4. Edition pin and Test262 pin are recorded in [Sources](/scripty/v0.0.1-dev/reference/sources)
+
+Exact in/out boundaries: [Scope](/scripty/v0.0.1-dev/es/scope).
+
+## Current engine reality (honest)
+
+scripty already has an early kernel: lexer/parser, bytecode interpreter, partial values, promises/microtasks, timers, local ESM, TS type strip, JSX transform. That is a starting point — **not** ES2026 completeness.
+
+| Area | Typical status today |
+| --- | --- |
+| Parse / interpret smokes | `partial` |
+| Promises / timers | `supported` (smokes) |
+| Symbols, BigInt, Proxy, full RegExp, TypedArray | mostly `unsupported` |
+| Test262 harness | not yet the product bar |
+| Built-in breadth | sparse |
+
+## Work packages
+
+| Doc | Contents |
+| --- | --- |
+| [Scope](/scripty/v0.0.1-dev/es/scope) | In/out, Annex B, host-defined exclusions |
+| [Phases](/scripty/v0.0.1-dev/es/phases) | ES-0 … ES-9 build sequence |
+| [Feature matrix](/scripty/v0.0.1-dev/es/feature-matrix) | Edition feature rows |
+| [Built-ins](/scripty/v0.0.1-dev/es/builtins) | Built-in object inventory |
+| [Module system](/scripty/v0.0.1-dev/es/module-system) | Language-level ESM (not Node resolve) |
+| [Test262](/scripty/v0.0.1-dev/es/test262) | Harness, CI, triage |
+
+## Risks
+
+| Risk | Note |
+| --- | --- |
+| Multi-year surface | Phases ES-0…ES-9 keep progress shippable |
+| Spec / Test262 churn | Re-pin process required |
+| Premature exclusive APIs | Prefer after ES-5 for real modules + builtins |
+| Confusing “ES complete” with “npm works” | Explicitly out of scope for I1 |
+
+## Next
+
+1. Read [Scope](/scripty/v0.0.1-dev/es/scope)
+2. Track [Phases](/scripty/v0.0.1-dev/es/phases)
+3. Update [Feature matrix](/scripty/v0.0.1-dev/es/feature-matrix) as work lands

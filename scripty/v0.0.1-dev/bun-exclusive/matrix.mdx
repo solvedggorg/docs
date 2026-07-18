@@ -1,0 +1,78 @@
+---
+title: "Bun-exclusive matrix"
+description: "Status matrix for Bun-only APIs on scripty."
+---
+
+# Bun-exclusive matrix
+
+Vocabulary: [Status vocabulary](/scripty/v0.0.1-dev/reference/status-vocabulary).  
+Inventory detail: [Inventory](/scripty/v0.0.1-dev/bun-exclusive/inventory).
+
+All rows start `unsupported` until implementation lands. Update this table in the same PR as code.
+
+**Coverage:** every [inventory](/scripty/v0.0.1-dev/bun-exclusive/inventory) target maps to a row or a named group below. A row may cover a group of closely related APIs (noted in the row). The [roadmap](/scripty/v0.0.1-dev/bun-exclusive/roadmap) B-5 gate ("no untracked inventory items") checks that this mapping is complete.
+
+## Core cluster
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| `Bun.file` | `unsupported` | — |
+| `Bun.write` | `unsupported` | — |
+| `Bun.serve` | `unsupported` | — |
+| `Bun.connect` / `Bun.listen` (TCP) | `unsupported` | — |
+| `Bun.spawn` / `Bun.spawnSync` | `unsupported` | — |
+| `Bun.stdin` / `stdout` / `stderr` File | `unsupported` | — |
+| `Bun.sleep` / `Bun.sleepSync` | `unsupported` | — |
+| `Bun.which` | `unsupported` | — |
+| `Bun.openInEditor` / DX helpers | `unsupported` | — |
+| `Bun.env` (Bun shape) | `unsupported` | — |
+| `Bun.main` / `Bun.argv` | `unsupported` | — |
+| `Bun.version` / `Bun.revision` (runtime identity) | `unsupported` | scripty identity separate; Bun-compat shim |
+
+## Data & crypto
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| `Bun.password` | `unsupported` | — |
+| `Bun.hash` / `CryptoHasher` | `unsupported` | — |
+| `Bun.escapeHTML` | `unsupported` | — |
+| `Bun.stringWidth` | `unsupported` | — |
+| `Bun.inspect` | `unsupported` | — |
+| `Bun.deepEquals` | `unsupported` | — |
+| `Bun.nanoseconds` | `unsupported` | — |
+| `Bun.Glob` | `unsupported` | — |
+| `Bun.semver` | `unsupported` | — |
+| TOML / YAML / JSONC helpers | `unsupported` | — |
+| `Bun.peek` | `unsupported` | — |
+| `Bun.mmap` | `unsupported` | — |
+| Stream helper `readableStreamTo*` | `unsupported` | — |
+
+## Storage & cloud
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| `bun:sqlite` | `unsupported` | — |
+| `Bun.sql` / `SQL` | `unsupported` | — |
+| `Bun.s3` / `S3Client` | `unsupported` | — |
+| Built-in Redis (if in pin) | `unsupported` | — |
+
+## Systems & tooling
+
+| Row | Status | Tests |
+| --- | --- | --- |
+| `bun:ffi` | `unsupported` | — |
+| `bun:test` | `unsupported` | — |
+| `bun:jsc` equivalents | `unsupported` | Refuse or scripty-native |
+| `Bun.Transpiler` | `unsupported` | — |
+| `Bun.build` | `unsupported` | — |
+| `Bun.plugin` hooks | `unsupported` | — |
+| `bun:wrap` / internal modules (refuse unless documented stable) | `unsupported` | — |
+| `Bun.gc` / `Bun.generateHeapSnapshot` (GC + heap) | `unsupported` | — |
+
+## Exit tracking
+
+High-value dogfood target for early `dogfooded` rows:
+
+1. `Bun.file` + `Bun.write`  
+2. `Bun.serve`  
+3. `bun:sqlite`  

@@ -1,0 +1,81 @@
+---
+title: "ES scope"
+description: "What full ECMAScript compatibility includes and excludes for scripty pre-v0.0.1."
+---
+
+# ES scope
+
+This page defines the **I1** conformance boundary. If a feature is outside this boundary, it does not block the language half of `0.0.1` — but it must still be listed honestly if users might expect it.
+
+## Spec pin
+
+| Item | Value |
+| --- | --- |
+| **Language** | ECMAScript |
+| **Edition** | **2026** (ECMA-262 **17th edition**, June 2026) |
+| **Specification (HTML)** | [262.ecma-international.org/17.0](https://262.ecma-international.org/17.0/) |
+| **Catalog** | [ECMA-262](https://ecma-international.org/publications-and-standards/standards/ecma-262/) |
+| **Pin date** | 2026-07-17 (program start) |
+| **Re-pin trigger** | Ecma publishes a newer ECMA-262 edition **or** we choose to claim a newer edition in release notes |
+
+When re-pinning:
+
+1. Update [Sources](/scripty/v0.0.1-dev/reference/sources) (edition snapshot URL + date)
+2. Diff the feature matrix for new rows
+3. Bump Test262 pin to a matching suite revision
+4. Update engineering `docs/es-pin.md` + `docs/matrix/language.md` in the scripty repo
+5. Open engineering work for deltas — do not claim the new edition until matrices catch up
+
+## In scope (blocks language gate)
+
+| Category | Examples |
+| --- | --- |
+| **Syntax** | Modules, classes, async/await, generators, private fields/methods, optional chaining, nullish coalescing, top-level await, decorators **if** in the pinned edition as normative, etc. |
+| **Types & values** | Undefined, Null, Boolean, String, Number, BigInt, Symbol, Object |
+| **Execution** | Environments, this binding, strict mode as required, completion records, exceptions |
+| **Built-ins** | Standard library objects required by the edition (see [Built-ins](/scripty/v0.0.1-dev/es/builtins)) |
+| **Iteration** | Iterators, async iterators, Iterator helpers (ES2025+), generator objects |
+| **Collections** | Map, Set, WeakMap, WeakSet + edition methods (e.g. Set methods) |
+| **Binary data** | ArrayBuffer, SharedArrayBuffer (if required), DataView, TypedArrays |
+| **Meta** | Proxy, Reflect, `Symbol.*` well-known symbols as required |
+| **Modules (language)** | ESM parse/link/evaluate, cyclic graphs, import attributes as required by the edition |
+| **Promises jobs** | Promise reaction jobs as specified (host may provide job queue; semantics must match) |
+
+## Annex B policy
+
+| Choice | Policy |
+| --- | --- |
+| **Default** | Annex B features are **opt-in per row** |
+| **To claim Annex B support** | Row must be `supported`/`dogfooded` with tests |
+| **If unimplemented** | Mark `unsupported` and fail closed — do not silently accept Annex B syntax without semantics |
+
+Document each Annex B decision in the [feature matrix](/scripty/v0.0.1-dev/es/feature-matrix).
+
+## Explicitly out of scope for I1
+
+| Category | Reason |
+| --- | --- |
+| DOM / CSSOM / HTML globals | Not ECMAScript language; browser hosts only |
+| Web APIs beyond language built-ins (e.g. `fetch` as host) | Host / runtime layers — not the ES language bar |
+| Node / Bun / Deno exclusive APIs | I2 / I3 / Node matrices |
+| Full Test262 **host** tests that require HTML | Not language kernel |
+| Non-Linux platforms | Permanent product lock |
+| Optimizing JIT | Performance track; not required for language correctness bar |
+| TypeScript typechecking | Type strip is a transform layer, not ES |
+
+Host-provided job scheduling, timers (`setTimeout`), and I/O are **runtime** concerns. I1 requires that **when** the host enqueues Promise jobs, Promise semantics match the spec. Timer APIs themselves are not ES language features.
+
+## “Fully compatible” checklist
+
+Use this checklist in release review:
+
+- [ ] Edition pin matches claimed release notes
+- [ ] Test262 pin recorded; CI green for in-scope set
+- [ ] Zero open blockers on in-scope failures
+- [ ] Feature matrix has no in-scope `unsupported` or `partial` rows
+- [ ] Annex B policy rows reviewed
+- [ ] No marketing claim of browser or npm completeness
+
+## Relationship to internal matrices
+
+The scripty repo keeps engineering matrices under `docs/matrix/language.md`. This public matrix is the **program-facing** source of truth for the ES2026 goal. When they disagree, update both in the same change set.
