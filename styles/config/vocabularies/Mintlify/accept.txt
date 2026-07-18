@@ -238,6 +238,8 @@ yappy
 Yappy
 pyppi
 Pyppi
+hasky
+Hasky
 deploy
 Deploy
 depotsdk-go
@@ -355,7 +357,9 @@ lockfiles
 scaffolded
 cutover
 unreferenced
+hardlink
 hardlinked
+reflink
 allowlist
 deps
 orgs

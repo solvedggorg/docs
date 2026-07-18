@@ -202,7 +202,7 @@
           },
           {
             "product": "hasky",
-            "description": "Haskell toolchain in Zig — lock-first packages, CAS, native GHC driver (Linux)",
+            "description": "Linux-only Haskell toolchain in Zig: lock-first hasky.json / hasky.lock, CAS store, native GHC driver",
             "icon": "terminal",
             "versions": [
               {
