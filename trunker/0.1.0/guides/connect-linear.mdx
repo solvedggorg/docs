@@ -1,0 +1,81 @@
+---
+title: "Connect Linear"
+description: "Authorize Linear OAuth, verify sync, and configure webhooks for a workspace."
+---
+
+This guide walks an **organization admin** through linking Linear to a trunker workspace.
+
+## Before you start
+
+- Active Clerk organization selected in trunker
+- Linear account that can authorize the trunker Linear OAuth app
+- Browser allowed to complete redirects to `https://trunker.solved.gg/linear/auth/callback`
+
+## Connect
+
+1. Sign in at [trunker.solved.gg](https://trunker.solved.gg).
+2. Open **Connect**.
+3. In the **Linear** panel, click **Connect with Linear**.
+4. Complete Linear’s consent screen.
+5. Wait for the callback page (“Completing Linear connection…”) then the dashboard success banner.
+
+On success, trunker:
+
+- Stores encrypted access (and refresh, if present) tokens
+- Records Linear viewer identity
+- Starts an **initial full sync** in the background
+
+## Reconnect / disconnect
+
+| Action | Effect |
+| --- | --- |
+| **Reconnect** | New OAuth; refreshes tokens and identity |
+| **Disconnect** | Removes the Linear connection for this workspace (synced entity rows may remain until operators prune; reconnect + sync refreshes) |
+
+Only org admins can reconnect or disconnect.
+
+## Verify sync
+
+1. Open **Dashboard**.
+2. Confirm Linear card shows **Connected** and a viewer email/name.
+3. Click **Sync now** if counts look stale.
+4. Open **Projects** and **Issues**.
+
+Cron continues to poll about every **five minutes** even without manual sync.
+
+## Webhooks (recommended)
+
+For faster updates than poll alone:
+
+1. Open **Settings → Linear webhooks**.
+2. Copy the public URL (production default):
+
+   ```text
+   https://trunker.api.solved.gg/webhooks/linear/ingest
+   ```
+
+3. In the Linear OAuth application settings, set the webhook URL and signing secret to match operator configuration (`LINEAR_WEBHOOK_SIGNING_SECRET` on the API).
+4. Trigger an issue change in Linear and confirm **Last event** advances and health moves toward healthy.
+
+If signature is not configured, Settings shows that clearly — webhooks will fail verification until the Worker secret is set.
+
+## Filters
+
+Before a large first sync, optionally set team keys or project IDs under **Settings → Sync filters**. Empty fields mean sync **all** visible teams/projects for the authorized Linear identity.
+
+See [Settings and filters](/trunker/0.1.0/guides/settings-and-filters).
+
+## Troubleshooting
+
+| Problem | What to try |
+| --- | --- |
+| OAuth error query param on Connect | Retry connect; confirm callback URL registration |
+| `LINEAR_CLIENT_ID not set` (API) | Operator misconfiguration — contact support |
+| Forbidden on Connect | Need org admin role |
+| Connected but empty data | Wait for sync; widen filters; confirm Linear org access |
+| Webhooks never healthy | URL/secret mismatch; no events yet; wrong Linear app |
+
+## Related
+
+- [Linear sync](/trunker/0.1.0/concepts/linear-sync)
+- [API: Linear connection](/trunker/0.1.0/reference/api#linear)

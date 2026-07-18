@@ -1,0 +1,51 @@
+---
+title: "URLs and surfaces"
+description: "Production hosts, OAuth callbacks, and webhook endpoints for trunker."
+---
+
+## Production hosts
+
+| Surface | URL |
+| --- | --- |
+| Web app (SPA) | https://trunker.solved.gg |
+| API Worker | https://trunker.api.solved.gg |
+| Health | https://trunker.api.solved.gg/health |
+
+## Auth redirects (SPA)
+
+| Integration | Path | Full production URL |
+| --- | --- | --- |
+| Linear OAuth callback | `/linear/auth/callback` | https://trunker.solved.gg/linear/auth/callback |
+| GitHub OAuth callback | `/github/auth/callback` | https://trunker.solved.gg/github/auth/callback |
+| GitHub App setup | `/github/setup` | https://trunker.solved.gg/github/setup |
+| Sign in | `/sign-in` | https://trunker.solved.gg/sign-in |
+| Sign up | `/sign-up` | https://trunker.solved.gg/sign-up |
+
+## Webhooks (API)
+
+| Integration | Path | Full production URL |
+| --- | --- | --- |
+| Linear ingest | `/webhooks/linear/ingest` | https://trunker.api.solved.gg/webhooks/linear/ingest |
+| Linear per-route (optional) | `/v1/webhooks/linear/:routeId` | https://trunker.api.solved.gg/v1/webhooks/linear/:routeId |
+| GitHub ingest | `/webhooks/github/ingest` | https://trunker.api.solved.gg/webhooks/github/ingest |
+
+## Local development hosts
+
+Typical local defaults when running the monorepo:
+
+| Surface | URL |
+| --- | --- |
+| Web | http://localhost:5173 |
+| API | http://127.0.0.1:8787 |
+
+Local callbacks use the **same path segments** as production with localhost hosts, for example:
+
+- `http://localhost:5173/linear/auth/callback`
+- `http://localhost:5173/github/auth/callback`
+- `http://localhost:5173/github/setup`
+
+OAuth apps must list those callback URLs if you test OAuth locally.
+
+## Clerk
+
+Hosted auth uses the solved.gg Clerk instance (custom domain such as `clerk.solved.gg` in production). Organizations must be enabled.

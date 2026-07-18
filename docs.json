@@ -263,6 +263,53 @@
                 ]
               }
             ]
+          },
+          {
+            "product": "trunker",
+            "description": "Linear + GitHub workspace dashboard for trunks and PR targets",
+            "icon": "diagram-project",
+            "versions": [
+              {
+                "version": "0.1.0",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "trunker/0.1.0/index",
+                      "trunker/0.1.0/quickstart"
+                    ]
+                  },
+                  {
+                    "group": "Core concepts",
+                    "pages": [
+                      "trunker/0.1.0/concepts/workspaces",
+                      "trunker/0.1.0/concepts/linear-sync",
+                      "trunker/0.1.0/concepts/github",
+                      "trunker/0.1.0/concepts/trunk-naming"
+                    ]
+                  },
+                  {
+                    "group": "Guides",
+                    "pages": [
+                      "trunker/0.1.0/guides/connect-linear",
+                      "trunker/0.1.0/guides/connect-github",
+                      "trunker/0.1.0/guides/dashboard",
+                      "trunker/0.1.0/guides/settings-and-filters"
+                    ]
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      "trunker/0.1.0/reference/urls",
+                      "trunker/0.1.0/reference/api",
+                      "trunker/0.1.0/reference/environment"
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -533,6 +580,10 @@
           {
             "label": "pyppi",
             "href": "https://pyppi.pm.solved.gg"
+          },
+          {
+            "label": "trunker",
+            "href": "https://trunker.solved.gg"
           }
         ]
       }

@@ -242,6 +242,8 @@ deploy
 Deploy
 depotsdk-go
 Depotsdk
+trunker
+Trunker
 solved\.gg
 iResolved
 iResolved,? LLC
@@ -374,3 +376,17 @@ M2\.5
 M3
 M6
 eval
+
+# --- trunker / control-plane vocabulary ---
+worktree
+worktrees
+upsert
+upserts
+upserted
+UUID
+UUIDs
+liveness
+Liveness
+ciphertext
+param
+queryable

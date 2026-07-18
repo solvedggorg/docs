@@ -1,0 +1,196 @@
+---
+title: "API reference"
+description: "HTTP API for trunker cloud — auth, status, Linear, GitHub, issues, and settings."
+---
+
+Base URL (production): `https://trunker.api.solved.gg`
+
+Unless noted, endpoints under `/v1/*` require:
+
+```http
+Authorization: Bearer <Clerk session JWT>
+```
+
+The JWT must include an active **organization** (`org_id`). Without an org, the API returns `403` with `org_required`.
+
+CORS allows the configured `WEB_ORIGIN` (production: `https://trunker.solved.gg`).
+
+## Public
+
+### `GET /health`
+
+Liveness for the Worker.
+
+```json
+{
+  "ok": true,
+  "service": "trunker-api",
+  "version": "0.1.0"
+}
+```
+
+### `POST /v1/linear/oauth/callback`
+
+Completes Linear OAuth. **No Clerk header** — uses signed `state` from `/v1/linear/oauth/start`.
+
+Body:
+
+```json
+{ "code": "...", "state": "..." }
+```
+
+Called by the SPA callback page after Linear redirects.
+
+### `POST /v1/github/oauth/callback`
+
+Same pattern for GitHub App OAuth.
+
+### `POST /webhooks/linear/ingest`
+
+Linear webhook receiver. Verifies Linear signature headers against `LINEAR_WEBHOOK_SIGNING_SECRET`.
+
+### `POST /webhooks/github/ingest`
+
+GitHub App webhook receiver. Verifies `X-Hub-Signature-256` against `GITHUB_WEBHOOK_SIGNING_SECRET`.
+
+---
+
+## Session
+
+### `GET /v1/me`
+
+Returns the authenticated user and org context.
+
+### `GET /v1/status`
+
+Workspace summary for the dashboard.
+
+Includes Linear connection flags, last sync / webhook times, GitHub connected + login + installation id, entity counts, and filter arrays (`teamKeys`, `projectIds`).
+
+---
+
+## Linear
+
+### `GET /v1/linear/connection`
+
+`{ connected, viewerName, viewerEmail, lastSyncAt, webhooksHealthy }`
+
+### `POST /v1/linear/oauth/start`
+
+**Org admin.** Returns `{ url }` for browser redirect to Linear authorize.
+
+### `DELETE /v1/linear/connection`
+
+**Org admin.** Disconnects Linear for the workspace.
+
+### `POST /v1/sync`
+
+**Org admin.** Body optional:
+
+```json
+{ "full": false, "prune": false }
+```
+
+Returns upsert counts for teams, projects, and issues.
+
+### `GET /v1/teams`
+
+List synced teams.
+
+### `GET /v1/projects`
+
+List synced projects (includes trunk naming fields when present).
+
+### `GET /v1/issues`
+
+Query params: `project`, `state`, `q`, `cursor`, `limit`.
+
+### `GET /v1/issues/:identifier`
+
+Issue detail plus comments (identifier like `ENG-123`).
+
+### `PATCH /v1/settings`
+
+**Org admin.** Body:
+
+```json
+{ "teamKeys": ["ENG"], "projectIds": [] }
+```
+
+Requires Linear connected.
+
+### `GET /v1/webhooks/status`
+
+Public webhook URL metadata and health timestamps (no secret material).
+
+---
+
+## GitHub
+
+### `GET /v1/github/connection`
+
+Connection status: login, avatar, installation id, account login/type, setup URL.
+
+### `POST /v1/github/oauth/start`
+
+**Org admin.** Returns GitHub authorize `{ url }`.
+
+### `DELETE /v1/github/connection`
+
+**Org admin.** Removes GitHub connection for the workspace.
+
+### `POST /v1/github/setup`
+
+**Org admin.** Persist installation after App setup redirect.
+
+```json
+{ "installation_id": "12345678", "setup_action": "install" }
+```
+
+Requires GitHub OAuth already connected.
+
+### `GET /v1/github/installations`
+
+Lists installations visible to the stored user token.
+
+### `GET /v1/github/repos`
+
+Lists repositories. Query:
+
+| Param | Description |
+| --- | --- |
+| `installation_id` | Prefer this install; defaults to stored installation |
+| `page` | Pagination (default 1) |
+
+If no installation is known, falls back to user repos.
+
+---
+
+## Errors
+
+JSON shape:
+
+```json
+{
+  "error": {
+    "code": "forbidden",
+    "message": "Organization admin role required"
+  }
+}
+```
+
+| HTTP | Common codes |
+| --- | --- |
+| 401 | `unauthorized` — missing/invalid Clerk JWT |
+| 403 | `org_required`, `forbidden` |
+| 404 | `not_found` |
+| 409 | `linear_not_connected`, `github_not_connected` |
+| 400 | `invalid_params`, `oauth_failed`, `webhook_error` |
+| 502 | `linear_error`, `github_error` |
+| 500 | `misconfigured`, `internal` |
+
+## Calling from scripts
+
+1. Obtain a Clerk session JWT for a user with an active organization (browser session or machine flow you control).
+2. `curl -H "Authorization: Bearer $TOKEN" https://trunker.api.solved.gg/v1/status`
+3. Prefer read endpoints for automation; mutating OAuth/start routes are browser-oriented.

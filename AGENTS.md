@@ -8,7 +8,7 @@
 - Primary navigation is **`navigation.languages`** wrapping **`products` → `versions` → groups**
 - English is the default language (`en`); Spanish (`es`) lives under `es/` with the same product/version path shape
 - Site root (**Home**) is welcome + legal — **not** product docs (legal pages stay English-only until counsel-reviewed)
-- Product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`, `/pyppi`, `/yappy`, `/deploy`, `/git`, `/depotsdk-go` (locale copies under `/es/...`)
+- Product docs live under path prefixes: `/rusty`, `/scripty`, `/worgo`, `/pyppi`, `/yappy`, `/deploy`, `/git`, `/depotsdk-go`, `/trunker` (locale copies under `/es/...` when translated)
 - Translate with DeepL via `scripts/translate-mdx.mjs` (protects brands/code with keep placeholders); re-wrap nav with `scripts/wrap-languages.mjs` after adding locales
 
 ## Site structure
@@ -24,16 +24,18 @@
 | **deploy** | `/deploy` | Next.js → Cloudflare Workers CLI (intro) |
 | **git** | `/git` | solved.gg git host UI (intro) |
 | **depotsdk-go** | `/depotsdk-go` | Go SDK for Depot API (intro) |
+| **trunker** | `/trunker` | Linear + GitHub cloud workspace for trunks / PR targets |
 
 ## Terminology
 
-- Product names in UI and headings: lowercase **rusty**, **scripty**, **worgo**, **pyppi**, **yappy**, **deploy**, **git**, **depotsdk-go**
+- Product names in UI and headings: lowercase **rusty**, **scripty**, **worgo**, **pyppi**, **yappy**, **deploy**, **git**, **depotsdk-go**, **trunker**
 - **worgo** is the product/package name (repo: solvedggorg/worgo; site: worgo.pm.solved.gg)
 - Marketing sites for the PM suite: `pm.solved.gg` (hub) and `<product>.pm.solved.gg` (rusty, scripty, worgo, yappy, pyppi, deploy)
 - **yappy** is permanently Linux-only and always native UI (Qt + GTK; no webview) — state that when platform or UI is discussed
 - **scripty** is the JS runtime/PM yappy embeds; do not describe yappy as Electron-with-Zig
 - **deploy** is init-time Next.js → Cloudflare Workers with an **owned** runtime — not OpenNext; do not claim full Next/Vercel parity before the compat matrix does
 - **git** is the solved.gg org-scoped git host UI (Clerk + Depot CI); not a public mass multi-tenant forge
+- **trunker** is the hosted Linear ↔ GitHub control plane (Clerk orgs = workspaces). Do not claim local worktrees, auto-open PR, or Linear write-back as shipped unless the product docs say so. App: trunker.solved.gg; API: trunker.api.solved.gg. Env keys follow the product root `.env` contract (LINEAR_CALLBACK_URL, GITHUB_*, etc.)
 - **pyppi** is Python tooling; do not claim full pip/uv parity while early access
 - Prefer **toolchain** over "rustup install" when describing `rusty env`
 - Prefer **rusty-format** / **cargo-format** for project layouts

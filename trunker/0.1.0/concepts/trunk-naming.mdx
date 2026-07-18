@@ -1,0 +1,52 @@
+---
+title: "Trunk naming"
+description: "Deterministic git trunk and issue branch names derived from Linear projects."
+---
+
+trunker uses **deterministic refs under `trunker/`** so humans and agents agree on names without free-form guesswork.
+
+## Project trunk
+
+For a Linear project, trunker normalizes a **branch slug** from the project name or Linear slug:
+
+| Input idea | Result |
+| --- | --- |
+| Project display name / slug | Lowercase, non-alphanumerics → `-`, trimmed |
+| Empty after normalize | Falls back to `project` |
+| Max length | Capped (about 48 characters) for safe ref atoms |
+
+**Trunk ref:**
+
+```text
+trunker/<branch_slug>
+```
+
+Example: project “Mobile App” → `trunker/mobile-app`.
+
+## Issue branches
+
+Given a trunk slug and a Linear issue identifier (`TEAM-123`):
+
+```text
+trunker/<branch_slug>/<ISSUE-ID>
+```
+
+Example: `trunker/mobile-app/ENG-456`.
+
+Identifiers are treated as uppercase team-key + number forms (for example `ENG-456`).
+
+## Why hierarchy
+
+- Safer parsing than flat names like `trunk-mobile-ENG-123` when slugs contain hyphens
+- Clear ownership: everything product-owned lives under `trunker/`
+- Gives cloud UI labels a consistent, hosted naming contract across projects and issues
+
+## What the cloud UI shows
+
+- **Projects** list includes branch slug / trunk ref when available
+- Issues keep Linear **identifiers** as the human key
+- Creating actual git branches and worktrees is **not** done by the hosted MVP; naming is the shared contract
+
+## Coexistence
+
+trunker does not rename your repository’s `main` (or other base branch). Product refs are intended to live **beside** normal collaboration branches. Force-updating user base branches is out of scope for the cloud product.

@@ -1,0 +1,72 @@
+---
+title: "Linear sync"
+description: "How trunker pulls teams, projects, issues, and comments from Linear."
+---
+
+trunker treats **Linear as the source of truth for planning state**. The Worker keeps a per-workspace cache in Cloudflare D1 for the dashboard and API.
+
+## Auth
+
+- Primary path: **OAuth** with the Linear application registered for trunker.
+- Tokens are **encrypted at rest** (`TOKEN_ENCRYPTION_KEY` on the Worker).
+- Org admins start connect from **Connect → Linear**.
+
+Optional developer tokens may exist in operator env for internal tooling; the product UI path is OAuth.
+
+## How data arrives
+
+| Path | Cadence | Role |
+| --- | --- | --- |
+| **Poll** | Worker cron `*/5` (every 5 minutes) | Always-on reconciliation |
+| **Manual sync** | Dashboard **Sync now** | On-demand full/partial poll for admins |
+| **Webhooks** | On Linear events | Near-real-time upsert when signed delivery works |
+
+Poll works alone. Webhooks improve freshness and set `webhooksHealthy` when events verify successfully.
+
+## What is stored
+
+Per workspace, roughly:
+
+| Entity | Purpose |
+| --- | --- |
+| Teams | Keys and names for filters and issue identifiers |
+| Projects | Names, slugs, computed `branch_slug` / trunk refs |
+| Issues | Identifier, title, description, state, project link, priority |
+| Comments | Bodies for issue detail views |
+| Sync cursors | Pagination / incremental poll bookkeeping |
+| Linear connection row | Encrypted tokens, viewer identity, last sync / webhook times, filters |
+
+## Filters
+
+On **Settings**, admins can set:
+
+- **Team keys** — comma-separated Linear team keys (for example `ENG,MOBILE`). Empty means all teams.
+- **Project IDs** — Linear project UUIDs. Empty means all projects.
+
+Filters apply on subsequent syncs. Narrow filters if you only care about one product stream.
+
+## Webhook URL
+
+Production ingest (app-level):
+
+```text
+https://trunker.api.solved.gg/webhooks/linear/ingest
+```
+
+Configure this on the Linear OAuth application with the signing secret that operators store as `LINEAR_WEBHOOK_SIGNING_SECRET`. trunker routes events using Linear organization identity after you connect.
+
+Settings shows the public URL and whether a signature secret is configured (it does not expose the secret to clients).
+
+## Failure modes
+
+| Symptom | Likely cause |
+| --- | --- |
+| Not connected | OAuth not finished or disconnected |
+| Connected, zero issues | Filters too tight; wrong Linear org; sync not finished |
+| Sync button 409 | Linear not connected |
+| Sync 502 | Linear API error or rate limit |
+| Webhooks inactive | No events yet, wrong URL/secret, or connect incomplete |
+
+## Write-back
+
+The cloud MVP is **read/sync oriented**. Automatic Linear state transitions or comment posts from trunker are not part of the hosted product surface yet.

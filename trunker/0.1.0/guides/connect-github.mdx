@@ -1,0 +1,72 @@
+---
+title: "Connect GitHub"
+description: "Authorize the GitHub App, complete install setup, and select repos for PR targets."
+---
+
+Use this guide to give a trunker workspace access to GitHub **organizations and repositories** you open PRs into.
+
+## Before you start
+
+- Org **admin** in the Clerk workspace
+- Permission on GitHub to install the trunker GitHub App on the target org (or user account)
+- App callbacks already registered (production):
+
+  | Kind | URL |
+  | --- | --- |
+  | Callback | `https://trunker.solved.gg/github/auth/callback` |
+  | Setup | `https://trunker.solved.gg/github/setup` |
+  | Webhook | `https://trunker.api.solved.gg/webhooks/github/ingest` |
+
+## 1. OAuth connect
+
+1. Open **Connect** in trunker.
+2. Under **GitHub**, click **Connect with GitHub**.
+3. Authorize on GitHub.
+4. Land back on Connect with a success banner; status shows your GitHub **login**.
+
+At this point trunker has a user-to-server token from the GitHub App OAuth client.
+
+## 2. Install the App
+
+1. On GitHub, install the trunker GitHub App on the organization (or user) that owns the target repos.
+2. Choose **all repositories** or a selected set.
+3. GitHub redirects to **setup** (`/github/setup?installation_id=…`).
+4. Stay signed into trunker with the correct organization selected so the installation can be saved.
+
+If you are signed out, trunker sends you to sign-in and returns to setup.
+
+If OAuth is not finished first, setup may fail with “Connect GitHub first”. Connect OAuth, then open the install flow again or pick an installation from the list.
+
+## 3. Choose installation and review repos
+
+On **Connect → GitHub**:
+
+1. Review the **Installations** table (account login + type).
+2. Click **Use for PRs** on the install that should be active for this workspace.
+3. Confirm the **Repositories** table lists expected repos, default branches, and visibility.
+
+Dashboard also shows GitHub connected state, login, and installation id.
+
+## 4. Reconnect / disconnect
+
+| Action | When |
+| --- | --- |
+| **Reconnect** | Token revoked, wrong user, or re-consent needed |
+| **Disconnect** | Remove GitHub link from this workspace only |
+
+Uninstalling the App on GitHub is separate — do that in GitHub organization settings if you want the install gone globally.
+
+## Troubleshooting
+
+| Problem | What to try |
+| --- | --- |
+| Empty repo list | Install App; grant repo access; select installation; reconnect |
+| Setup `missing_installation` | Install from GitHub so `installation_id` is present |
+| Setup requires sign-in | Complete Clerk sign-in with the right org active |
+| Forbidden | Need org admin |
+| API `github_not_connected` | Finish OAuth before listing installs/repos |
+
+## Related
+
+- [GitHub linking concepts](/trunker/0.1.0/concepts/github)
+- [API: GitHub](/trunker/0.1.0/reference/api#github)

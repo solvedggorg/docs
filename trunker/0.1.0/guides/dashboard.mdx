@@ -1,0 +1,72 @@
+---
+title: "Dashboard and navigation"
+description: "Use the trunker shell: dashboard cards, projects, issues, and connect."
+---
+
+After you select a Clerk organization, trunker shows a dark-themed shell with a left sidebar and main content area.
+
+## Sidebar
+
+| Item | Purpose |
+| --- | --- |
+| **Dashboard** | Workspace health and counts |
+| **Projects** | Linear projects + trunk refs |
+| **Issues** | Searchable issue list and detail |
+| **Connect** | Linear and GitHub integrations |
+| **Settings** | Sync filters and Linear webhook URL |
+| Org switcher | Change workspace |
+| User button | Account / sign out |
+
+## Dashboard cards
+
+Typical cards:
+
+| Card | Meaning |
+| --- | --- |
+| Linear | Connected or not; viewer identity |
+| GitHub | Connected or not; login; installation id |
+| Last sync | Timestamp of last successful Linear poll write |
+| Webhooks | Linear webhook health + last event time |
+| Teams / Projects / Issues | Cached entity counts |
+
+### Sync now
+
+Org admins can trigger an immediate Linear sync. Success banners report how many teams, projects, and issues were upserted.
+
+If Linear is not connected, the primary action becomes a link to **Connect**.
+
+## Projects
+
+Projects come from Linear after sync. Use this view to:
+
+- Confirm the right Linear projects appear
+- Read computed **branch slug** / **trunk ref** (`trunker/...`)
+- Cross-check filters if something is missing
+
+See [Trunk naming](/trunker/0.1.0/concepts/trunk-naming).
+
+## Issues
+
+Browse issues with optional filters (project, state, text search — depending on UI controls). Open an issue for:
+
+- Title, description, state, priority
+- Linear URL when present
+- Cached comments
+
+Identifiers (for example `ENG-123`) are stable keys shared with branch naming conventions.
+
+## Connect and Settings
+
+- **Connect** — integration lifecycle (OAuth, disconnect, GitHub installs/repos)
+- **Settings** — filters and webhook diagnostics
+
+Prefer Connect for “are we linked?” and Settings for “what subset do we sync?”.
+
+## Empty states
+
+| State | Action |
+| --- | --- |
+| No organization | Create/join via org switcher |
+| Linear not connected | Connect → Linear |
+| Connected, zero issues | Sync; relax filters; wait for poll |
+| GitHub connected, no repos | Install App; grant access; select installation |

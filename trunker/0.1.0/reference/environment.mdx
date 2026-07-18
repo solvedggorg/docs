@@ -1,0 +1,78 @@
+---
+title: "Environment and operations"
+description: "Env key contract for trunker — root .env names, Worker secrets, and local overrides."
+---
+
+This page is for **operators** deploying or developing trunker. End users of [trunker.solved.gg](https://trunker.solved.gg) do not set these variables.
+
+## Contract rule
+
+**Root `.env` is the credential contract.** Application code binds to these key names. Do not rename Linear or GitHub App credentials to match older internal names.
+
+## Application credentials (root `.env`)
+
+| Key | Role |
+| --- | --- |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Web Clerk publishable key (Vite loads monorepo root) |
+| `CLERK_SECRET_KEY` | API Clerk secret |
+| `LINEAR_CALLBACK_URL` | SPA OAuth return for Linear |
+| `LINEAR_WEBHOOK_URL` | Linear webhook target (app config / docs) |
+| `LINEAR_WEBHOOK_SIGNING_SECRET` | Verify Linear webhooks |
+| `LINEAR_CLIENT_ID` / `LINEAR_CLIENT_SECRET` | Linear OAuth app |
+| `LINEAR_APP_DEVELOPER_TOKEN` | Optional headless Linear token |
+| `GITHUB_CALLBACK_URL` | SPA OAuth return for GitHub |
+| `GITHUB_SETUP_URL` | SPA App setup return |
+| `GITHUB_WEBHOOK_URL` | GitHub webhook ingest URL |
+| `GITHUB_WEBHOOK_SIGNING_SECRET` | Verify GitHub webhooks |
+| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | GitHub App OAuth client |
+| `GITHUB_APP_ID` | GitHub App id |
+
+## Worker-only
+
+| Key | Role |
+| --- | --- |
+| `TOKEN_ENCRYPTION_KEY` | 32-byte key (hex or base64) for AES-GCM token encryption in D1 |
+| `WEB_ORIGIN` | CORS allowlist origin(s) |
+| `APP_URL` | Public app base URL |
+| `API_PUBLIC_URL` | Public API base URL |
+| `OAUTH_STATE_SECRET` | Optional HMAC key for OAuth state; falls back to `TOKEN_ENCRYPTION_KEY` |
+| `CLERK_JWT_ISSUER` | Optional Clerk issuer tweak |
+
+## Local development
+
+```bash
+npm install
+npm run build -w @trunker/shared
+cp apps/api/.dev.vars.example apps/api/.dev.vars
+# Copy values from root .env into .dev.vars using the SAME key names
+# Override hosts only: LINEAR_CALLBACK_URL / GITHUB_* to localhost:5173
+
+npm run db:migrate:local
+npm run dev:api   # :8787
+npm run dev:web   # :5173 — loads root .env for NEXT_PUBLIC_CLERK_*
+```
+
+Clerk Organizations must be enabled. OAuth apps need local callback URLs if you test connect flows on localhost.
+
+## Production deploy sketch
+
+1. D1 database bound as `DB` with migrations applied (`0001_init`, `0002_github`, …).
+2. Worker `wrangler.toml` public vars match production callback/setup/webhook URLs and `GITHUB_APP_ID`.
+3. Secrets via `wrangler secret put` for Clerk, encryption key, Linear client pair + webhook secret, GitHub client pair + webhook secret.
+4. Pages build with `VITE_API_URL=https://trunker.api.solved.gg` and root Clerk publishable key.
+5. Smoke: `GET /health`, open app, Connect Linear, Connect GitHub.
+
+## Cloudflare resources (reference)
+
+| Resource | Name / note |
+| --- | --- |
+| Worker | `trunker-api` — custom domain `trunker.api.solved.gg`, cron `*/5` |
+| Pages | `trunker-web` — custom domain `trunker.solved.gg` |
+| D1 | `trunker` binding `DB` |
+
+## Security checklist
+
+- Never commit `.env`, `.dev.vars`, or secret bulk files
+- Rotate `TOKEN_ENCRYPTION_KEY` only with a migration plan (ciphertext becomes unreadable)
+- Restrict org admin membership — admins can attach foreign Linear/GitHub accounts to the workspace
+- Keep GitHub App and Linear app callback URLs in lockstep with deployed SPA routes

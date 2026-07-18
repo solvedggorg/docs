@@ -1,0 +1,54 @@
+---
+title: "GitHub linking"
+description: "GitHub App OAuth, installation setup, and repository listing for PR targets."
+---
+
+trunker links a workspace to **GitHub** so you can see which organizations and repositories are available for opening pull requests into. Linking uses a **GitHub App** (OAuth user authorization plus installation), not a bare personal access token pasted into the UI.
+
+## Two steps
+
+1. **OAuth (user-to-server)** — an org admin authorizes the App. trunker stores an encrypted access token and the GitHub login.
+2. **Install / setup** — the App is installed on a GitHub organization or user account. GitHub redirects to the setup URL; trunker stores `installation_id` and account metadata.
+
+You need both for a clean “repos for this install” list. OAuth alone can still list user-visible repos as a fallback.
+
+## URLs (production)
+
+These match the GitHub App configuration and root env contract:
+
+| Purpose | URL |
+| --- | --- |
+| OAuth callback | `https://trunker.solved.gg/github/auth/callback` |
+| Setup (after install) | `https://trunker.solved.gg/github/setup` |
+| Webhooks | `https://trunker.api.solved.gg/webhooks/github/ingest` |
+
+Do not invent alternate callback paths. If you self-host, keep the same path segments and only change host if the App registration matches.
+
+## What you can do in the UI
+
+On **Connect → GitHub** after a successful link:
+
+- See connected GitHub login
+- See active installation account (org or user)
+- List **installations** and mark one **Use for PRs**
+- List **repositories** (name, default branch, visibility)
+
+## Permissions
+
+GitHub App permissions are configured on the App in GitHub. trunker does not invent scopes beyond what the App grants. If repo list is empty:
+
+- Install the App on the correct org
+- Grant repository access (all or selected)
+- Reconnect or re-select the installation
+
+Opening PRs as a bot identity would require App JWT + private key installation tokens. The current product path uses the **user OAuth token** from the App’s OAuth client for API access (listing; PR create is a follow-on).
+
+## Webhooks
+
+GitHub delivers events to the Worker ingest URL. Signatures use `X-Hub-Signature-256` and `GITHUB_WEBHOOK_SIGNING_SECRET`. trunker accepts pings and installation-related events to refresh health metadata.
+
+## Security notes
+
+- Tokens are encrypted in D1 with the Worker encryption key.
+- Only org admins can connect, disconnect, or change the active installation.
+- Disconnect deletes the workspace GitHub connection row (not the GitHub App install on GitHub.com — remove that in GitHub settings if needed).

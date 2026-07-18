@@ -1,0 +1,51 @@
+---
+title: "Settings and filters"
+description: "Limit Linear sync scope and verify webhook configuration."
+---
+
+**Settings** is workspace-scoped. Only org admins can save filter changes.
+
+## Sync filters
+
+| Field | Format | Empty means |
+| --- | --- | --- |
+| Team keys | Comma-separated Linear team keys (`ENG, MOBILE`) | All teams |
+| Project IDs | Comma-separated Linear project UUIDs | All projects |
+
+### How to choose filters
+
+1. Connect Linear and run one full sync with empty filters if the workspace is small.
+2. Note team keys from Linear (or trunker teams API once populated).
+3. Restrict team keys to product streams you want in the dashboard.
+4. Optionally pin specific project UUIDs for a single product line.
+5. Click **Save filters**, then **Sync now** on the dashboard.
+
+Filters do not delete historical rows by themselves on every path; treat them as “what future sync prefers to include.” If you need a clean subset, reconnect and full-sync after tightening filters, or contact operators for prune workflows.
+
+## Linear webhooks panel
+
+| Field | Meaning |
+| --- | --- |
+| Public URL | Where Linear should POST events |
+| Last event | Timestamp of last verified webhook for this workspace |
+| Signature configured | Whether the Worker has `LINEAR_WEBHOOK_SIGNING_SECRET` |
+
+The UI never shows the raw signing secret to clients.
+
+Production URL:
+
+```text
+https://trunker.api.solved.gg/webhooks/linear/ingest
+```
+
+## Related operator env
+
+Operators map Settings expectations to env keys (source of truth: product root `.env` / Worker secrets):
+
+| Concern | Key |
+| --- | --- |
+| Linear OAuth callback | `LINEAR_CALLBACK_URL` |
+| Linear webhook URL (docs / Linear app) | `LINEAR_WEBHOOK_URL` |
+| Linear webhook secret | `LINEAR_WEBHOOK_SIGNING_SECRET` |
+
+End users of the hosted product only need the public URLs above — not Worker secrets.
