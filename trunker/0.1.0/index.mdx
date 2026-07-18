@@ -23,7 +23,7 @@ trunker is that control plane for the cloud MVP. Local git worktrees and a full 
 
 ## What trunker does today
 
-- **Clerk organizations as workspaces** — each org is one Trunker workspace with its own connections and synced data
+- **Clerk organizations as workspaces** — each org is one trunker workspace with its own connections and synced data
 - **Linear OAuth** — connect a Linear account; tokens encrypted at rest
 - **Sync** — GraphQL poll (Worker cron every 5 minutes) plus signed Linear webhooks
 - **Dashboard** — connection health, last sync, team / project / issue counts
@@ -47,7 +47,7 @@ Honest early-access boundaries for the cloud MVP:
 
 ```mermaid
 flowchart LR
-  Clerk[Clerk org] --> WS[Trunker workspace]
+  Clerk[Clerk org] --> WS[trunker workspace]
   Linear[Linear GraphQL + webhooks] --> API[trunker-api Worker]
   GitHub[GitHub App OAuth + install] --> API
   API --> D1[(D1 cache)]
@@ -76,7 +76,7 @@ flowchart LR
     Sign in, create an org, connect Linear and GitHub.
   </Card>
   <Card title="Workspaces" icon="users" href="/trunker/0.1.0/concepts/workspaces">
-    How Clerk Organizations map to Trunker data.
+    How Clerk Organizations map to trunker data.
   </Card>
   <Card title="Connect Linear" icon="link" href="/trunker/0.1.0/guides/connect-linear">
     OAuth, sync, and webhook expectations.

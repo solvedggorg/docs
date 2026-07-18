@@ -3,12 +3,12 @@ title: "Connect GitHub"
 description: "Authorize the GitHub App, complete install setup, and select repos for PR targets."
 ---
 
-Use this guide to give a Trunker workspace access to GitHub **organizations and repositories** you open PRs into.
+Use this guide to give a trunker workspace access to GitHub **organizations and repositories** you open PRs into.
 
 ## Before you start
 
 - Org **admin** in the Clerk workspace
-- Permission on GitHub to install the Trunker GitHub App on the target org (or user account)
+- Permission on GitHub to install the trunker GitHub App on the target org (or user account)
 - App callbacks already registered (production):
 
   | Kind | URL |
@@ -28,7 +28,7 @@ At this point trunker has a user-to-server token from the GitHub App OAuth clien
 
 ## 2. Install the App
 
-1. On GitHub, install the Trunker GitHub App on the organization (or user) that owns the target repos.
+1. On GitHub, install the trunker GitHub App on the organization (or user) that owns the target repos.
 2. Choose **all repositories** or a selected set.
 3. GitHub redirects to **setup** (`/github/setup?installation_id=…`).
 4. Stay signed into trunker with the correct organization selected so the installation can be saved.

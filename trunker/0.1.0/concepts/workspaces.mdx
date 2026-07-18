@@ -1,13 +1,13 @@
 ---
 title: "Workspaces"
-description: "Clerk Organizations are Trunker workspaces — isolation, roles, and the org switcher."
+description: "Clerk Organizations are trunker workspaces — isolation, roles, and the org switcher."
 ---
 
 Every piece of synced Linear data and every integration token in trunker is scoped to a **workspace**. A workspace is exactly one **Clerk Organization**.
 
 ## Mapping
 
-| Clerk | Trunker |
+| Clerk | trunker |
 | --- | --- |
 | Organization id (`org_id` JWT claim) | `workspace_id` in D1 |
 | Organization name | Displayed in the sidebar |
@@ -26,7 +26,7 @@ There is no personal (non-org) workspace path for product data. The UI uses `Org
 
 ## Org switcher
 
-The sidebar footer hosts Clerk’s organization switcher and user menu. The app forces a **dark** Clerk appearance so controls stay visible against Trunker’s dark chrome.
+The sidebar footer hosts Clerk’s organization switcher and user menu. The app forces a **dark** Clerk appearance so controls stay visible against trunker’s dark chrome.
 
 If you land on “Select an organization”, create or join an org, then continue to the dashboard.
 
