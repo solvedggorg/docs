@@ -78,7 +78,7 @@ Resolves needs from the lock (or fails closed without one for cargo-format), the
 | `--affected-direct [BASE]` | build, test | Path-touched only |
 | `--bin NAME` | build | Binary target |
 | `--features` / `--all-features` / `--no-default-features` | build, install | Feature flags |
-| `-j N` | build, test | Jobs (`RUSTY_JOBS`) |
+| `-j N` | build, test, fetch | Jobs (`RUSTY_JOBS`); fetch workers additionally capped |
 | `--shard k/n` | test | CI shard (1-based) |
 | `--reporter junit=PATH` | test | JUnit XML |
 | `--retries N` | test | Retry failed test binaries |
