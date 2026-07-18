@@ -27,21 +27,46 @@ Version string is currently in the `0.0.1-dev` line during early access.
 
 | Command | Description |
 | --- | --- |
-| `rusty init [name] [--format cargo\|rusty] [--kind KIND] [--edition YYYY]` | Scaffold a project |
+| `rusty init [name] [options]` | Scaffold a project (scriptable; see below) |
 | `rusty migrate [--yes] [--dry-run]` | Cargo → rusty.json + rusty.lock |
 | `rusty lock` | Generate/update lockfile |
-| `rusty fetch` | Resolve (if needed) + ingest deps into CAS |
+| `rusty fetch` | Resolve (if needed) + parallel CAS ingest / materialize |
 | `rusty build` / `run` / `check` | Native rustc graph (hard error if unsupported) |
 | `rusty test [FILTER]…` | Native file-test runner |
-| `rusty lint` / `format` | Run `scripts.lint` / `scripts.format` |
+| `rusty lint` / `format` | Optional `scripts.lint` / `scripts.format`; else no built-in under these names |
 | `rusty script <name> [args…]` | Run any `rusty.json` scripts entry |
 | `rusty add <crate> [--vers REQ]` | Add dependency (native) |
 | `rusty rm <crate>… [--dev\|--build]` | Remove deps + refresh lock |
 | `rusty update [crate…]` | Re-resolve lock from manifests |
 | `rusty clean` | Remove `<project>/.rusty/target` |
 | `rusty rustc` / `rustdoc …` | Active toolchain via proxy |
-| `rusty clippy` / `fmt` / `doc` / `bench` / `tree` | Cargo interop (needs cargo on PATH) |
+| `rusty clippy` / `fmt` | Native (`clippy-driver` / `rustfmt`; install components via `env install`) |
+| `rusty doc` / `bench` / `tree` | Cargo interop (needs cargo on PATH) |
 | `rusty install <crate>[@version]` | Prebuilt, else native rustc → `$RUSTY_HOME/bin` |
+
+### `rusty init` options
+
+```bash
+rusty init [name] [--kind KIND | -cli|-web|-tui|-lib|-fullstack|-blank] [--format cargo|rusty] [--edition YYYY] [-y]
+```
+
+| Flag | Meaning |
+| --- | --- |
+| `name` | Package name (default: current directory name when non-interactive) |
+| `--kind KIND` | `web` \| `cli` \| `tui` \| `lib` \| `fullstack` \| `blank` |
+| `--cli` / `-cli`, `--web` / `-web`, `--tui` / `-tui`, `--lib` / `-lib`, `--fullstack` / `-fullstack`, `--blank` / `-blank` | Template kind; each is an alias for `--kind`. Pass exactly one of `--kind` or a single shorthand flag (they are mutually exclusive) |
+| `--format cargo\|rusty` | Project format |
+| `--edition YYYY` | `2015` \| `2018` \| `2021` \| `2024` |
+| `--yes` / `-y` | Non-interactive (no TTY prompts; defaults for unset fields) |
+| `-h` / `--help` | Full usage |
+
+Examples: `rusty init lib -cli`, `rusty init myapp --web -y --format rusty`.
+
+On a TTY without `-y`, prompts for unset name/kind/format/edition. Interactive default kind is **cli**; non-interactive default is **blank**.
+
+### `rusty fetch`
+
+Resolves needs from the lock (or fails closed without one for cargo-format), then downloads, checksum-verifies, ingests, and materializes registry crates **in parallel** (work-queue workers, capped like sparse-index prefetch). When a lock pin (checksum) is present, the crates.io static download URL is used and the sparse index is not consulted for that crate.
 
 ### Common build / test flags
 
@@ -53,7 +78,7 @@ Version string is currently in the `0.0.1-dev` line during early access.
 | `--affected-direct [BASE]` | build, test | Path-touched only |
 | `--bin NAME` | build | Binary target |
 | `--features` / `--all-features` / `--no-default-features` | build, install | Feature flags |
-| `-j N` | build, test | Jobs (`RUSTY_JOBS`) |
+| `-j N` | build, test, fetch | Jobs (`RUSTY_JOBS`); fetch workers additionally capped |
 | `--shard k/n` | test | CI shard (1-based) |
 | `--reporter junit=PATH` | test | JUnit XML |
 | `--retries N` | test | Retry failed test binaries |

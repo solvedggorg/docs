@@ -18,7 +18,8 @@ Native-first layout:
 Create with:
 
 ```bash
-rusty init --format rusty
+rusty init --format rusty -y
+# or scriptable kind: rusty init mylib -lib --format rusty -y
 ```
 
 **Scripts** live in `rusty.json` under `"scripts"`. Lifecycle keys can override or wrap built-in verbs:
@@ -26,7 +27,7 @@ rusty init --format rusty
 - `build`, `test`, `lint`, `format` — special lifecycle hooks
 - any other name — run via `rusty script <name>`
 
-`lint` and `format` always go through scripts (there is no built-in clippy/rustfmt driver under those names).
+`lint` and `format` always go through scripts. For clippy/rustfmt without a script wrapper, use `rusty clippy` / `rusty fmt` (native drivers; install components via `env install`).
 
 ## cargo-format
 
@@ -41,7 +42,7 @@ Interop layout for existing Cargo trees:
 Create with:
 
 ```bash
-rusty init --format cargo
+rusty init --format cargo -y
 ```
 
 Or open an existing Cargo project; rusty detects `Cargo.toml` without requiring a prior init.

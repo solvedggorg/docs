@@ -56,7 +56,7 @@ rusty env install stable x86_64-unknown-linux-musl
 rusty env install stable cargo
 ```
 
-Without cargo on PATH, interop commands (`clippy`, `fmt`, `doc`, `bench`, `tree`) fail closed (exit **127**).
+Without cargo on PATH, interop commands (`doc`, `bench`, `tree`) fail closed (exit **127**). Native `clippy` / `fmt` need the matching components (`rusty env install <id> clippy` / `rustfmt`), not cargo.
 
 ## PATH for shims
 

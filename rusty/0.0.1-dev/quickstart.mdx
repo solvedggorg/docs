@@ -44,11 +44,17 @@ export PATH="${RUSTY_HOME:-$HOME/.rusty}/bin:$PATH"
 
 ## 3. Create a project
 
-Interactive (TTY) or fully flagged:
+On a TTY, `rusty init` prompts for unset fields. For scripts and CI, pass flags so nothing is interactive:
 
 ```bash
 mkdir hello-rusty && cd hello-rusty
-rusty init --format rusty --kind cli --edition 2021
+# name + kind short-flag + non-interactive
+rusty init hello-rusty --cli -y --format rusty --edition 2021
+
+# equivalent forms
+rusty init lib -cli
+rusty init myapp --web -y --format rusty
+rusty init api --kind fullstack --edition 2024 -y
 ```
 
 Useful flags:
@@ -57,8 +63,12 @@ Useful flags:
 | --- | --- |
 | `--format rusty` | Scaffold `rusty.json` + `rusty.lock` (native-first) |
 | `--format cargo` | Scaffold `Cargo.toml` for interop / gradual migration |
-| `--kind cli` / `lib` / `web` / … | Template kind (prompted on TTY if omitted) |
-| `--edition 2021` | Rust edition |
+| `--kind KIND` | `web` \| `cli` \| `tui` \| `lib` \| `fullstack` \| `blank` |
+| `--cli` / `-cli`, `--web` / `-web`, … | Same as `--kind` (exactly one kind) |
+| `--edition 2021` | Rust edition (`2015` \| `2018` \| `2021` \| `2024`) |
+| `--yes` / `-y` | Non-interactive even on a TTY (defaults for unset fields) |
+
+Interactive menu default kind is **cli**; non-interactive default kind is **blank**. See `rusty init --help`.
 
 Project metadata and caches land in **`.rusty/`** (including `.rusty/format`).
 
@@ -70,7 +80,7 @@ rusty fetch
 ```
 
 - **Lock** writes `rusty.lock` or `Cargo.lock` depending on project format.
-- **Fetch** resolves (if needed) and ingests crates into the content-addressable store.
+- **Fetch** resolves (if needed) and ingests crates into the content-addressable store **in parallel** (worker count capped like sparse-index prefetch; honors `RUSTY_JOBS` / `-j` budget). When the lockfile already pins a checksum, rusty builds the crates.io static download URL and skips a sparse-index round-trip.
 
 ## 5. Build and test
 
