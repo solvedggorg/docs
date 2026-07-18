@@ -13,15 +13,17 @@ scripty/               # product docs → docs.solved.gg/scripty
 worgo/                 # product docs → docs.solved.gg/worgo
 pyppi/                 # product docs → docs.solved.gg/pyppi
 yappy/                 # product docs → docs.solved.gg/yappy
-deploy/                # product docs → docs.solved.gg/deploy
-git/                   # product docs → docs.solved.gg/git
 depotsdk-go/           # product docs → docs.solved.gg/depotsdk-go
+.nrn/                  # not right now — deferred es, deploy, git, trunker
 ```
 
 The product switcher lists **Home**, **rusty**, **scripty**, **worgo**, **pyppi**,
-**yappy**, **deploy**, **git**, and **depotsdk-go**. Home is the default entry
-(welcome + legal). Product documentation is **not** at the site root; each
-product lives under its path prefix.
+**yappy**, and **depotsdk-go**. Home is the default entry (welcome + legal).
+Product documentation is **not** at the site root; each product lives under its
+path prefix.
+
+Spanish locale and the **deploy**, **git**, and **trunker** product trees live
+under `.nrn/` until they are ready to publish again. See `.nrn/README.md`.
 
 ## Development
 
