@@ -23,11 +23,15 @@ rusty test
 
 If `build`/`check`/`run` report unsupported shapes, that is intentional fail-closed behavior for cargo-format graphs not yet in the native matrix.
 
-Interop-only verbs still expect cargo on PATH:
+Native clippy/fmt need components (not cargo). Interop-only verbs still expect cargo on PATH:
 
 ```bash
-rusty env install stable cargo   # only if you need these
+rusty env install stable clippy
+rusty env install stable rustfmt
 rusty clippy
+rusty fmt
+
+rusty env install stable cargo   # only if you need doc/bench/tree
 rusty doc
 ```
 
