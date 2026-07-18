@@ -47,14 +47,14 @@ Version string is currently in the `0.0.1-dev` line during early access.
 ### `rusty init` options
 
 ```bash
-rusty init [name] [-cli|-web|-tui|-lib|…] [--format cargo|rusty] [--edition YYYY] [-y]
+rusty init [name] [--kind KIND | -cli|-web|-tui|-lib|…] [--format cargo|rusty] [--edition YYYY] [-y]
 ```
 
 | Flag | Meaning |
 | --- | --- |
 | `name` | Package name (default: cwd basename when non-interactive) |
 | `--kind KIND` | `web` \| `cli` \| `tui` \| `lib` \| `fullstack` \| `blank` |
-| `--cli` / `-cli`, `--web` / `-web`, `--tui` / `-tui`, `--lib` / `-lib`, `--fullstack` / `-fullstack`, `--blank` / `-blank` | Template kind (exactly one; same as `--kind`) |
+| `--cli` / `-cli`, `--web` / `-web`, `--tui` / `-tui`, `--lib` / `-lib`, `--fullstack` / `-fullstack`, `--blank` / `-blank` | Template kind; each is an alias for `--kind`. Pass exactly one of `--kind` or a single shorthand flag (they are mutually exclusive) |
 | `--format cargo\|rusty` | Project format |
 | `--edition YYYY` | `2015` \| `2018` \| `2021` \| `2024` |
 | `--yes` / `-y` | Non-interactive (no TTY prompts; defaults for unset fields) |
