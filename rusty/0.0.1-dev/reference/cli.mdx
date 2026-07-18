@@ -47,12 +47,12 @@ Version string is currently in the `0.0.1-dev` line during early access.
 ### `rusty init` options
 
 ```bash
-rusty init [name] [--kind KIND | -cli|-web|-tui|-lib|…] [--format cargo|rusty] [--edition YYYY] [-y]
+rusty init [name] [--kind KIND | -cli|-web|-tui|-lib|-fullstack|-blank] [--format cargo|rusty] [--edition YYYY] [-y]
 ```
 
 | Flag | Meaning |
 | --- | --- |
-| `name` | Package name (default: cwd basename when non-interactive) |
+| `name` | Package name (default: current directory name when non-interactive) |
 | `--kind KIND` | `web` \| `cli` \| `tui` \| `lib` \| `fullstack` \| `blank` |
 | `--cli` / `-cli`, `--web` / `-web`, `--tui` / `-tui`, `--lib` / `-lib`, `--fullstack` / `-fullstack`, `--blank` / `-blank` | Template kind; each is an alias for `--kind`. Pass exactly one of `--kind` or a single shorthand flag (they are mutually exclusive) |
 | `--format cargo\|rusty` | Project format |
