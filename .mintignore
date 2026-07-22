@@ -8,3 +8,8 @@ drafts/
 
 # Not right now — deferred products and Spanish locale
 .nrn/
+es
+git
+navigation.deferred.json
+README.md
+trunker

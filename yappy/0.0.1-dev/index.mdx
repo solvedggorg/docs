@@ -5,6 +5,10 @@ description: "yappy is a Linux-only native desktop shell — Qt + GTK, with scri
 
 **yappy** is a Linux-only native desktop shell written in Zig. It targets Electron / Tauri / Deno Desktop class apps **without** an embedded browser: UI is **Qt and GTK**, and app logic runs on **[scripty](/scripty)** (JS runtime + project manager).
 
+<Warning>
+  **Permanently Linux-only** and **always native UI** — no webview, no Chromium, no HTML-as-shell.
+</Warning>
+
 ## What yappy is for
 
 - **Native Linux UI** — first-class **Qt** and **GTK** backends (v0.1.0 bar: both)
@@ -12,21 +16,67 @@ description: "yappy is a Linux-only native desktop shell — Qt + GTK, with scri
 - **Capability-scoped host** — FS and related APIs default deny; grants are explicit
 - **Backend-agnostic app API** — apps target a unified widget surface where possible
 
+## Product split
+
+| Layer | Owner | Responsibility |
+| --- | --- | --- |
+| **scripty** | [scripty](/scripty) | JS VM, host ABI, package manager, embed API |
+| **yappy** | this product | Process main, event loop, **native UI**, OS integration, capabilities, packaging |
+| **App code** | app repo | JS/TS business logic via scripty; UI via yappy native APIs |
+
+Rules:
+
+1. No browser stack in yappy.
+2. No second JS engine — only scripty.
+3. Package management is scripty’s; yappy may invoke it but does not reimplement npm.
+4. Native APIs are yappy’s product surface.
+
+## Architecture (target)
+
+```text
+yappy process (Linux)
+  main / CLI · capability host · backend selector (qt | gtk)
+           │
+           ▼
+  unified widget + window + event API
+           │
+           ▼
+  scripty embed  (isolates · modules · PM graph)
+    app JS/TS  ←→  yappy_* host functions
+```
+
+## Status
+
+yappy is in **early access / scaffold**. Install paths, CLI reference, and the native API matrix will land as the binary stabilizes. Backend and API matrices currently mark required rows as **unsupported** until implementation lands — that honesty is intentional.
+
+| Decision | Status |
+| --- | --- |
+| Linux-only forever | Accepted |
+| Native UI only (no webview) | Accepted |
+| scripty as the only JS runtime | Accepted |
+| v0.1.0 = both Qt and GTK first-class | Accepted |
+| Default backend when both installed | Pending |
+| Qt binding approach / GTK4 pin | Spike / proposed |
+
 ## How it fits the suite
 
 | Sibling | Role |
 | --- | --- |
 | [scripty](/scripty) | JS runtime + PM that yappy embeds |
 | [rusty](/rusty) | Rust package manager + toolchain (Linux) |
-| [worgo](/worgo) | Go workspace project manager |
-| [pyppi](/pyppi) | Python package manager + project tool |
-| [depotsdk-go](/depotsdk-go) | Go client for the Depot API |
+| [worgo](/worgo) / [pyppi](/pyppi) / [hasky](/hasky) | Other language PMs |
+| [deploy](/deploy) | Next.js → Cloudflare Workers |
+| [clerk-zig](/clerk-zig) | Shared product auth |
+| [zig-libsql](/zig-libsql) | Zig libSQL / SQLite adapter |
 
-yappy is **permanently Linux-only** and **always native UI** — no webview, no Chromium, no HTML-as-shell.
+## Next in these docs
 
-## Status
-
-yappy is in **early access / coming soon**. Install paths, CLI reference, and the native API matrix will land here as the binary stabilizes.
+1. [Backend parity matrix](/yappy/0.0.1-dev/reference/backends)
+2. [Native API matrix](/yappy/0.0.1-dev/reference/native-api)
+3. Install and doctor (GTK / Qt system deps)
+4. Hello window on GTK and Qt
+5. scripty embed and app project layout
+6. Packaging and capabilities
 
 Until then:
 
@@ -34,13 +84,3 @@ Until then:
 - Suite hub: [pm.solved.gg](https://pm.solved.gg)
 - Org overview: [solved.gg/projects](https://solved.gg/projects)
 - Contact: [intake@solved.gg](mailto:intake@solved.gg)
-
-## What to expect next in these docs
-
-1. Install and doctor (GTK / Qt system deps)
-2. Hello window on GTK and Qt
-3. scripty embed and app project layout
-4. Native API and backend parity reference
-5. Packaging and capabilities
-
-Questions or early access: [intake@solved.gg](mailto:intake@solved.gg).

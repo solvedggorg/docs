@@ -5,10 +5,10 @@ Deferred docs content that should not ship in the live Mintlify site yet.
 | Path | What |
 | --- | --- |
 | `es/` | Spanish locale (full tree) |
-| `deploy/` | deploy product intro |
+| `deploy/` | **superseded** — live tree is `../deploy/` (kept for Spanish / history) |
 | `git/` | git product intro |
 | `trunker/` | trunker 0.1.0 guides |
-| `navigation.deferred.json` | Nav blocks to restore into `docs.json` |
+| `navigation.deferred.json` | Nav blocks to restore into `docs.json` (deploy entry may already be live) |
 
 ## Restore
 

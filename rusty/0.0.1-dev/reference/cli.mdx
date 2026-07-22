@@ -27,28 +27,30 @@ Version string is currently in the `0.0.1-dev` line during early access.
 
 | Command | Description |
 | --- | --- |
-| `rusty init [name] [--format cargo\|rusty] [--kind KIND] [--edition YYYY]` | Scaffold a project |
+| `rusty init [name] [--kind KIND\|--cli\|--web\|--tui\|--lib\|--fullstack\|--blank] [--format cargo\|rusty] [--edition YYYY] [-y\|--yes]` | Scaffold a project (TTY prompts unless scripted) |
 | `rusty migrate [--yes] [--dry-run]` | Cargo → rusty.json + rusty.lock |
 | `rusty lock` | Generate/update lockfile |
 | `rusty fetch` | Resolve (if needed) + ingest deps into CAS |
 | `rusty build` / `run` / `check` | Native rustc graph (hard error if unsupported) |
-| `rusty test [FILTER]…` | Native file-test runner |
-| `rusty lint` / `format` | Run `scripts.lint` / `scripts.format` |
+| `rusty test [FILTER]…` | Native file-test runner (never cargo by default) |
+| `rusty clippy [-p PKG] [--workspace]` | **Native** clippy-driver graph (no cargo). Install: `rusty env install <id> clippy` |
+| `rusty fmt [--check] [-p PKG] …` | **Native** rustfmt over package sources (no cargo). Install: `rusty env install <id> rustfmt` |
+| `rusty lint` / `format` | `scripts.lint` / `scripts.format`, else native clippy/fmt |
 | `rusty script <name> [args…]` | Run any `rusty.json` scripts entry |
 | `rusty add <crate> [--vers REQ]` | Add dependency (native) |
 | `rusty rm <crate>… [--dev\|--build]` | Remove deps + refresh lock |
 | `rusty update [crate…]` | Re-resolve lock from manifests |
 | `rusty clean` | Remove `<project>/.rusty/target` |
 | `rusty rustc` / `rustdoc …` | Active toolchain via proxy |
-| `rusty clippy` / `fmt` / `doc` / `bench` / `tree` | Cargo interop (needs cargo on PATH) |
+| `rusty doc` / `bench` / `tree` | Cargo interop only (needs cargo on PATH) |
 | `rusty install <crate>[@version]` | Prebuilt, else native rustc → `$RUSTY_HOME/bin` |
 
 ### Common build / test flags
 
 | Flag | Applies to | Meaning |
 | --- | --- | --- |
-| `-p PKG` | build, test | Package select |
-| `--workspace` | build, test | Multi-package |
+| `-p PKG` | build, test, clippy, fmt | Package select |
+| `--workspace` | build, test, clippy, fmt | Multi-package |
 | `--affected [BASE]` | build, test | Touched + reverse dependents |
 | `--affected-direct [BASE]` | build, test | Path-touched only |
 | `--bin NAME` | build | Binary target |
@@ -57,10 +59,13 @@ Version string is currently in the `0.0.1-dev` line during early access.
 | `--shard k/n` | test | CI shard (1-based) |
 | `--reporter junit=PATH` | test | JUnit XML |
 | `--retries N` | test | Retry failed test binaries |
+| `--no-scripts` | lifecycle verbs | Skip package scripts (`RUSTY_NO_SCRIPTS=1`) |
 
 `rusty build path.rs` compiles a single file and skips package scripts.
 
-`rusty install` supports `--bin`, `--features`, `--all-features`, `--no-default-features`. Cargo install only with `RUSTY_INSTALL_ALLOW_CARGO=1` (and not `RUSTY_INSTALL_NO_CARGO`).
+Lifecycle overrides: `scripts.build|test|lint|format` in `rusty.json` can opt into cargo per-verb.
+
+`rusty install` supports `--bin`, `--features`, `--all-features`, `--no-default-features`. Cargo install only with `RUSTY_INSTALL_ALLOW_CARGO=1`.
 
 ## Content store
 
@@ -106,11 +111,13 @@ Version string is currently in the `0.0.1-dev` line during early access.
 
 ## Auth (product identity)
 
+Clerk OAuth via **[clerk-zig](/clerk-zig)** — shared suite session, **not** crates.io.
+
 | Command | Description |
 | --- | --- |
-| `rusty auth login` | Browser PKCE → `$RUSTY_HOME/auth.db` |
-| `rusty auth logout` | Clear session |
+| `rusty auth login` | Browser PKCE → `$PMS_HOME/auth/session.db` |
+| `rusty auth logout` | Clear local session (best-effort remote revoke) |
 | `rusty auth whoami` | Email / user id |
 | `rusty auth status` | Session + store path (no secrets) |
 
-Requires `RUSTY_AUTH_CLIENT_ID` and `RUSTY_AUTH_ISSUER`. This is **not** crates.io login/publish.
+Requires `PMS_AUTH_CLIENT_ID` and `PMS_AUTH_ISSUER` (`RUSTY_AUTH_*` legacy aliases still accepted). One login under `$PMS_HOME` serves every PM in the suite.

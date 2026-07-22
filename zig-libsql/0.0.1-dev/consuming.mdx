@@ -1,0 +1,93 @@
+---
+title: "Consuming"
+description: "How product toolchains depend on zig-libsql."
+---
+
+How product toolchains (rusty, scripty, hasky, clerk-zig, …) depend on this package.
+
+## Requirements
+
+- Zig **0.16.x**
+- libc (local engine)
+
+## Depend via release tag (production)
+
+Prefer a **published GitHub tag** so builds are reproducible and offline after fetch:
+
+```bash
+zig fetch --save https://github.com/solvedggorg/zig-libsql/archive/refs/tags/v0.2.0.tar.gz
+```
+
+That writes `url` + content `hash` into your `build.zig.zon` under `.dependencies.zig_libsql`.
+
+### `build.zig`
+
+```zig
+const libsql = b.dependency("zig_libsql", .{
+    .target = target,
+    .optimize = optimize,
+});
+mod.addImport("zig_libsql", libsql.module("zig_libsql"));
+// Do NOT also linkSystemLibrary("sqlite3") — the module compiles vendor/sqlite3.c.
+```
+
+Wire the import on every module that `@import("zig_libsql")` (library root **and** executable / tests, as needed).
+
+### Import
+
+```zig
+const libsql = @import("zig_libsql");
+
+var db = try libsql.Database.open(allocator, .{ .path = db_path });
+defer db.deinit();
+var conn = db.connect();
+
+try conn.exec("PRAGMA journal_mode=DELETE; CREATE TABLE IF NOT EXISTS t(...);", .{});
+
+var stmt = try conn.prepare("SELECT x FROM t WHERE id = ?1;");
+defer stmt.deinit();
+try stmt.bindInt(1, 1);
+while (try stmt.step()) |row| {
+    // row.text is borrowed until the next step/reset/deinit — dupe if you keep it.
+    const s = try row.text(0);
+    _ = s;
+}
+
+// After a failed exec/prepare (local):
+// log.err("sql: {s}", .{conn.lastErrorMessage()});
+```
+
+Module name: **`zig_libsql`**. Package name in `build.zig.zon`: **`zig_libsql`**.
+
+## Local path (development only)
+
+```zig
+// build.zig.zon — temporary while hacking both repos
+.zig_libsql = .{ .path = "../zig-libsql" },
+```
+
+Do **not** ship products on path deps. Release tags are the production contract.
+
+## Security (consumer-owned)
+
+- Restrict file modes **before / at open** for secret stores (`0600`). Prefer a tight `umask` or pre-create the file; this library does not chmod by default.
+- Prefer `PRAGMA journal_mode=DELETE` for token DBs (no WAL sidecars).
+- Never log auth tokens or URLs that embed secrets. `lastErrorMessage` is for SQL diagnostics only.
+
+## API map
+
+| Need | API |
+| --- | --- |
+| Open file / memory | `Database.open` |
+| Multi-statement DDL | `Connection.exec` |
+| Bound DML / SELECT | `prepare` + `bind*` + `step` / `execute` |
+| Optional bind | `bindNull` |
+| Diagnostics (local) | `lastErrorMessage` / `lastErrorCode` |
+| Remote Turso/libSQL | `path = "libsql://…"` + `auth_token` + `io` |
+| Embedded replica sync | optional; requires inject / optional rust bridge |
+
+## Versioning
+
+- Semver in `build.zig.zon` and package `version` stay in sync.
+- Never move a published tag. Bugfixes → patch; breaking API → major/minor per policy.
+- Default package **does not** include optional replica bridge tooling.

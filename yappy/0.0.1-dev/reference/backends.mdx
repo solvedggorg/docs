@@ -1,0 +1,55 @@
+---
+title: "Backend parity matrix"
+description: "Qt vs GTK feature parity for yappy v0.1.0 — status vocabulary and current rows."
+---
+
+Status values: `unsupported` | `partial` | `supported` | `dogfooded`.
+
+**v0.1.0 bar:** every **required** row must be `supported` or `dogfooded` on **both** backends (or deferred with note — not silent).
+
+Last synced from product tree: **2026-07-16** (scaffold matrices; implementation in progress).
+
+## Build / host
+
+| Feature | GTK | Qt | Notes |
+| --- | --- | --- | --- |
+| Linux-only build | unsupported | unsupported | fail closed on non-Linux |
+| `-Dbackend=gtk` | unsupported | — | |
+| `-Dbackend=qt` | — | unsupported | |
+| System deps documented | unsupported | unsupported | Fedora/Debian package names |
+| `yappy doctor` checks toolkit libs | unsupported | unsupported | |
+
+## Window & lifecycle
+
+| Feature | GTK | Qt | Notes |
+| --- | --- | --- | --- |
+| Create top-level window | unsupported | unsupported | |
+| Set title / size / show | unsupported | unsupported | |
+| Close / destroy / app quit | unsupported | unsupported | |
+| Window close event → host/JS | unsupported | unsupported | |
+
+## Layout & widgets (v0.1 minimum)
+
+| Feature | GTK | Qt | Notes |
+| --- | --- | --- | --- |
+| Vertical / horizontal box | unsupported | unsupported | v0.1 minimum |
+| Label, button, single-line text input | unsupported | unsupported | |
+| Button click / text change events | unsupported | unsupported | |
+
+## scripty bridge (demo path)
+
+| Feature | GTK | Qt | Notes |
+| --- | --- | --- | --- |
+| Embed isolate + run entry module | unsupported | unsupported | requires scripty |
+| Button click → JS handler | unsupported | unsupported | |
+| JS → update label | unsupported | unsupported | |
+| Capability-gated file read from JS | unsupported | unsupported | |
+
+## Toolkit versions (intent)
+
+| Backend | Target | Status |
+| --- | --- | --- |
+| GTK | GTK4 | proposed |
+| Qt | Qt6 Widgets | pending bridge spike |
+
+Never claim backend parity until this matrix says `supported` or `dogfooded`.

@@ -1,0 +1,48 @@
+---
+title: "hasky.json schema"
+description: "Native project manifest for hasky-format projects (schema v0)."
+---
+
+Native project manifest. **Only** format `hasky build` will accept (after migrate). Cabal / Stack / `package.yaml` trees are migration **inputs**, not runtime formats.
+
+## Minimal
+
+```json
+{
+  "name": "hello",
+  "version": "0.1.0",
+  "ghc": "9.10.1",
+  "modules": { "auto": true },
+  "dependencies": {
+    "base": ">=4.18 && <5"
+  }
+}
+```
+
+## Fields (v0)
+
+| Field | Required | Notes |
+| --- | --- | --- |
+| `name` | yes | Package name |
+| `version` | yes | Semver-ish string |
+| `ghc` | recommended | Pin GHC id hasky env will use |
+| `modules.auto` | no | If true, discover `.hs` under component roots (apps) |
+| `modules` list | no | Explicit module list (libraries / publish) |
+| `dependencies` | no | Map name → version range (resolved into `hasky.lock`) |
+| `dev-dependencies` | no | Test / bench only |
+| `lib` / `bins` / `tests` | later | Component roots; defaults: `src/`, `app/`, `test/` |
+| `system-deps` | later | pkg-config names |
+| `workspace` | later | members / exclude |
+
+## hasky.lock
+
+Produced by `hasky lock` (Phase 2). Fully pins package versions + content checksums + optional binary unit digests. Offline `hasky fetch` + build.
+
+## Migration
+
+`hasky migrate` reads `.cabal` / `package.yaml` / `stack.yaml` / `cabal.project` and writes `hasky.json` + initial lock. Unsupported shapes fail closed.
+
+## Related
+
+- [CLI reference](/hasky/0.0.1-dev/reference/cli)
+- [Introduction](/hasky/0.0.1-dev)

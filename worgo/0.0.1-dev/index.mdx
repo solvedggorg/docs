@@ -11,6 +11,17 @@ description: "worgo is a next-gen Go workspace project manager, written in Zig."
 - **Project management** for Go: init, dependency workflows, and workspace operations with a single CLI shape
 - **Zig implementation** — same systems approach as [rusty](/rusty) and [scripty](/scripty): fast paths, explicit behavior, minimal ceremony
 
+## Status
+
+worgo is in **early access / scaffold** (`0.0.1-dev`). The public CLI surface is still forming; do not assume full `go` / workspace parity yet.
+
+Build from source (Zig **0.16.x**):
+
+```bash
+zig build
+zig build test
+```
+
 ## How it fits the suite
 
 | Sibling | Ecosystem |
@@ -19,19 +30,19 @@ description: "worgo is a next-gen Go workspace project manager, written in Zig."
 | [scripty](/scripty) | JavaScript / TypeScript runtime + PM |
 | **worgo** | Go workspace project manager |
 | [pyppi](/pyppi) | Python package manager + project tool |
+| [hasky](/hasky) | Haskell toolchain (Linux) |
 | [yappy](/yappy) | Linux native desktop shell (Qt + GTK) |
-| [depotsdk-go](/depotsdk-go) | Go SDK for the Depot API |
+| [deploy](/deploy) | Next.js → Cloudflare Workers |
+| [clerk-zig](/clerk-zig) | Shared product auth |
+| [zig-libsql](/zig-libsql) | Zig libSQL / SQLite adapter |
 
 These products ship under the [solved.gg](https://solved.gg) / iResolved, LLC product family.
 
-## Status
-
-worgo is in **early access / coming soon**. Install instructions, workspace model details, and CLI reference will land here as the product surface freezes.
-
-Until then:
+Until install channels freeze:
 
 - Product site: [worgo.pm.solved.gg](https://worgo.pm.solved.gg)
 - Suite hub: [pm.solved.gg](https://pm.solved.gg)
+- Source: [github.com/solvedggorg/worgo](https://github.com/solvedggorg/worgo)
 - Org overview: [solved.gg/projects](https://solved.gg/projects)
 
 ## What to expect next in these docs

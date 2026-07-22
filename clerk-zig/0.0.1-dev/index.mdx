@@ -1,0 +1,101 @@
+---
+title: "Introduction"
+description: "clerk-zig is the Linux-only shared Clerk OAuth library for the PMS suite — one login under $PMS_HOME."
+---
+
+**clerk-zig** is a Zig package that centralizes **solved.gg / iResolved product identity** for the Project Managers suite (rusty, scripty, hasky, deploy, …). It is **not** a full Clerk SDK: no Backend API, no JWKS middleware, no webhooks.
+
+## What clerk-zig is for
+
+- **Clerk OAuth** for product CLIs: authorize, token exchange, refresh, revoke, userinfo
+- **PKCE + loopback callback + browser open** for interactive `auth login`
+- **Shared session store** at **`$PMS_HOME/auth/session.db`** (via [zig-libsql](/zig-libsql))
+- **Shared suite root** **`$PMS_HOME`** (default `~/.pms`) so one login serves every PM
+
+<Warning>
+  **Linux only.** First-party builds and session semantics target Linux. Do not expect non-Linux support.
+</Warning>
+
+## Status
+
+**Library in use.** First consumer: **[rusty](/rusty)** (`rusty auth login|logout|whoami|status` — CLI branding only; OAuth and store live here).
+
+| Area | Status |
+| --- | --- |
+| paths / config / PKCE | Shipped |
+| OAuth + callback + browser | Shipped |
+| Session store (`session.db`) | Shipped |
+| rusty CLI consumer | Shipped |
+| Other PM thin auth CLIs | Planned |
+| Full multi-PM path migration under `$PMS_HOME/<pm>/` | Follow-up |
+
+## Architecture
+
+```text
+rusty / scripty / hasky CLI  (auth login|…)
+              │  @import("clerk_zig")
+              ▼
+         clerk-zig
+    config → pkce → oauth ⇄ Clerk (https issuer)
+             callback + browser
+             login orchestration
+             store ──► zig-libsql
+             paths ($PMS_HOME)
+              │
+              ▼
+    $PMS_HOME/auth/session.db
+```
+
+## Environment
+
+| Variable | Role |
+| --- | --- |
+| `PMS_HOME` | Suite data root (default `~/.pms`) |
+| `PMS_AUTH_CLIENT_ID` | Clerk OAuth **public** client id (required for login) |
+| `PMS_AUTH_ISSUER` | Clerk Frontend API / issuer URL (`https://` required) |
+| `PMS_AUTH_SCOPES` | Optional scopes (default: `profile email offline_access`) |
+| `RUSTY_AUTH_*` | **Legacy aliases** used when the matching `PMS_*` value is unset |
+
+## Product CLI surface (consumers)
+
+Keep brand-facing commands in each PM:
+
+```bash
+rusty auth login     # browser PKCE → $PMS_HOME/auth/session.db
+rusty auth logout
+rusty auth whoami
+rusty auth status    # path + session metadata, no secrets
+```
+
+Never print access or refresh tokens.
+
+## Build & consume
+
+Requires Zig **0.16.x**, Linux, and **zig-libsql**.
+
+```bash
+# library checkout
+zig build
+zig build test
+```
+
+See [Consuming](/clerk-zig/0.0.1-dev/consuming) for `build.zig.zon` wiring and [\$PMS_HOME layout](/clerk-zig/0.0.1-dev/pms-home) for the suite directory contract.
+
+## How it fits the suite
+
+| Sibling | Role |
+| --- | --- |
+| **clerk-zig** | Shared product auth library |
+| [zig-libsql](/zig-libsql) | Session DB backend |
+| [rusty](/rusty) | First PM consumer (`rusty auth`) |
+| [scripty](/scripty) / [hasky](/hasky) / [deploy](/deploy) | Future thin auth CLIs |
+
+## Links
+
+- Source: [github.com/solvedggorg/clerk-zig](https://github.com/solvedggorg/clerk-zig) (org path when published)
+- Suite hub: [pm.solved.gg](https://pm.solved.gg)
+- Contact: [intake@solved.gg](mailto:intake@solved.gg)
+
+## License
+
+MIT — see the package `LICENSE`.

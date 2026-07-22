@@ -1,6 +1,6 @@
 ---
 title: "Environment variables"
-description: "RUSTY_* and cargo-compatible variables rusty sets or honors."
+description: "RUSTY_*, PMS_*, and cargo-compatible variables rusty sets or honors."
 ---
 
 ## Primary
@@ -16,8 +16,20 @@ description: "RUSTY_* and cargo-compatible variables rusty sets or honors."
 | `RUSTY_NO_SCRIPTS` | Set to `1` to skip lifecycle script hooks |
 | `RUSTY_INSTALL_ALLOW_CARGO` | Set to `1` to allow `cargo install` after prebuilt + native miss |
 | `RUSTY_INSTALL_NO_CARGO` | Force no cargo install path even if allow is set |
-| `RUSTY_AUTH_CLIENT_ID` | Clerk OAuth client for `rusty auth` |
-| `RUSTY_AUTH_ISSUER` | Clerk / OIDC issuer for `rusty auth` |
+
+## Suite auth (clerk-zig)
+
+| Variable | Default / notes |
+| --- | --- |
+| `PMS_HOME` | Suite data root; default `~/.pms` |
+| `PMS_AUTH_CLIENT_ID` | Clerk OAuth public client id (required for login) |
+| `PMS_AUTH_ISSUER` | Clerk Frontend API / issuer URL (`https://` required) |
+| `PMS_AUTH_SCOPES` | Optional scopes (default: `profile email offline_access`) |
+| `RUSTY_AUTH_CLIENT_ID` | Legacy alias for `PMS_AUTH_CLIENT_ID` when PMS unset |
+| `RUSTY_AUTH_ISSUER` | Legacy alias for `PMS_AUTH_ISSUER` |
+| `RUSTY_AUTH_SCOPES` | Legacy alias for `PMS_AUTH_SCOPES` |
+
+Session file: `$PMS_HOME/auth/session.db` (mode 0600). See [clerk-zig](/clerk-zig) and [\$PMS_HOME](/clerk-zig/0.0.1-dev/pms-home).
 
 ## Cargo-compatible (often set by rusty)
 
@@ -33,10 +45,10 @@ description: "RUSTY_* and cargo-compatible variables rusty sets or honors."
 
 | Path | Purpose |
 | --- | --- |
-| `$RUSTY_HOME` | Toolchains, store, auth, bin shims |
+| `$RUSTY_HOME` | Toolchains, store, bin shims |
 | `$RUSTY_HOME/bin` | Proxies after `env use` |
 | `$RUSTY_HOME/cargo-home` | Managed cargo-home layout |
-| `$RUSTY_HOME/auth.db` | Product auth session |
+| `$PMS_HOME/auth/session.db` | Shared suite product auth session |
 | `<root>/.rusty/` | Format marker, target, layer index, graph caches |
 | `<root>/.rusty/format` | `rusty` or `cargo` |
 | `<root>/.rusty/target` | Build outputs |
@@ -44,5 +56,6 @@ description: "RUSTY_* and cargo-compatible variables rusty sets or honors."
 ## Interop notes
 
 - Default toolchain install does **not** include cargo.
-- Interop verbs without cargo fail with exit **127**.
+- `clippy` and `fmt` are **native** (need clippy/rustfmt components, not cargo).
+- Interop verbs without cargo (`doc`, `bench`, `tree`) fail with exit **127**.
 - Doc/bench prep may append `--offline` when the offline prep path ran.

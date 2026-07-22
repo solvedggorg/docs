@@ -5,12 +5,62 @@ description: "hasky is a Linux-only Haskell toolchain in Zig — lock-first pack
 
 **hasky** is a Linux-only Haskell toolchain written in Zig. It sits next to [rusty](/rusty), [scripty](/scripty), [worgo](/worgo), and [pyppi](/pyppi) in the solved.gg language-tooling suite: GHCup-like env management, lock-first package resolve, a content-addressable store, and a native **GHC** build driver for **hasky-format** projects (`hasky.json` / `hasky.lock`).
 
+<Warning>
+  **Linux only, permanently.** hasky relies on hardlink / reflink CAS semantics. macOS and Windows are not supported and will not be added.
+</Warning>
+
 ## What hasky is for
 
 - **Haskell project management** — resolve, lock, fetch, and build with a single CLI direction
 - **hasky-format only** — runtime projects use `hasky.json` + `hasky.lock`; Cabal/Stack trees are migration inputs (`hasky migrate`)
 - **Drive stock GHC** — native graph and unit cache over the compiler you already know; not a reimplementation of typechecking
-- **Linux-only** — permanently; hardlink / reflink CAS semantics are part of the design
+- **100× clean rebuild (measured goal)** — warm global **binary unit CAS** + lock-first + hardlink package-db materialize (not “GHC 100× faster”)
+
+## Theories (product DNA)
+
+hasky ports the product DNA of sibling **[rusty](/rusty)**:
+
+- pnpm-style **content-addressable store** (BLAKE3, atomic puts, hardlink materialize)
+- **lock-first** builds (no multi-minute solver on the hot path)
+- **native compiler graph** (drive stock `ghc`, never reimplement typechecking in v1)
+- **unit artifact CAS** (and later **binary package units** for 100× clean rebuilds)
+- one CLI; fail closed; integrity non-negotiable
+
+## Status
+
+Early scaffold (**Phase 0** / `0.0.1-dev`). Not production-ready. Not a full Cabal or Stack replacement.
+
+| Area | Status |
+| --- | --- |
+| `help` / `version` | Available |
+| `doctor` | Available (toolchain / PATH / project state) |
+| `env` | Stub (install / list / show) |
+| `store` | CAS path / stats / put / get / has |
+| `build` | Stub until Phase 3 |
+| `lock` / `fetch` / `migrate` | Planned (Phase 2–4) |
+
+## CLI surface (today)
+
+```bash
+hasky help
+hasky version
+hasky doctor
+hasky env …          # toolchain management (stub)
+hasky store …        # CAS store
+hasky build          # native GHC graph (stub until Phase 3)
+```
+
+Environment: `HASKY_HOME` (default `~/.hasky`). Suite-wide product auth (when wired) uses [`$PMS_HOME`](/clerk-zig/0.0.1-dev/pms-home) via [clerk-zig](/clerk-zig).
+
+## Build from source
+
+Requires Zig **0.16.x** and Linux.
+
+```bash
+zig build
+zig build test
+./zig-out/bin/hasky help
+```
 
 ## How it fits the suite
 
@@ -22,28 +72,22 @@ description: "hasky is a Linux-only Haskell toolchain in Zig — lock-first pack
 | [pyppi](/pyppi) | Python package manager + project tool |
 | **hasky** | Haskell toolchain + package manager (Linux) |
 | [yappy](/yappy) | Linux native desktop shell (Qt + GTK) |
-| [depotsdk-go](/depotsdk-go) | Go SDK for the Depot API |
+| [deploy](/deploy) | Next.js → Cloudflare Workers |
+| [clerk-zig](/clerk-zig) | Shared product auth |
+| [zig-libsql](/zig-libsql) | Zig libSQL / SQLite adapter |
 
-These products ship under the [solved.gg](https://solved.gg) / iResolved, LLC product family.
+## Next in these docs
 
-## Status
-
-hasky is in **early access / coming soon**. It is not a full Cabal or Stack replacement yet. Install instructions, lockfile reference, migrate guide, and CLI docs will land here as the native path stabilizes.
+1. [hasky.json schema](/hasky/0.0.1-dev/concepts/hasky-json)
+2. [CLI reference](/hasky/0.0.1-dev/reference/cli)
+3. Install and doctor (Linux + GHC toolchain)
+4. First lockfile, fetch, and native build
+5. Migrate from Cabal/Stack
+6. Benchmarks and 100× measurement harness
 
 Until then:
 
 - Product site: [hasky.pm.solved.gg](https://hasky.pm.solved.gg)
 - Suite hub: [pm.solved.gg](https://pm.solved.gg)
 - Source: [github.com/solvedggorg/hasky](https://github.com/solvedggorg/hasky)
-- Org overview: [solved.gg/projects](https://solved.gg/projects)
-
-## What to expect next in these docs
-
-1. Install and doctor (Linux + GHC toolchain)
-2. First `hasky.json` project and lockfile
-3. Fetch, materialize, and native build/test
-4. Migrate from Cabal/Stack
-5. Unit cache and workspace workflows
-6. CLI and configuration reference
-
-Questions or early access: [intake@solved.gg](mailto:intake@solved.gg).
+- Contact: [intake@solved.gg](mailto:intake@solved.gg)

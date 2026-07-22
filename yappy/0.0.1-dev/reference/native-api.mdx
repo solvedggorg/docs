@@ -1,0 +1,49 @@
+---
+title: "Native API matrix"
+description: "App-visible yappy UI / lifecycle API sketch and status."
+---
+
+Status values: `unsupported` | `partial` | `supported` | `dogfooded`.
+
+Names are **illustrative** until the public surface freezes. Backend parity for the same feature: [Backend parity](/yappy/0.0.1-dev/reference/backends).
+
+Last synced from product tree: **2026-07-16**.
+
+## App lifecycle
+
+| API (sketch) | Status |
+| --- | --- |
+| `app.run` / host main loop | unsupported |
+| `app.quit` | unsupported |
+| `app.setName` | unsupported |
+
+## Window
+
+| API (sketch) | Status |
+| --- | --- |
+| `ui.window.create` | unsupported |
+| `window.setTitle` / `setSize` / `show` | unsupported |
+| `window.onClose` | unsupported |
+
+## Layout & widgets
+
+| API (sketch) | Status |
+| --- | --- |
+| `ui.box.vertical` / `horizontal` | unsupported |
+| `ui.label` / `label.setText` | unsupported |
+| `ui.button` / `button.onClick` | unsupported |
+| `ui.textInput` / change + `getText` | unsupported |
+
+## Events / capabilities
+
+| API (sketch) | Status | Notes |
+| --- | --- | --- |
+| In-process host → JS / JS → UI | unsupported | |
+| Default deny FS + grant + read | unsupported | demo path |
+| Open-file dialog → grant | unsupported | optional v0.1 |
+
+## Escape hatches
+
+Backend-specific imports are discouraged. If added, they require a matrix note and reason.
+
+Do not list webview/DOM APIs — out of product scope.

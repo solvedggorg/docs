@@ -215,6 +215,18 @@
                     "pages": [
                       "hasky/0.0.1-dev/index"
                     ]
+                  },
+                  {
+                    "group": "Core concepts",
+                    "pages": [
+                      "hasky/0.0.1-dev/concepts/hasky-json"
+                    ]
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      "hasky/0.0.1-dev/reference/cli"
+                    ]
                   }
                 ]
               }
@@ -234,6 +246,76 @@
                     "group": "Get started",
                     "pages": [
                       "yappy/0.0.1-dev/index"
+                    ]
+                  },
+                  {
+                    "group": "Reference",
+                    "pages": [
+                      "yappy/0.0.1-dev/reference/backends",
+                      "yappy/0.0.1-dev/reference/native-api"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "deploy",
+            "description": "Next.js \u2192 Cloudflare Workers at init time",
+            "icon": "rocket",
+            "versions": [
+              {
+                "version": "0.0.1-dev",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "deploy/0.0.1-dev/index"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "clerk-zig",
+            "description": "Shared Clerk OAuth library for the PMS suite under $PMS_HOME",
+            "icon": "key",
+            "versions": [
+              {
+                "version": "0.0.1-dev",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "clerk-zig/0.0.1-dev/index",
+                      "clerk-zig/0.0.1-dev/pms-home",
+                      "clerk-zig/0.0.1-dev/consuming"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "product": "zig-libsql",
+            "description": "Pure(as)-Zig libSQL / SQLite adapter for toolchains",
+            "icon": "database",
+            "versions": [
+              {
+                "version": "0.0.1-dev",
+                "default": true,
+                "tag": "Latest",
+                "groups": [
+                  {
+                    "group": "Get started",
+                    "pages": [
+                      "zig-libsql/0.0.1-dev/index",
+                      "zig-libsql/0.0.1-dev/consuming"
                     ]
                   }
                 ]
@@ -362,6 +444,10 @@
           {
             "label": "hasky",
             "href": "https://hasky.pm.solved.gg"
+          },
+          {
+            "label": "deploy",
+            "href": "https://deploy.pm.solved.gg"
           },
           {
             "label": "trunker",

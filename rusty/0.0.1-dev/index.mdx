@@ -29,13 +29,13 @@ Those numbers come from that production monorepo shape — not a micro-benchmark
 - **Content store** — pnpm-style CAS under `$RUSTY_HOME` for crates and blobs
 - **Layers & artifact cache** — per-crate differential cache and `RUSTC_WRAPPER` integration
 - **Workspaces** — member listing, git-affected packages, reverse dependents, version-drift reports
-- **Product auth** — optional Clerk-based identity for solved.gg / iResolved accounts (not crates.io login)
+- **Product auth** — optional Clerk-based identity via **[clerk-zig](/clerk-zig)** for solved.gg / iResolved accounts (session at `$PMS_HOME/auth/session.db`; not crates.io login)
 
 ## What rusty is not (yet)
 
 rusty is **early access**, not full Cargo parity. Prefer this framing:
 
-> Dual-mode early access: native path for the rusty-format subset and growing cargo-format support; explicit cargo interop only for a small allowlist (`clippy`, `fmt`, `doc`, `bench`, `tree`) and opt-in install paths.
+> Dual-mode early access: native path for the rusty-format subset and growing cargo-format support; explicit cargo interop only for a small allowlist (`doc`, `bench`, `tree`) and opt-in install paths. `clippy` and `fmt` are native.
 
 Do not expect every Cargo feature, registry edge case, or build-script shape to work natively on day one. Unsupported native builds fail closed with a clear error.
 
@@ -46,9 +46,11 @@ Do not expect every Cargo feature, registry edge case, or build-script shape to 
 | `lock` / `fetch` / `add` / `rm` / `update` / `clean` | Yes | File I/O for both formats; no cargo process |
 | `build` / `run` / `check` | Yes (subset) | Hard error if unsupported; optional `scripts.build` |
 | `test` | Yes | Never cargo by default; optional `scripts.test` |
-| `lint` / `format` | Scripts | Require `scripts.lint` / `scripts.format` in `rusty.json` |
-| `clippy` / `fmt` / `doc` / `bench` / `tree` | Interop | Need cargo on PATH |
+| `clippy` / `fmt` | Yes | Native drivers; install `clippy` / `rustfmt` components |
+| `lint` / `format` | Scripts → native | `scripts.*` override, else clippy/fmt |
+| `doc` / `bench` / `tree` | Interop | Need cargo on PATH |
 | `install` | Prebuilt → native | Cargo only with `RUSTY_INSTALL_ALLOW_CARGO=1` |
+| `auth` | Suite session | [clerk-zig](/clerk-zig) → `$PMS_HOME/auth/session.db` |
 
 ## Next steps
 

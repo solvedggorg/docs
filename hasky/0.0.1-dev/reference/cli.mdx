@@ -1,0 +1,40 @@
+---
+title: "CLI reference"
+description: "Command map for hasky 0.0.1-dev."
+---
+
+```bash
+hasky <COMMAND> [args...]
+hasky help | -h | --help
+hasky version | -V | --version
+```
+
+Version line: `hasky 0.0.1-dev` during early access.
+
+## Commands
+
+| Command | Description | Phase |
+| --- | --- | --- |
+| `help` | Show help | Available |
+| `version` | Print version | Available |
+| `doctor` | Diagnose toolchain / PATH / project state | Available |
+| `env` | Toolchain management (install / list / show) | Stub |
+| `store` | CAS store (`path` / `stats` / `put` / `get` / `has`) | Available |
+| `build` | Native GHC graph | Stub until Phase 3 |
+| `lock` | Generate / update `hasky.lock` | Planned |
+| `fetch` | Ingest deps into CAS | Planned |
+| `migrate` | Cabal / Stack → hasky.json + lock | Planned |
+
+Never shells out to cabal/stack for **hasky-format** build / lock / fetch. Drives stock **ghc**.
+
+## Environment
+
+| Variable | Default / notes |
+| --- | --- |
+| `HASKY_HOME` | Data root (default `~/.hasky`) |
+
+Product suite auth (when wired) uses `PMS_HOME` / `PMS_AUTH_*` via [clerk-zig](/clerk-zig) — not crates.io-style registry login for Haskell packages.
+
+## Performance note
+
+**100× clean rebuild** is a **measured** binary-CAS goal. Primary lever is warm global binary unit CAS + lock-first + hardlink materialize — not “GHC itself is 100× faster.” Do not publish the claim without the product benchmark harness.

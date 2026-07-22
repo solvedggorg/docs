@@ -3,18 +3,31 @@ title: "Introduction"
 description: "scripty is a JS runtime and project manager with Node, Deno, and Bun APIs — rebuilt in Zig."
 ---
 
-**scripty** is a JavaScript runtime and project manager written in Zig. One tool aims to cover the APIs and workflows you already use with Node.js, Deno, and Bun — with built-in formatting and linting — without stacking three separate runtimes.
+**scripty** is a JavaScript runtime and project manager written in Zig. One tool aims to cover the APIs and workflows you already use with Node.js, Deno, and Bun — with built-in formatting and linting — without stacking three separate runtimes. The engine is an **own VM** (not V8, JSC, or SpiderMonkey).
+
+<Warning>
+  **Linux only, permanently.** First-party builds, CI, and dogfood are Linux-only. Desktop UI never lives in scripty (no webview / Chromium) — hosts such as [yappy](/yappy) embed scripty from separate repositories.
+</Warning>
 
 ## What scripty is for
 
 - **One runtime surface** for Node, Deno, and Bun APIs (full compatibility is the product goal; the implementation is still early)
-- **Project management** for JS/TS trees: install, run, and workspace workflows in one CLI
-- **Built-in format + lint** with rules and ecosystem support, so you are not forced to wire a separate toolchain for every repo
-- **Speed as a first-class goal** — marketing target is on the order of **100× Bun** for the paths scripty is designed around
+- **Own Zig VM** — parse → bytecode → interpret; TS type strip + JSX transform by extension
+- **Project management** for JS/TS trees: install, run, and workspace workflows in one CLI (maturing with the engine)
+- **Speed as a first-class goal** — marketing target is on the order of **100×** the fastest comparable baseline *on paths scripty designs for* (define benches; not universal web parity)
+
+## CLI surface (today)
+
+```bash
+scripty run <file.js|file.ts|file.tsx|file.jsx>
+scripty <file.js|file.ts|file.tsx|file.jsx>   # same as run
+scripty test262 [--path …] [--feature …] [--report …] [--limit …]
+scripty --help
+```
+
+Version line: `scripty v0.0.0` during pre-v0.0.1. No Node/Deno/Bun fallback.
 
 ## How it fits the suite
-
-scripty sits next to [rusty](/rusty) (Rust), [worgo](/worgo) (Go), [pyppi](/pyppi) (Python), and [yappy](/yappy) (native desktop host): tooling from [solved.gg](https://solved.gg).
 
 | Sibling | Ecosystem |
 | --- | --- |
@@ -22,12 +35,15 @@ scripty sits next to [rusty](/rusty) (Rust), [worgo](/worgo) (Go), [pyppi](/pypp
 | **scripty** | JavaScript / TypeScript runtime + PM |
 | [worgo](/worgo) | Go workspace project manager |
 | [pyppi](/pyppi) | Python package manager + project tool |
+| [hasky](/hasky) | Haskell toolchain + package manager (Linux) |
 | [yappy](/yappy) | Linux native desktop shell (embeds scripty) |
-| [depotsdk-go](/depotsdk-go) | Go SDK for the Depot API |
+| [deploy](/deploy) | Next.js → Cloudflare Workers |
+| [clerk-zig](/clerk-zig) | Shared product auth |
+| [zig-libsql](/zig-libsql) | Zig libSQL / SQLite adapter |
 
 ## Status
 
-scripty is in **early access / pre-v0.0.1**. Public packaging, install paths, and CLI reference will land here as the binary stabilizes.
+scripty is in **early access / pre-v0.0.1**. Public packaging and full CLI reference will land here as the binary stabilizes. License: **Business Source License 1.1** (source-available; converts to Apache-2.0 after three years per version).
 
 ### Active program: pre-v0.0.1
 
@@ -46,6 +62,7 @@ Until install channels freeze:
 - Product site: [scripty.pm.solved.gg](https://scripty.pm.solved.gg)
 - Suite hub: [pm.solved.gg](https://pm.solved.gg)
 - Org overview: [solved.gg/projects](https://solved.gg/projects)
+- Source: [github.com/solvedggorg/scripty](https://github.com/solvedggorg/scripty)
 
 ## What to expect next in these docs
 
@@ -53,6 +70,6 @@ Until install channels freeze:
 2. Install and first project (when packaging lands)
 3. Shared Node / runtime API reference
 4. Package management and workspaces
-5. Format, lint, scripts, and CLI reference
+5. Format, lint, scripts, and full CLI reference
 
 Questions or early access: [intake@solved.gg](mailto:intake@solved.gg).

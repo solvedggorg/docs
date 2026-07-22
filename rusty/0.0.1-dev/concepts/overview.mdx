@@ -29,7 +29,7 @@ Contrast with a cargo-wrapper mental model: rusty does **not** aim to shell out 
 | **Content store** | Content-addressable blobs and crate trees |
 | **Cache / layers** | Artifact groups and per-crate differential layers (`.rusty/`) |
 | **Workspace** | Monorepo member discovery, affected packages, dependents |
-| **Auth** | Optional product identity (Clerk), separate from crates.io |
+| **Auth** | Optional product identity via [clerk-zig](/clerk-zig) (`$PMS_HOME/auth/session.db`), separate from crates.io |
 
 ## Dual-mode projects
 
@@ -43,15 +43,17 @@ Detection uses those files plus `.rusty/format`. See [Project formats](/rusty/0.
 ## Build philosophy
 
 - **`build` / `run` / `check` / `test`**: native graph or hard error.
+- **`clippy` / `fmt`**: native drivers (install components via `rusty env`).
 - **Lifecycle scripts**: optional overrides in `rusty.json` (`scripts.build`, `scripts.test`, …).
-- **Cargo interop verbs**: tiny allowlist only; documented as needing cargo on PATH.
+- **Cargo interop verbs**: tiny allowlist only (`doc`, `bench`, `tree`); documented as needing cargo on PATH.
 - **No silent online cargo fallback** for rusty-format when native prep fails.
 
 ## Where data lives
 
 | Location | Contents |
 | --- | --- |
-| `$RUSTY_HOME` | Toolchains, global store, auth, bin shims |
+| `$RUSTY_HOME` | Toolchains, global store, bin shims |
+| `$PMS_HOME/auth/session.db` | Shared suite product auth session |
 | `<workspace>/.rusty/` | Format marker, target dir, layer index, project caches |
 
 Details: [Store and cache](/rusty/0.0.1-dev/concepts/store-and-cache), [Environment](/rusty/0.0.1-dev/reference/environment).

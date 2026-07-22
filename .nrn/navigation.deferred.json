@@ -2,26 +2,6 @@
   "_comment": "Not right now \u2014 restore into docs.json navigation when ready. Content lives under .nrn/",
   "english_products": [
     {
-      "product": "deploy",
-      "description": "Next.js \u2192 Cloudflare Workers at init time",
-      "icon": "rocket",
-      "versions": [
-        {
-          "version": "latest",
-          "default": true,
-          "tag": "Latest",
-          "groups": [
-            {
-              "group": "Get started",
-              "pages": [
-                "deploy/0.0.1-dev/index"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "product": "git",
       "description": "solved.gg git host UI \u2014 Clerk auth, Depot CI",
       "icon": "code-branch",

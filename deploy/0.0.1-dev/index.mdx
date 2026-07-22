@@ -1,0 +1,127 @@
+---
+title: "Introduction"
+description: "deploy bootstraps Next.js apps onto Cloudflare Workers at init time — owned runtime, Vercel-like CLI."
+---
+
+**deploy** is a Zig CLI that wires **Next.js → Cloudflare Workers** when you **create or adopt** an app. It rewrites configs, patches dependencies, generates wrangler, and ships through an **owned** Workers runtime under `@solvedgg/deploy-*` — not a post-build OpenNext adapter.
+
+## What deploy is for
+
+- **Init-time Cloudflare wiring** — `deploy create` / `deploy init` instead of bolting on an adapter after the fact
+- **Vercel-like verbs** — `deploy`, `env`, `link`, `whoami`, `logs`, `dev`, `check`
+- **Owned runtime + build** — `@solvedgg/deploy-runtime` and `@solvedgg/deploy-build` (original code, not a rebrand)
+- **Honest compat** — supported / partial / unsupported tracked in a living matrix; unsupported features fail closed unless you force
+
+## How it maps
+
+| Need | Cloudflare |
+| --- | --- |
+| App server | Workers |
+| Static assets | Workers Assets |
+| KV / edge cache | KV + Cache API |
+| Blobs | R2 |
+| SQL | D1 / Hyperdrive |
+| Images | Cloudflare Images / transform |
+| Cron | `triggers.crons` |
+| Queues | Queues |
+| AI | Workers AI |
+
+## Install (from source)
+
+Requires [Zig](https://ziglang.org/) `0.16+` and Linux for first-party development.
+
+```bash
+git clone https://github.com/solvedggorg/deploy.git
+cd deploy
+zig build
+./zig-out/bin/deploy help
+```
+
+## Quick start
+
+```bash
+# greenfield
+deploy create my-app --yes --name my-app
+cd my-app
+bun install   # link workspace packages or published @solvedgg/deploy-*
+
+# existing Next app
+deploy init . --name my-app
+deploy check
+deploy link --name my-app
+deploy deploy
+```
+
+## CLI surface
+
+| Command | Purpose |
+| --- | --- |
+| `deploy create [dir]` | Scaffold App Router Next + CF wiring (interactive; own scaffolding) |
+| `deploy init [dir]` | Adopt an existing Next app (patch configs / deps) |
+| `deploy check [dir]` | Compat matrix scan (+ TTY prompts / `--force`) |
+| `deploy link [dir]` | Bind Worker name / account into `deploy.json` |
+| `deploy deploy [dir]` | Build with `@solvedgg/deploy-build` + `wrangler deploy` |
+| `deploy dev [dir]` | Local development (Next + worker bindings) |
+| `deploy env list\|pull\|push\|add\|rm` | Secrets / vars bridge via wrangler |
+| `deploy whoami` | Cloudflare identity (`wrangler whoami`) |
+| `deploy logs` | Tail Worker logs (`wrangler tail`) |
+| `deploy matrix` | Print coverage estimate |
+| `deploy version` / `help` | Meta |
+
+Common flags: `--force`, `--yes` / `-y`, `--name`, `--account-id`, `--rewrite-next-config`.
+
+## Packages
+
+| Package | Role |
+| --- | --- |
+| `@solvedgg/deploy-runtime` | Worker `fetch` handler, cache, images, bindings |
+| `@solvedgg/deploy-build` | `withDeploy(nextConfig)`, `deploy-build` CLI, asset staging |
+
+These are **original** packages under `packages/`. They are not OpenNext.
+
+## Compat policy
+
+- Supported / partial / unsupported / planned live in the product `src/compat/matrix.zig`.
+- On TTY, unsupported hits prompt: **we no do this yet, do anyway?**
+- Non-interactive: fail closed unless `--force` or `DEPLOY_FORCE=1`.
+
+## Milestones
+
+| Version | Target |
+| --- | --- |
+| `0.0.x` | CLI + init/create + wrangler + runtime/build skeleton |
+| `v0.1.0` | ~**75%** Next / Vercel feature surface |
+| `v1.0.0` | **100%** compat goal |
+
+Do not claim full Next/Vercel parity before the matrix says so.
+
+## How it fits the suite
+
+| Sibling | Role |
+| --- | --- |
+| **deploy** | Next.js → Cloudflare Workers CLI + runtime |
+| [rusty](/rusty) | Rust package manager + toolchain (Linux) |
+| [scripty](/scripty) | JS runtime + PM |
+| [worgo](/worgo) / [pyppi](/pyppi) / [hasky](/hasky) | Other language PMs |
+| [yappy](/yappy) | Linux native desktop shell |
+| [clerk-zig](/clerk-zig) | Shared product auth (Clerk OAuth) |
+| [zig-libsql](/zig-libsql) | Zig libSQL / SQLite adapter |
+
+## Status
+
+deploy is in **early access** (`0.0.1-dev`). Build from source; package install channels will be documented here when published.
+
+- Product site: [deploy.pm.solved.gg](https://deploy.pm.solved.gg)
+- Suite hub: [pm.solved.gg](https://pm.solved.gg)
+- Source: [github.com/solvedggorg/deploy](https://github.com/solvedggorg/deploy)
+- Org overview: [solved.gg/projects](https://solved.gg/projects)
+
+## What to expect next in these docs
+
+1. Install packages and PATH setup
+2. Create vs init walkthroughs
+3. Compat matrix reference
+4. Runtime and build package APIs
+5. Env, secrets, and production checklist
+
+Questions or early access: [intake@solved.gg](mailto:intake@solved.gg).

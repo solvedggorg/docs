@@ -11,6 +11,17 @@ description: "pyppi is a Python package manager and project tool, written in Zig
 - **Zig implementation** — same systems approach as sibling language tools: explicit behavior, fast paths, minimal ceremony
 - **Honest early access** — the public CLI surface is still forming; do not assume full pip or uv parity yet
 
+## Status
+
+pyppi is in **early access / scaffold** (`0.0.1-dev`). Install instructions, lockfile model, and CLI reference will land here as the binary stabilizes.
+
+Build from source (Zig **0.16.x**):
+
+```bash
+zig build
+zig build test
+```
+
 ## How it fits the suite
 
 | Sibling | Ecosystem |
@@ -19,16 +30,15 @@ description: "pyppi is a Python package manager and project tool, written in Zig
 | [scripty](/scripty) | JavaScript / TypeScript runtime + PM |
 | [worgo](/worgo) | Go workspace project manager |
 | **pyppi** | Python package manager + project tool |
+| [hasky](/hasky) | Haskell toolchain (Linux) |
 | [yappy](/yappy) | Linux native desktop shell (Qt + GTK) |
-| [depotsdk-go](/depotsdk-go) | Go SDK for the Depot API |
+| [deploy](/deploy) | Next.js → Cloudflare Workers |
+| [clerk-zig](/clerk-zig) | Shared product auth |
+| [zig-libsql](/zig-libsql) | Zig libSQL / SQLite adapter |
 
 These products ship under the [solved.gg](https://solved.gg) / iResolved, LLC product family.
 
-## Status
-
-pyppi is in **early access / coming soon**. Install instructions, lockfile model, and CLI reference will land here as the binary stabilizes.
-
-Until then:
+Until install channels freeze:
 
 - Product site: [pyppi.pm.solved.gg](https://pyppi.pm.solved.gg)
 - Suite hub: [pm.solved.gg](https://pm.solved.gg)

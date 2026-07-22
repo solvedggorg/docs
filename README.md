@@ -14,17 +14,20 @@ worgo/                 # product docs → docs.solved.gg/worgo
 pyppi/                 # product docs → docs.solved.gg/pyppi
 hasky/                 # product docs → docs.solved.gg/hasky
 yappy/                 # product docs → docs.solved.gg/yappy
+deploy/                # product docs → docs.solved.gg/deploy
+clerk-zig/             # product docs → docs.solved.gg/clerk-zig
+zig-libsql/            # product docs → docs.solved.gg/zig-libsql
 depotsdk-go/           # product docs → docs.solved.gg/depotsdk-go
-.nrn/                  # not right now — deferred es, deploy, git, trunker
+.nrn/                  # not right now — deferred es, git, trunker
 ```
 
 The product switcher lists **Home**, **rusty**, **scripty**, **worgo**, **pyppi**,
-**hasky**, **yappy**, and **depotsdk-go**. Home is the default entry (welcome +
-legal). Product documentation is **not** at the site root; each product lives
-under its path prefix.
+**hasky**, **yappy**, **deploy**, **clerk-zig**, **zig-libsql**, and **depotsdk-go**.
+Home is the default entry (welcome + legal). Product documentation is **not** at
+the site root; each product lives under its path prefix.
 
-Spanish locale and the **deploy**, **git**, and **trunker** product trees live
-under `.nrn/` until they are ready to publish again. See `.nrn/README.md`.
+Spanish locale and the **git** / **trunker** product trees live under `.nrn/`
+until they are ready to publish again. See `.nrn/README.md`.
 
 ## Development
 
@@ -41,4 +44,6 @@ Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify
 
 ## Writing
 
-See `AGENTS.md` for product terminology and content boundaries.
+See `AGENTS.md` for product terminology and content boundaries. Prefer syncing
+from the sibling packages in the pms monorepo (`../rusty`, `../scripty`, …)
+when product CLIs and READMEs change.
