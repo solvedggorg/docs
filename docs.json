@@ -3,9 +3,7 @@
     "theme": "mint",
     "name": "solved.gg Docs",
     "colors": {
-        "primary": "#E8B923",
-        "light": "#f4f4f5",
-        "dark": "#27272a"
+        "primary": "#E8B923"
     },
     "background": {
         "light": "#fafafa",
