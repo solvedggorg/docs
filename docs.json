@@ -3,7 +3,9 @@
     "theme": "mint",
     "name": "solved.gg Docs",
     "colors": {
-        "primary": "#E8B923"
+        "primary": "#E8B923",
+        "light": "#E8B923",
+        "dark": "#E8B923"
     },
     "background": {
         "light": "#fafafa",
