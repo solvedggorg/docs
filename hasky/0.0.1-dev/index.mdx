@@ -28,13 +28,13 @@ hasky ports the product DNA of sibling **[rusty](/rusty)**:
 
 ## Status
 
-Early scaffold (**Phase 0** / `0.0.1-dev`). Not production-ready. Not a full Cabal or Stack replacement.
+**Phase 1** (`0.0.1-dev`): toolchain env works. Not production-ready. Not a full Cabal or Stack replacement.
 
 | Area | Status |
 | --- | --- |
 | `help` / `version` | Available |
 | `doctor` | Available (toolchain / PATH / project state) |
-| `env` | Stub (install / list / show) |
+| `env install\|list\|show\|use\|which` | Available — official bindists, SHA-256 verified |
 | `store` | CAS path / stats / put / get / has |
 | `build` | Stub until Phase 3 |
 | `lock` / `fetch` / `migrate` | Planned (Phase 2–4) |
@@ -45,9 +45,11 @@ Early scaffold (**Phase 0** / `0.0.1-dev`). Not production-ready. Not a full Cab
 hasky help
 hasky version
 hasky doctor
-hasky env …          # toolchain management (stub)
-hasky store …        # CAS store
-hasky build          # native GHC graph (stub until Phase 3)
+hasky env install 9.10.1   # download + verify + install GHC
+hasky env list
+hasky env which ghc
+hasky store …              # CAS store
+hasky build                # native GHC graph (stub until Phase 3)
 ```
 
 Environment: `HASKY_HOME` (default `~/.hasky`). Suite-wide product auth (when wired) uses [`$PMS_HOME`](/clerk-zig/0.0.1-dev/pms-home) via [clerk-zig](/clerk-zig).

@@ -18,12 +18,28 @@ Version line: `hasky 0.0.1-dev` during early access.
 | `help` | Show help | Available |
 | `version` | Print version | Available |
 | `doctor` | Diagnose toolchain / PATH / project state | Available |
-| `env` | Toolchain management (install / list / show) | Stub |
+| `env show` | Active toolchain + paths | Available |
+| `env list` | Installed GHC versions (`*` = default) | Available |
+| `env install <ver>` | Download bindist, SHA-256 verify, install | Available |
+| `env use <ver>` | Set default toolchain | Available |
+| `env uninstall <ver>` | Remove installed toolchain | Available |
+| `env which [prog]` | Path to `ghc` (or prog) in active toolchain | Available |
 | `store` | CAS store (`path` / `stats` / `put` / `get` / `has`) | Available |
 | `build` | Native GHC graph | Stub until Phase 3 |
 | `lock` | Generate / update `hasky.lock` | Planned |
 | `fetch` | Ingest deps into CAS | Planned |
 | `migrate` | Cabal / Stack → hasky.json + lock | Planned |
+
+### `env install` flags
+
+```bash
+hasky env install 9.10.1
+hasky env install 9.10.1 --platform=deb12
+hasky env install 9.10.1 --from-file ./ghc-….tar.xz --sha256 <64-hex>
+hasky env install 9.10.1 --no-default
+```
+
+Bindists come from `https://downloads.haskell.org/~ghc/<ver>/`. Checksums are taken from the published `SHA256SUMS` file. Default platform: `deb12` (x86_64), `deb11` (aarch64).
 
 Never shells out to cabal/stack for **hasky-format** build / lock / fetch. Drives stock **ghc**.
 
@@ -32,6 +48,8 @@ Never shells out to cabal/stack for **hasky-format** build / lock / fetch. Drive
 | Variable | Default / notes |
 | --- | --- |
 | `HASKY_HOME` | Data root (default `~/.hasky`) |
+| `HASKY_TOOLCHAIN` | Override default GHC id |
+| `HASKY_GHC_PLATFORM` | Bindist platform tag (e.g. `deb12`) |
 
 Product suite auth (when wired) uses `PMS_HOME` / `PMS_AUTH_*` via [clerk-zig](/clerk-zig) — not crates.io-style registry login for Haskell packages.
 

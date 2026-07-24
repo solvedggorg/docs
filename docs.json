@@ -1,463 +1,447 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "solved.gg Docs",
-  "colors": {
-    "primary": "#18181b",
-    "light": "#f4f4f5",
-    "dark": "#27272a"
-  },
-  "background": {
-    "light": "#fafafa",
-    "dark": "#070708"
-  },
-  "favicon": "/favicon.svg",
-  "navigation": {
-    "languages": [
-      {
-        "language": "en",
-        "default": true,
-        "products": [
-          {
-            "product": "Home",
-            "description": "Welcome to solved.gg docs and legal",
-            "icon": "house",
-            "versions": [
-              {
-                "version": "2026-07-04",
+    "$schema": "https://mintlify.com/docs.json",
+    "theme": "mint",
+    "name": "solved.gg Docs",
+    "colors": {
+        "primary": "#E8B923",
+        "light": "#f4f4f5",
+        "dark": "#27272a"
+    },
+    "background": {
+        "light": "#fafafa",
+        "dark": "#070708"
+    },
+    "favicon": "/favicon.svg",
+    "navigation": {
+        "languages": [
+            {
+                "language": "en",
                 "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Welcome",
-                    "pages": [
-                      "index"
-                    ]
-                  },
-                  {
-                    "group": "Legal",
-                    "pages": [
-                      "legal/2026-07-04/privacy",
-                      "legal/2026-07-04/terms",
-                      "legal/2026-07-04/eula",
-                      "legal/2026-07-04/cla"
-                    ]
-                  }
+                "products": [
+                    {
+                        "product": "Home",
+                        "description": "Welcome to solved.gg docs and legal",
+                        "icon": "house",
+                        "versions": [
+                            {
+                                "version": "2026-07-04",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Welcome",
+                                        "pages": ["index"]
+                                    },
+                                    {
+                                        "group": "Legal",
+                                        "pages": [
+                                            "legal/2026-07-04/privacy",
+                                            "legal/2026-07-04/terms",
+                                            "legal/2026-07-04/eula",
+                                            "legal/2026-07-04/cla"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "product": "rusty",
+                        "description": "Cargo + rustup, rebuilt in Zig for Linux monorepos",
+                        "icon": "gears",
+                        "versions": [
+                            {
+                                "version": "0.0.1-dev",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Get started",
+                                        "pages": [
+                                            "rusty/0.0.1-dev/index",
+                                            "rusty/0.0.1-dev/quickstart",
+                                            "rusty/0.0.1-dev/install"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Core concepts",
+                                        "pages": [
+                                            "rusty/0.0.1-dev/concepts/overview",
+                                            "rusty/0.0.1-dev/concepts/project-formats",
+                                            "rusty/0.0.1-dev/concepts/toolchains",
+                                            "rusty/0.0.1-dev/concepts/store-and-cache"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Guides",
+                                        "pages": [
+                                            "rusty/0.0.1-dev/guides/build-and-test",
+                                            "rusty/0.0.1-dev/guides/workspaces",
+                                            "rusty/0.0.1-dev/guides/migrate-from-cargo"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Reference",
+                                        "pages": [
+                                            "rusty/0.0.1-dev/reference/cli",
+                                            "rusty/0.0.1-dev/reference/environment"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "product": "scripty",
+                        "description": "JS runtime and project manager \u2014 Node, Deno, and Bun APIs in Zig",
+                        "icon": "code",
+                        "versions": [
+                            {
+                                "version": "latest",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Get started",
+                                        "pages": ["scripty/0.0.1-dev/index"]
+                                    },
+                                    {
+                                        "group": "v0.0.1-dev program",
+                                        "pages": [
+                                            "scripty/v0.0.1-dev/index",
+                                            "scripty/v0.0.1-dev/principles",
+                                            "scripty/v0.0.1-dev/initiatives",
+                                            "scripty/v0.0.1-dev/roadmap"
+                                        ]
+                                    },
+                                    {
+                                        "group": "I1 \u2014 ES Engine",
+                                        "pages": [
+                                            "scripty/v0.0.1-dev/es/index",
+                                            "scripty/v0.0.1-dev/es/scope",
+                                            "scripty/v0.0.1-dev/es/phases",
+                                            "scripty/v0.0.1-dev/es/feature-matrix",
+                                            "scripty/v0.0.1-dev/es/builtins",
+                                            "scripty/v0.0.1-dev/es/module-system",
+                                            "scripty/v0.0.1-dev/es/test262"
+                                        ]
+                                    },
+                                    {
+                                        "group": "I2 \u2014 Bun-exclusive",
+                                        "pages": [
+                                            "scripty/v0.0.1-dev/bun-exclusive/index",
+                                            "scripty/v0.0.1-dev/bun-exclusive/inventory",
+                                            "scripty/v0.0.1-dev/bun-exclusive/matrix",
+                                            "scripty/v0.0.1-dev/bun-exclusive/roadmap"
+                                        ]
+                                    },
+                                    {
+                                        "group": "I3 \u2014 Deno-exclusive",
+                                        "pages": [
+                                            "scripty/v0.0.1-dev/deno-exclusive/index",
+                                            "scripty/v0.0.1-dev/deno-exclusive/inventory",
+                                            "scripty/v0.0.1-dev/deno-exclusive/matrix",
+                                            "scripty/v0.0.1-dev/deno-exclusive/roadmap"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Reference",
+                                        "pages": [
+                                            "scripty/v0.0.1-dev/reference/status-vocabulary",
+                                            "scripty/v0.0.1-dev/reference/sources",
+                                            "scripty/v0.0.1-dev/reference/relationship-to-v1"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "product": "worgo",
+                        "description": "Next-gen Go workspace project manager, written in Zig",
+                        "icon": "cube",
+                        "versions": [
+                            {
+                                "version": "latest",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Get started",
+                                        "pages": ["worgo/0.0.1-dev/index"]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "product": "pyppi",
+                        "description": "Python package manager and project tool, written in Zig",
+                        "icon": "layer-group",
+                        "versions": [
+                            {
+                                "version": "0.0.1-dev",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Get started",
+                                        "pages": ["pyppi/0.0.1-dev/index"]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "product": "hasky",
+                        "description": "Linux-only Haskell toolchain in Zig: lock-first hasky.json / hasky.lock, CAS store, native GHC driver",
+                        "icon": "terminal",
+                        "versions": [
+                            {
+                                "version": "0.0.1-dev",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Get started",
+                                        "pages": ["hasky/0.0.1-dev/index"]
+                                    },
+                                    {
+                                        "group": "Core concepts",
+                                        "pages": [
+                                            "hasky/0.0.1-dev/concepts/hasky-json"
+                                        ]
+                                    },
+                                    {
+                                        "group": "Reference",
+                                        "pages": [
+                                            "hasky/0.0.1-dev/reference/cli"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "product": "yappy",
+                        "description": "Linux-only native desktop shell \u2014 Qt + GTK, scripty for app logic",
+                        "icon": "desktop",
+                        "versions": [
+                            {
+                                "version": "latest",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Get started",
+                                        "pages": ["yappy/0.0.1-dev/index"]
+                                    },
+                                    {
+                                        "group": "Reference",
+                                        "pages": [
+                                            "yappy/0.0.1-dev/reference/backends",
+                                            "yappy/0.0.1-dev/reference/native-api"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "product": "deploy",
+                        "description": "Next.js \u2192 Cloudflare Workers at init time",
+                        "icon": "rocket",
+                        "versions": [
+                            {
+                                "version": "0.0.1-dev",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Get started",
+                                        "pages": ["deploy/0.0.1-dev/index"]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "product": "clerk-zig",
+                        "description": "Shared Clerk OAuth library for the PMS suite under $PMS_HOME",
+                        "icon": "key",
+                        "versions": [
+                            {
+                                "version": "0.0.1-dev",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Get started",
+                                        "pages": [
+                                            "clerk-zig/0.0.1-dev/index",
+                                            "clerk-zig/0.0.1-dev/pms-home",
+                                            "clerk-zig/0.0.1-dev/consuming"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "product": "zig-libsql",
+                        "description": "Pure(as)-Zig libSQL / SQLite adapter for toolchains",
+                        "icon": "database",
+                        "versions": [
+                            {
+                                "version": "0.0.1-dev",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Get started",
+                                        "pages": [
+                                            "zig-libsql/0.0.1-dev/index",
+                                            "zig-libsql/0.0.1-dev/consuming"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "product": "depotsdk-go",
+                        "description": "Go SDK for the Depot API",
+                        "icon": "box",
+                        "versions": [
+                            {
+                                "version": "latest",
+                                "default": true,
+                                "tag": "Latest",
+                                "groups": [
+                                    {
+                                        "group": "Get started",
+                                        "pages": ["depotsdk-go/0.0.1-dev/index"]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 ]
-              }
+            }
+        ],
+        "global": {
+            "anchors": [
+                {
+                    "anchor": "solved.gg",
+                    "href": "https://solved.gg",
+                    "icon": "globe"
+                },
+                {
+                    "anchor": "Projects",
+                    "href": "https://solved.gg/projects",
+                    "icon": "grid-2"
+                }
             ]
-          },
-          {
-            "product": "rusty",
-            "description": "Cargo + rustup, rebuilt in Zig for Linux monorepos",
-            "icon": "gears",
-            "versions": [
-              {
-                "version": "0.0.1-dev",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": [
-                      "rusty/0.0.1-dev/index",
-                      "rusty/0.0.1-dev/quickstart",
-                      "rusty/0.0.1-dev/install"
-                    ]
-                  },
-                  {
-                    "group": "Core concepts",
-                    "pages": [
-                      "rusty/0.0.1-dev/concepts/overview",
-                      "rusty/0.0.1-dev/concepts/project-formats",
-                      "rusty/0.0.1-dev/concepts/toolchains",
-                      "rusty/0.0.1-dev/concepts/store-and-cache"
-                    ]
-                  },
-                  {
-                    "group": "Guides",
-                    "pages": [
-                      "rusty/0.0.1-dev/guides/build-and-test",
-                      "rusty/0.0.1-dev/guides/workspaces",
-                      "rusty/0.0.1-dev/guides/migrate-from-cargo"
-                    ]
-                  },
-                  {
-                    "group": "Reference",
-                    "pages": [
-                      "rusty/0.0.1-dev/reference/cli",
-                      "rusty/0.0.1-dev/reference/environment"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "scripty",
-            "description": "JS runtime and project manager \u2014 Node, Deno, and Bun APIs in Zig",
-            "icon": "code",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": [
-                      "scripty/0.0.1-dev/index"
-                    ]
-                  },
-                  {
-                    "group": "v0.0.1-dev program",
-                    "pages": [
-                      "scripty/v0.0.1-dev/index",
-                      "scripty/v0.0.1-dev/principles",
-                      "scripty/v0.0.1-dev/initiatives",
-                      "scripty/v0.0.1-dev/roadmap"
-                    ]
-                  },
-                  {
-                    "group": "I1 \u2014 ES Engine",
-                    "pages": [
-                      "scripty/v0.0.1-dev/es/index",
-                      "scripty/v0.0.1-dev/es/scope",
-                      "scripty/v0.0.1-dev/es/phases",
-                      "scripty/v0.0.1-dev/es/feature-matrix",
-                      "scripty/v0.0.1-dev/es/builtins",
-                      "scripty/v0.0.1-dev/es/module-system",
-                      "scripty/v0.0.1-dev/es/test262"
-                    ]
-                  },
-                  {
-                    "group": "I2 \u2014 Bun-exclusive",
-                    "pages": [
-                      "scripty/v0.0.1-dev/bun-exclusive/index",
-                      "scripty/v0.0.1-dev/bun-exclusive/inventory",
-                      "scripty/v0.0.1-dev/bun-exclusive/matrix",
-                      "scripty/v0.0.1-dev/bun-exclusive/roadmap"
-                    ]
-                  },
-                  {
-                    "group": "I3 \u2014 Deno-exclusive",
-                    "pages": [
-                      "scripty/v0.0.1-dev/deno-exclusive/index",
-                      "scripty/v0.0.1-dev/deno-exclusive/inventory",
-                      "scripty/v0.0.1-dev/deno-exclusive/matrix",
-                      "scripty/v0.0.1-dev/deno-exclusive/roadmap"
-                    ]
-                  },
-                  {
-                    "group": "Reference",
-                    "pages": [
-                      "scripty/v0.0.1-dev/reference/status-vocabulary",
-                      "scripty/v0.0.1-dev/reference/sources",
-                      "scripty/v0.0.1-dev/reference/relationship-to-v1"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "worgo",
-            "description": "Next-gen Go workspace project manager, written in Zig",
-            "icon": "cube",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": [
-                      "worgo/0.0.1-dev/index"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "pyppi",
-            "description": "Python package manager and project tool, written in Zig",
-            "icon": "layer-group",
-            "versions": [
-              {
-                "version": "0.0.1-dev",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": [
-                      "pyppi/0.0.1-dev/index"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "hasky",
-            "description": "Linux-only Haskell toolchain in Zig: lock-first hasky.json / hasky.lock, CAS store, native GHC driver",
-            "icon": "terminal",
-            "versions": [
-              {
-                "version": "0.0.1-dev",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": [
-                      "hasky/0.0.1-dev/index"
-                    ]
-                  },
-                  {
-                    "group": "Core concepts",
-                    "pages": [
-                      "hasky/0.0.1-dev/concepts/hasky-json"
-                    ]
-                  },
-                  {
-                    "group": "Reference",
-                    "pages": [
-                      "hasky/0.0.1-dev/reference/cli"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "yappy",
-            "description": "Linux-only native desktop shell \u2014 Qt + GTK, scripty for app logic",
-            "icon": "desktop",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": [
-                      "yappy/0.0.1-dev/index"
-                    ]
-                  },
-                  {
-                    "group": "Reference",
-                    "pages": [
-                      "yappy/0.0.1-dev/reference/backends",
-                      "yappy/0.0.1-dev/reference/native-api"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "deploy",
-            "description": "Next.js \u2192 Cloudflare Workers at init time",
-            "icon": "rocket",
-            "versions": [
-              {
-                "version": "0.0.1-dev",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": [
-                      "deploy/0.0.1-dev/index"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "clerk-zig",
-            "description": "Shared Clerk OAuth library for the PMS suite under $PMS_HOME",
-            "icon": "key",
-            "versions": [
-              {
-                "version": "0.0.1-dev",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": [
-                      "clerk-zig/0.0.1-dev/index",
-                      "clerk-zig/0.0.1-dev/pms-home",
-                      "clerk-zig/0.0.1-dev/consuming"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "zig-libsql",
-            "description": "Pure(as)-Zig libSQL / SQLite adapter for toolchains",
-            "icon": "database",
-            "versions": [
-              {
-                "version": "0.0.1-dev",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": [
-                      "zig-libsql/0.0.1-dev/index",
-                      "zig-libsql/0.0.1-dev/consuming"
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "product": "depotsdk-go",
-            "description": "Go SDK for the Depot API",
-            "icon": "box",
-            "versions": [
-              {
-                "version": "latest",
-                "default": true,
-                "tag": "Latest",
-                "groups": [
-                  {
-                    "group": "Get started",
-                    "pages": [
-                      "depotsdk-go/0.0.1-dev/index"
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "solved.gg",
-          "href": "https://solved.gg",
-          "icon": "globe"
-        },
-        {
-          "anchor": "Projects",
-          "href": "https://solved.gg/projects",
-          "icon": "grid-2"
         }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg",
-    "href": "/"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Your Account",
-        "href": "https://accounts.solved.gg/user"
-      },
-      {
-        "label": "Support",
-        "href": "https://in.solved.gg/support"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "solved.gg",
-      "href": "https://solved.gg"
-    }
-  },
-  "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
-    ]
-  },
-  "footer": {
-    "links": [
-      {
-        "header": "Sponsors",
-        "items": [
-          {
-            "label": "Digital Ocean",
-            "href": "https://l.solved.gg/PBxjJzW"
-          },
-          {
-            "label": "Coderabbit",
-            "href": "https://l.solved.gg/mI5vTic"
-          }
+    },
+    "logo": {
+        "light": "/logo/light.svg",
+        "dark": "/logo/dark.svg",
+        "href": "/"
+    },
+    "navbar": {
+        "links": [
+            {
+                "label": "Your Account",
+                "href": "https://accounts.solved.gg/user"
+            },
+            {
+                "label": "Support",
+                "href": "https://in.solved.gg/support"
+            }
+        ],
+        "primary": {
+            "type": "button",
+            "label": "solved.gg",
+            "href": "https://solved.gg"
+        }
+    },
+    "contextual": {
+        "options": [
+            "copy",
+            "view",
+            "chatgpt",
+            "claude",
+            "perplexity",
+            "mcp",
+            "cursor",
+            "vscode"
         ]
-      },
-      {
-        "header": "in",
-        "items": [
-          {
-            "label": "Help Center",
-            "href": "https://in.solved.gg/docs"
-          }
-        ]
-      },
-      {
-        "header": "Products",
-        "items": [
-          {
-            "label": "rusty",
-            "href": "https://rusty.pm.solved.gg"
-          },
-          {
-            "label": "scripty",
-            "href": "https://scripty.pm.solved.gg"
-          },
-          {
-            "label": "worgo",
-            "href": "https://worgo.pm.solved.gg"
-          },
-          {
-            "label": "yappy",
-            "href": "https://yappy.pm.solved.gg"
-          },
-          {
-            "label": "pyppi",
-            "href": "https://pyppi.pm.solved.gg"
-          },
-          {
-            "label": "hasky",
-            "href": "https://hasky.pm.solved.gg"
-          },
-          {
-            "label": "deploy",
-            "href": "https://deploy.pm.solved.gg"
-          },
-          {
-            "label": "trunker",
-            "href": "https://trunker.solved.gg"
-          }
-        ]
-      }
-    ],
-    "socials": {
-      "discord": "https://discord.solved.gg"
+    },
+    "footer": {
+        "links": [
+            {
+                "header": "Sponsors",
+                "items": [
+                    {
+                        "label": "Digital Ocean",
+                        "href": "https://l.solved.gg/PBxjJzW"
+                    },
+                    {
+                        "label": "Coderabbit",
+                        "href": "https://l.solved.gg/mI5vTic"
+                    }
+                ]
+            },
+            {
+                "header": "in",
+                "items": [
+                    {
+                        "label": "Help Center",
+                        "href": "https://in.solved.gg/docs"
+                    }
+                ]
+            },
+            {
+                "header": "Products",
+                "items": [
+                    {
+                        "label": "rusty",
+                        "href": "https://rusty.pm.solved.gg"
+                    },
+                    {
+                        "label": "scripty",
+                        "href": "https://scripty.pm.solved.gg"
+                    },
+                    {
+                        "label": "worgo",
+                        "href": "https://worgo.pm.solved.gg"
+                    },
+                    {
+                        "label": "yappy",
+                        "href": "https://yappy.pm.solved.gg"
+                    },
+                    {
+                        "label": "pyppi",
+                        "href": "https://pyppi.pm.solved.gg"
+                    },
+                    {
+                        "label": "hasky",
+                        "href": "https://hasky.pm.solved.gg"
+                    },
+                    {
+                        "label": "deploy",
+                        "href": "https://deploy.pm.solved.gg"
+                    },
+                    {
+                        "label": "trunker",
+                        "href": "https://trunker.solved.gg"
+                    }
+                ]
+            }
+        ],
+        "socials": {
+            "discord": "https://discord.solved.gg"
+        }
     }
-  }
 }
